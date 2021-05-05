@@ -27,4 +27,35 @@ module.exports.bootstrap = async function() {
   // ]);
   // ```
 
+sails.log('Hello, world, about to create places..');
+
+  await Place.createEach([
+    {
+      name : 'Piazza Saffi',
+      intro_text: 'La piazza principale di Forlì',
+full_text: 'La piazza principale di Forlì, bla bla bla',
+      gps: '{geolocation {lat: 44.2225 , lng: 12.041111}}',
+      category_id: 1,
+//	image: 'foobar.jpg',
+      image: 'https://www.forlipedia.it/site/wp-content/uploads/2020/02/piazza-saffi-faceb.jpg',
+    },
+       {
+      name : 'Palazzo Piazza Paulucci',
+      intro_text: 'un edificio storico della città di Forlì che occupa tutto un lato di Piazza Ordelaffi',
+      full_text: 'un edificio storico della città di Forlì che occupa tutto un lato di Piazza Ordelaffi, bla bla bla',
+      gps: '{geolocation {lat: 44.1327 , lng: 12.021921}}',
+      category_id: 1,
+ image: 'foo.jpg',
+    },
+      {
+      name : 'Porta Schiavonia',
+      intro_text: 'Porta Schiavonìa è l\'unica porta rimasta della cinta muraria di Forlì.',
+full_text: 'Porta Schiavonìa è l\'unica porta rimasta della cinta muraria di Forlì. bla bla bla...',
+      gps: '{geolocation {lat: 44.1327 , lng: 12.021921}}',
+      category_id: 1,
+ image: 'foo.jpg',
+    },
+  ]);
+
+
 };

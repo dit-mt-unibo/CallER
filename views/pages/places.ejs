@@ -1,0 +1,26 @@
+<h1 class="display-4">Places</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(function(place){ %>
+            <tr>
+                <td><%= place.id %></td>
+                <td><%= place.name %></td>
+                <td>
+                    <a href="/place/<%= place.id %>" class="btn btn-primary">Edit</a>
+                    <form class="d-inline" action="/place/delete/<%= place.id %>" method="post">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody> 
+</table>
+
+<%- exposeLocalsToBrowser() %>

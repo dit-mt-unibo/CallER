@@ -1,0 +1,33 @@
+<div class="container">
+<h1>Scheda aggiornata</h1>
+<hr/>
+ <!--
+id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, tags, gps,
+ *              published, category_id, createdAt, updatedAt
+-->
+  <div class="container">
+    <img class="img-rounded" src="<%= place.image %>"></img>
+  </div>
+  <form action="<%= '/place/update/'+  place.id %>" method="post" >
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" class="form-control" name="name" value="<%= place.name %>">
+      </div>
+    <div class="form-group">
+      <label>Descrizione</label>
+      <input type="text" class="form-control" name="intro_text" value="<%= place.intro_text %>">
+      </div>
+    <div class="form-group">
+      <label>Posizione</label>
+      <input type="text" class="form-control" name="gps" value="<%= place.gps %>">
+      </div>
+    <div class="form-group">
+      <label>Testo</label>
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" name="full_text" rows="8"><%= place.full_text %></textarea>
+    </div>
+    <button class="btn btn-warning" type="submit">Update</button>
+  </form>
+
+</div>

@@ -20,7 +20,14 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
-
+  '/place': { 
+	controller: 'PlaceController',
+  	action: 'render' 
+  },
+  '/places': {
+    controller: 'PlaceController',
+    action: 'lista'
+  },
 
   /***************************************************************************
   *                                                                          *
