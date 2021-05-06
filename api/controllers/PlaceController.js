@@ -41,4 +41,27 @@ module.exports = {
     });
   },
 
+  updateOne: async (request, response) => {
+    var updatedRecord = await Place.updateOne(request.params.id)
+      .set(request.body);
+    var place = updatedRecord;
+    response.view('place', { place });
+  },
+
+  create: async (request, response) => {
+    var place = await Place.create(request.body).fetch();
+    response.redirect('/place');
+  },
+
+  delete: async (request, response) => {
+    var deleted = await Place.destroyOne(request.params.id);
+    if (deleted) {
+      sails.log('Deleted place with id: ' + request.params.id);
+    } else {
+      sails.log('The database does not have a Place with id: ' + request.params.id);
+    }
+    response.redirect('/place');
+  },
+
+
 };

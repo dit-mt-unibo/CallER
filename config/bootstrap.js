@@ -27,8 +27,10 @@ module.exports.bootstrap = async function() {
   // ]);
   // ```
 
-sails.log('Hello, world, about to create places..');
-
+  /*
+   
+   sails.log('Hello, world, about to create places..');
+    
   await Place.createEach([
     {
       name : 'Piazza Saffi',
@@ -57,5 +59,6 @@ full_text: 'Porta Schiavonìa è l\'unica porta rimasta della cinta muraria di F
     },
   ]);
 
+  */
 
 };

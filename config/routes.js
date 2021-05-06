@@ -20,14 +20,33 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
+  '/add': { view: 'addplace' },
   '/place': { 
 	controller: 'PlaceController',
-  	action: 'render' 
+  	action: 'lista' 
   },
+  /*
   '/places': {
     controller: 'PlaceController',
     action: 'lista'
   },
+  */
+  'POST /place/update/:id': {
+    controller: 'PlaceController',
+    action: 'updateOne'
+  },
+
+  'POST /place/create': {
+    controller: 'PlaceController',
+    action: 'create'
+  },
+
+  'POST /place/delete/:id': {
+    controller: 'PlaceController',
+    action: 'delete'
+  },
+
+
 
   /***************************************************************************
   *                                                                          *
@@ -40,5 +59,5 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-
+  'PUT /contenuto/update/:id': { action: 'contenuto/update' },
 };
