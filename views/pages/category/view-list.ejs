@@ -1,0 +1,81 @@
+<div id="view-list" v-cloak>
+
+    <modal-box :show="showModalBox" :body="textModalBox">                            
+        <div slot="footer">
+            <button @click="closeModalBox">
+                OK
+            </button>
+        </div>
+    </modal-box>
+
+    <modal-box :show="showModalBoxDelete">                    
+        <div slot="header">
+            ATTENZIONE
+        </div>
+        <div slot="body">
+            Sicuro di voler cancellare la categoria?
+        </div>
+        <div slot="footer">
+            <button @click="deleteCategory">
+                Sì
+            </button>
+            <button @click="closeModalBoxDelete">
+                No
+            </button>
+        </div>
+    </modal-box>
+
+    <div class="container-fluid">
+
+        <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
+
+    <div class="container-fluid" style="margin:30px 0">
+        <a class="btn btn-success" href="/category/add">Nuova categoria</a>
+    </div>    
+
+<%  if ( items.length == 0 ) { %>
+    
+    <%- partial('../../partials/no-result.ejs') %>
+    
+<% } else { %>    
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="30%">Nome</th>
+                <th width="40%">Descrizione</th>
+                <th style="text-align: center" width="10%">Pubblicato</th>
+                <th width="15"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in items">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td @click="openModalBox(item.description)" class="text-highlight">
+                    <text-truncate :text="item.description"></text-truncate>                    
+                </td>
+                <td align="center">
+                    <i class="bi" :class="[ item.published == 1 ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger']"></i>
+                </td>
+                <td align="center">
+                    <a class="btn btn-primary" :href="'/category/edit/' + item.id">Modifica</a>
+                    <a class="btn btn-danger" href="#" @click="openModalBoxDelete(item.id)">Elimina</a>
+                </td>                                                
+            </tr>
+        </tbody> 
+    </table>        
+
+<% } %>
+
+    </div>    
+
+</div>
+
+<script src="/js/components/modal-box.component.js"></script>
+<script src="/js/components/flash-message.component.js"></script>
+<script src="/js/components/text-truncate.component.js"></script>
+<script src="/js/pages/category/view-list.page.js"></script>
+
+

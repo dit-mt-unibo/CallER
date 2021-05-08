@@ -48,6 +48,33 @@ module.exports.routes = {
 
 
 
+  // Routes for categories
+  'GET /category' : {
+    action: 'category/view-list',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+  'GET /category/add': {
+    action: 'category/view-create',
+    view: 'pages/category/view-create',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+  'GET /category/edit/:id': {
+    action: 'category/view-update',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+  'POST /category/save': {
+    action: 'category/save'
+  },
+  'GET /category/delete/:id': {
+    action: 'category/delete'
+  },
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
