@@ -8,7 +8,7 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
  *              published, category_id, createdAt, updatedAt
 -->
   <div class="container">
-    <img class="img-rounded" src="<%= place.image %>"></img>
+    <img class="img-fluid" src="<%='/images/contenuti/'+place.imageUID %>"></img>
   </div>
   <form action="<%= '/place/update/'+  place.id %>" method="post" >
     <div class="form-group">
@@ -43,8 +43,7 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
       <label>Categoria</label>
       <select name="category_id" class="form-control">
         <% categories.forEach(element => {
-          // var selected = (element.id == 3) ? "selected" : "";
-          var selected = "selected";
+          var selected = (element.id == place.category_id) ? "selected" : "";
         %>
         <option value="<%= element.id %>" <%=selected %> > <%= element.name %>
         </option>

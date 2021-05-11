@@ -57,10 +57,48 @@ module.exports = {
     response.view('place', { place });
   },
 
-  create: async (request, response) => {
+  create: function (request, response){
+    var params = request.allParams();
+    request.file('image').upload({
+      dirname: '../../assets/images/contenuti',
+      maxBytes: 10000000
+    }, function (err, uploadedFile) {
+      if (err) {
+        return response.serverError(err);
+      }
+      console.log(uploadedFile);
+
+      if (uploadedFile.length === 0) {
+        return response.redirect('/');
+        return sails.log('Contenuto non creato!');
+      }
+
+      var fileName = uploadedFile[0].filename;
+      var fileUID = uploadedFile[0].fd.replace(/^.*[\\\/]/, '');
+
+      request.body.image = uploadedFile[0].filename;
+      request.body.imageUID = fileUID;
+
+        Place.create(request.body, function(err, createdData) {
+        if (err) {
+          return response.badRequest({
+            error: err
+          });
+        } else {
+          return response.json({
+            data: createdData
+          });
+        }
+      });
+      //response.redirect('/place');
+    });
+  },
+
+  createOld: async (request, response) => {
     var place = await Place.create(request.body).fetch();
     response.redirect('/place');
   },
+
 
   delete: async (request, response) => {
     var deleted = await Place.destroyOne(request.params.id);

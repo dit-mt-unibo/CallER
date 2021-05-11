@@ -41,7 +41,12 @@ module.exports = {
                 
             }
         },
-        
+
+    imageUID: {
+      type: 'string',
+      description: 'uuid of the image file, which has been uploaded under assets/images/contenuti',
+      },
+
         video: {
             type: 'string',
             description: 'url of a youtube video',

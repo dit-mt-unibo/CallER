@@ -8,7 +8,7 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
   <div class="container">
     
   </div>
-  <form action="<%= '/place/create/' %>" method="post" >
+  <form enctype="multipart/form-data" action="/place/create/" method="POST">
     <div class="form-group">
       <label>Nome</label>
       <input type="text" class="form-control" name="name" value="">
@@ -16,10 +16,6 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
     <div class="form-group">
       <label>Descrizione</label>
       <input type="text" class="form-control" name="intro_text" value="">
-    </div>
-    <div class="form-group">
-      <label>Immagine</label>
-      <input type="text" class="form-control" name="image" value="">
     </div>
 
     <div class="form-group">
@@ -52,16 +48,13 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
       </select>
     </div>
 
+    <div class="form-group">
+      <label>Immagine</label>
+      <input type="file" class="form-control" id="imageUpload" name="image" value="">
+    </div>
 
-    <button type="button" class="btn btn-primary" onclick="window.history.back();">Indietro</button>
+    <a class="btn btn-primary" href="/place">Indietro</a>
     <button class="btn btn-success" type="submit">Ok</button>
-  </form>
-
-  <form id="uploadForm"
-      enctype="multipart/form-data"
-      action="/upload/upload"
-      method="post">
-    <input type="file" id="userPhotoInput" name="userPhoto" />
   </form>
 
 </div>
