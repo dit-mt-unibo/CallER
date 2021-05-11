@@ -32,15 +32,15 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
       <textarea class="form-control" name="full_text" rows="8"></textarea>
     </div>
     <div class="form-group">
-      <label>Categoria</label>
-      <select class="form-control" name="category_id">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+      <label>Categoria</label>     
+      <select name="category_id" class="form-control">
+        <option value=""></option>
+        <% categories.forEach(element => { %>
+            <option value="<%= element.id %>"><%= element.name %></option>
+        <% }) %>                
       </select>
     </div>
+
 
     <button type="button" class="btn btn-primary" onclick="window.history.back();">Indietro</button>
     <button class="btn btn-success" type="submit">Ok</button>

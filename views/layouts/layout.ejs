@@ -33,7 +33,9 @@
 
     <!--STYLES-->
     <link rel="stylesheet" href="/dependencies/bootstrap-4.css">
+    <link rel="stylesheet" href="/styles/custom.css">
     <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/modal-box.css">
     <!--STYLES END-->
 
         <!--
@@ -63,10 +65,27 @@
     <script src="/dependencies/sails.io.js"></script>
     <script src="/dependencies/jquery.js"></script>
     <script src="/dependencies/bootstrap.min.js"></script>
+    <script src="/dependencies/cloud.js"></script>
+    <script src="/dependencies/lodash.js"></script>
+    <script src="/dependencies/parasails.js"></script>
+    <script src="/dependencies/vue.js"></script>
+    <script src="/js/cloud.setup.js"></script>
+    <script src="/js/components/ajax-button.component.js"></script>
+    <script src="/js/components/ajax-form.component.js"></script>
+    <script src="/js/components/cloud-error.component.js"></script>
+    <script src="/js/components/flash-message.component.js"></script>
+    <script src="/js/components/modal-box.component.js"></script>
+    <script src="/js/components/text-truncate.component.js"></script>
+    <script src="/js/pages/category/view-create.page.js"></script>
+    <script src="/js/pages/category/view-list.page.js"></script>
     <!--SCRIPTS END-->
   </head>
 
   <body>
+
+    <%- partial('../partials/menu.ejs') %> 
+   
+
     <%- body %>
 
 

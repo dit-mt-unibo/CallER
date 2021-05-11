@@ -1,11 +1,11 @@
-<%- partial('../partials/menu.ejs') %>
+<!-- <%- partial('../partials/menu.ejs') %> -->
 
-<h1 class="display-4">Places</h1>
+<h1 class="display-4">Contenuti</h1>
 <table class="table table-striped">
     <thead>
         <tr>
             <th>#</th>
-            <th>Title</th>
+            <th>Nome</th>
             <th></th>
         </tr>
     </thead>
@@ -15,47 +15,39 @@
                 <td><%= place.id %></td>
                 <td><%= place.name %></td>
                 <td>
-                    <a href="/place/<%= place.id %>" class="btn btn-primary">Edit</a>
-                    <form class="d-inline" action="/place/delete/<%= place.id %>" method="post">
-                        <input type="submit" name="delete" value="Delete" class="btn btn-danger">
-                    </form>
+                    <a href="/place/<%= place.id %>" class="btn btn-primary">Modifica</a>
+                    <a href="/place/delete/<%= place.id %>" class="btn btn-danger confirm-delete" title="Elimina" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton<%= place.id %>">Elimina</a>
                 </td>
             </tr>
         <% }); %>
     </tbody> 
 </table>
 
-<a class="btn btn-primary" href="/add">Aggiungi</a>
+<a class="btn btn-success" href="/add">Aggiungi</a>
 
     <!-– Delete button will redirect to the href of the element with 'id = caller-id' property in this modal-–>
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body confirm-delete">
-            This action is permanent!
+            Vuoi eliminare questo contenuto?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal">Delete</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal">Elimina</button>
           </div>
         </div>
       </div>
     </div>
-
- <div>
-    <a href="CIAO/delete/1" class="btn btn-danger" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton1">Delete 1</a>
-    <a href="CIAO/delete/2" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton2">Delete 2</a>
-    <a href="CIAO/delete/3" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton3">Delete 3</a>
- </div>
-
+            
       <script>
         $(document).on('click', '.confirm-delete', function () {
-        $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+          $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
         });
 
         $(document).on('click', '#confirmDeleteButtonModal', function () {
-        var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
-        window.location = $("#".concat(caller)).attr("href");
+          var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+          window.location = $("#".concat(caller)).attr("href");
         });
       </script>
 

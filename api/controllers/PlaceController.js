@@ -63,5 +63,13 @@ module.exports = {
     response.redirect('/place');
   },
 
+  prepCreate: async (request, response) => {
+    categories = await Category.find({
+      where: { parent_id: null },
+      sort: 'name ASC'
+    });
+    response.view('addplace', { categories });
+  },
+
 
 };

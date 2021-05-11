@@ -1,4 +1,4 @@
-<%- partial=""('./partials/menu.ejs') %>
+
   
 <div class="container">
 <h2>Scheda numero <%= place.id %></h2>
@@ -12,7 +12,7 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
   </div>
   <form action="<%= '/place/update/'+  place.id %>" method="post" >
     <div class="form-group">
-      <label>Name</label>
+      <label>Nome</label>
       <input type="text" class="form-control" name="name" value="<%= place.name %>">
       </div>
     <div class="form-group">

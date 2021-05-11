@@ -20,7 +20,11 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
-  '/add': { view: 'addplace' },
+  '/add': {
+    controller: 'PlaceController',
+    action: 'prepCreate',
+    view: 'addplace'
+  },
   '/place': { 
 	controller: 'PlaceController',
   	action: 'lista' 
@@ -42,6 +46,11 @@ module.exports.routes = {
   },
 
   'POST /place/delete/:id': {
+    controller: 'PlaceController',
+    action: 'delete'
+  },
+
+  'GET /place/delete/:id': {
     controller: 'PlaceController',
     action: 'delete'
   },
