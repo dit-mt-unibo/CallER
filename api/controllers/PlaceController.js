@@ -33,17 +33,26 @@ module.exports = {
     });
   },
 
-  findOne: function (request, response) {
-    Place.find(request.params.id).exec(function (error, places) {
-      var place = places[0];
-      sails.log(place);
-      response.view('place', { place });
-    });
+  findOne: async (request, response) => {
+    var place = await Place.findOne(request.params.id);
+    sails.log(place);
+    try {
+
+      categories = await Category.find({
+        sort: 'id ASC'
+      });
+
+    }
+    catch (err) {
+      //
+    }
+    response.view('place', { place , categories });
   },
 
   updateOne: async (request, response) => {
     var updatedRecord = await Place.updateOne(request.params.id)
       .set(request.body);
+    sails.log("Update Place received: " + updatedRecord);
     var place = updatedRecord;
     response.view('place', { place });
   },

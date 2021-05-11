@@ -79,9 +79,14 @@ module.exports = {
             description: 'json array [tagA, tagB, tagC]'            
         },
         
-        gps: {
-            type: 'json',
-            description: 'json object geolocation {lat: , lng:}'            
+        lat: {
+            type: 'number',
+            description: 'latitudine'            
+        },
+
+        long: {
+          type: 'number',
+          description: 'longitudine'
         },
         
         published: {

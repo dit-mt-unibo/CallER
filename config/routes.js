@@ -29,12 +29,6 @@ module.exports.routes = {
 	controller: 'PlaceController',
   	action: 'lista' 
   },
-  /*
-  '/places': {
-    controller: 'PlaceController',
-    action: 'lista'
-  },
-  */
   'POST /place/update/:id': {
     controller: 'PlaceController',
     action: 'updateOne'
@@ -95,5 +89,4 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'PUT /contenuto/update/:id': { action: 'contenuto/update' },
 };
