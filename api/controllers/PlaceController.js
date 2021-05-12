@@ -70,7 +70,7 @@ module.exports = {
       request.body.image = fileName;
       request.body.imageUID = fileUID;
 
-      sails.log("FATTO: filename: " + request.body.image + " UID: " + request.body.imageUID);
+      // sails.log("FATTO: filename: " + request.body.image + " UID: " + request.body.imageUID);
       Place.updateOne(request.params.id).set(request.body).exec((err, createdData) => {
         if (err) {
           return response.badRequest({

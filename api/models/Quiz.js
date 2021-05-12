@@ -14,9 +14,9 @@ module.exports = {
     attributes : {
         
         type: {
-            type: 'string',
-            description: 'can be 0 = multiple choice quiz , 1 = fill in the blank quiz, 2 = word order quiz ',
-            required: true
+          type: 'number',
+          description: 'can be 0 = multiple choice quiz , 1 = fill in the blank quiz, 2 = word order quiz ',
+          defaultsTo: 0,
         },
         
         question: {

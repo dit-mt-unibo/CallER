@@ -49,6 +49,21 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
       </select>
     </div>
 
+    <div class="form-group">
+      <label>Audio</label>
+      <input type="text" class="form-control" name="audio" value="<%= place.audio %>">
+    </div>
+
+    <div class="form-group">
+      <label>Video</label>
+      <input type="text" class="form-control" name="video" value="<%= place.video %>">
+    </div>
+
+    <div class="form-group">
+      <label>Tags</label>
+      <input type="text" class="form-control" name="tags" value="<%= place.tags %>">
+    </div>
+    
     <div class="container">
       <img class=""rounded mx-auto d-block" src="<%='/images/contenuti/'+place.imageUID %>"></img>
     </div>
@@ -57,7 +72,7 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
       <input type="file" class="form-control" id="imageUpload" name="image" value="<%= place.image %>">
     </div>
 
-    <button type="button" class="btn btn-primary" onclick="window.history.back();">Indietro</button>
+    <a class="btn btn-primary" href="/place">Annulla</a>
     <button class="btn btn-warning" type="submit">Aggiorna</button>
   </form>
 

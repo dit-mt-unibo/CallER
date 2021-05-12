@@ -1,0 +1,35 @@
+<div class="container">
+<h2>Crea Quiz </h2>
+<hr/>
+ <!--
+id, question, choices, answer
+-->
+  <div class="container">
+    
+  </div>
+  <form action="/quiz/create/" method="POST">
+    <div class="form-group">
+      <label>Domanda</label>
+      <input type="text" class="form-control" name="question" value="">
+    </div>
+    <div class="form-group">
+      <label>Risposte (separate da , )</label>
+      <input type="text" class="form-control" name="choices" value="">
+    </div>
+
+    <div class="form-group">
+      <label>Risposta Giusta</label>     
+      <select name="answer" class="form-control">
+        <option value=""></option>
+        <option value="1">A</option>
+        <option value="2">B</option>
+        <option value="3">C</option>
+        <option value="4">D</option>
+      </select>
+    </div>
+
+    <a class="btn btn-primary" href="/quiz">Indietro</a>
+    <button class="btn btn-success" type="submit">Ok</button>
+  </form>
+
+</div>

@@ -78,6 +78,21 @@ module.exports.routes = {
     action: 'category/delete'
   },
 
+  // Routes for quiz
+  '/quiz': {
+    action: 'quiz/view-list',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+  'GET /quiz/add': {
+    action: 'quiz/view-create',
+    view: 'pages/quiz/create',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

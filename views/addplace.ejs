@@ -24,11 +24,11 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputLat">Latitudine</label>
-        <input type="text" class="form-control" name="lat">
+        <input type="text" class="form-control" name="lat" value="44.2227">
       </div>
       <div class="form-group col-md-6">
         <label for="inputLat">Longitudine</label>
-        <input type="text" class="form-control" name="long">
+        <input type="text" class="form-control" name="long" value="12.0407">
       </div>
     </div>
 
@@ -46,6 +46,21 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
             <option value="<%= element.id %>"><%= element.name %></option>
         <% }) %>                
       </select>
+    </div>
+
+    <div class="form-group">
+      <label>Audio (facoltativo)</label>
+      <input type="text" class="form-control" name="audio" value="">
+    </div>
+
+    <div class="form-group">
+      <label>Video (facoltativo)</label>
+      <input type="text" class="form-control" name="video" value="">
+    </div>
+
+    <div class="form-group">
+      <label>Tags (facoltativo)</label>
+      <input type="text" class="form-control" name="tags" value="">
     </div>
 
     <div class="form-group">

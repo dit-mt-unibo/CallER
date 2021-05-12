@@ -1,0 +1,53 @@
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Domanda</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% items.forEach(function(quiz){ %>
+            <tr>
+                <td><%= quiz.id %></td>
+                <td><%= quiz.question %></td>
+                <td>
+                    <a href="/quiz/<%= quiz.id %>" class="btn btn-primary">Modifica</a>
+                    <a href="/quiz/delete/<%= quiz.id %>" class="btn btn-danger confirm-delete" title="Elimina" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton<%= quiz.id %>">Elimina</a>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody> 
+</table>
+
+<a class="btn btn-success" href="/quiz/add">Aggiungi</a>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body confirm-delete">
+            Vuoi eliminare questo contenuto?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal">Elimina</button>
+          </div>
+        </div>
+      </div>
+    </div>
+            
+      <script>
+        $(document).on('click', '.confirm-delete', function () {
+          $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+        });
+
+        $(document).on('click', '#confirmDeleteButtonModal', function () {
+          var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+          window.location = $("#".concat(caller)).attr("href");
+        });
+      </script>
+
+
+<%- exposeLocalsToBrowser() %>
+
