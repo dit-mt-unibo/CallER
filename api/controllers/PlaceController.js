@@ -49,12 +49,44 @@ module.exports = {
     response.view('place', { place , categories });
   },
 
-  updateOne: async (request, response) => {
-    var updatedRecord = await Place.updateOne(request.params.id)
-      .set(request.body);
-    sails.log("Update Place received: " + updatedRecord);
-    var place = updatedRecord;
-    response.view('place', { place });
+  updateOne: function (request, response) {
+    var params = request.allParams();
+    request.file('image').upload({
+      dirname: '../../assets/images/contenuti',
+      maxBytes: 10000000
+    }, function (err, uploadedFile) {
+      if (err) {
+        return response.serverError(err);
+      }
+      console.log(uploadedFile);
+
+      if (uploadedFile.length === 0) {
+        return response.redirect('/');
+        return sails.log('Contenuto non creato!');
+      }
+
+        var fileName = uploadedFile[0].filename;
+        var fileUID = uploadedFile[0].fd.replace(/^.*[\\\/]/, '');
+
+        request.body.image = uploadedFile[0].filename;
+        request.body.imageUID = fileUID;
+
+        var updatedRecord = Place.updateOne(request.params.id).set(request.body);
+
+        if (!updatedRecord) {
+          return response.badRequest();
+        } else {
+          sails.log("Update Place received: " + updatedRecord.id + " imageUID: " + updatedRecord.imageUID + " image name: " +
+            updatedRecord.image);
+          // return response.view('/place', { place: createdData });
+          response.redirect('/place');
+        }
+
+
+    });
+      
+    
+
   },
 
   create: function (request, response){
@@ -85,9 +117,8 @@ module.exports = {
             error: err
           });
         } else {
-          return response.json({
-            data: createdData
-          });
+          // return response.view('/place', { place: createdData });
+          response.redirect('/place');
         }
       });
       //response.redirect('/place');

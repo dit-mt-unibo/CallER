@@ -7,10 +7,8 @@
 id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, tags, gps,
  *              published, category_id, createdAt, updatedAt
 -->
-  <div class="container">
-    <img class="img-fluid" src="<%='/images/contenuti/'+place.imageUID %>"></img>
-  </div>
-  <form action="<%= '/place/update/'+  place.id %>" method="post" >
+  
+  <form enctype="multipart/form-data" action="<%= '/place/update/'+  place.id %>" method="post" >
     <div class="form-group">
       <label>Nome</label>
       <input type="text" class="form-control" name="name" value="<%= place.name %>">
@@ -49,6 +47,12 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
         </option>
         <% }) %>
       </select>
+    </div>
+
+    <div class="form-group">
+      <label>Immagine</label>
+      <input type="file" class="form-control" id="imageUpload" name="image" value="<%= place.image %>">
+      <img class="img-fluid" src="<%='/images/contenuti/'+place.imageUID %>"></img>
     </div>
 
     <button type="button" class="btn btn-primary" onclick="window.history.back();">Indietro</button>
