@@ -49,10 +49,12 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
       </select>
     </div>
 
+    <div class="container">
+      <img class=""rounded mx-auto d-block" src="<%='/images/contenuti/'+place.imageUID %>"></img>
+    </div>
     <div class="form-group">
       <label>Immagine</label>
       <input type="file" class="form-control" id="imageUpload" name="image" value="<%= place.image %>">
-      <img class="img-fluid" src="<%='/images/contenuti/'+place.imageUID %>"></img>
     </div>
 
     <button type="button" class="btn btn-primary" onclick="window.history.back();">Indietro</button>

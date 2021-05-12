@@ -10,9 +10,7 @@ module.exports = {
 
   render: async (request, response) => {
     try {
-      let place = await Place.findOne({
-        id: 1
-      });
+      let place = await Place.findOne(request.params.id);
       if (!place) {
         return response.notFound('The place was NOT found!');
       }
@@ -49,44 +47,44 @@ module.exports = {
     response.view('place', { place , categories });
   },
 
-  updateOne: function (request, response) {
+  updateOne: async (request, response) => {
     var params = request.allParams();
     request.file('image').upload({
       dirname: '../../assets/images/contenuti',
-      maxBytes: 10000000
+      maxBytes: 10000000 // limit to 10 Mb
     }, function (err, uploadedFile) {
       if (err) {
         return response.serverError(err);
       }
-      console.log(uploadedFile);
+      sails.log(uploadedFile);
 
       if (uploadedFile.length === 0) {
         return response.redirect('/');
         return sails.log('Contenuto non creato!');
       }
 
-        var fileName = uploadedFile[0].filename;
-        var fileUID = uploadedFile[0].fd.replace(/^.*[\\\/]/, '');
+      var fileName = uploadedFile[0].filename;
+      var fileUID = uploadedFile[0].fd.replace(/^.*[\\\/]/, '');
 
-        request.body.image = uploadedFile[0].filename;
-        request.body.imageUID = fileUID;
+      sails.log("filename: " + fileName + " UID: " + fileUID);
+      request.body.image = fileName;
+      request.body.imageUID = fileUID;
 
-        var updatedRecord = Place.updateOne(request.params.id).set(request.body);
-
-        if (!updatedRecord) {
-          return response.badRequest();
+      sails.log("FATTO: filename: " + request.body.image + " UID: " + request.body.imageUID);
+      Place.updateOne(request.params.id).set(request.body).exec((err, createdData) => {
+        if (err) {
+          return response.badRequest({
+            error: err
+          });
         } else {
-          sails.log("Update Place received: " + updatedRecord.id + " imageUID: " + updatedRecord.imageUID + " image name: " +
-            updatedRecord.image);
           // return response.view('/place', { place: createdData });
+          sails.log("UPDATED Image :" + createdData.image)
           response.redirect('/place');
         }
-
+      });
 
     });
-      
-    
-
+     
   },
 
   create: function (request, response){
