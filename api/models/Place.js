@@ -122,7 +122,7 @@ function validateExtension(filename, allowedExts) {
   if (filename == '') return true;
 
     var result = false;
-    var extension = filename.split('.').slice(-1);
+    var extension = filename.split('.').slice(-1).toString().toLowerCase();
     
     allowedExts.forEach(elm => {
         
