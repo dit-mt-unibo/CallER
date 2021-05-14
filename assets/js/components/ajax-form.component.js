@@ -32,6 +32,8 @@ parasails.registerComponent('ajaxForm', {
         'formData',
         'formRules',
         'catParentId', // category parent ID
+        'tbwEditorId', // trumbowyg editor ID
+        'tbwEditorField', // trumbowyg field name
 
     ],
 
@@ -120,21 +122,28 @@ parasails.registerComponent('ajaxForm', {
             // Clear the userland "cloudError" prop.
             this.$emit('update:cloudError', '');
 
+            // Category form. Adds parent_id key to the formData object
+            if ( _.isUndefined(this.catParentId) === false ) {
+
+                this.$set(this.formData, 'parent_id' , this.catParentId);
+
+            } 
+
+            // Adds trumbowyg content to the formData object
+            if ( _.isUndefined(this.tbwEditorId) === false ) {
+
+                this.$set(this.formData, this.tbwEditorField , $( "#" + this.tbwEditorId ).trumbowyg('html') );
+
+            }
+
             // Determine the argins that will be sent to the server in our request.
-            var argins;
+            var argins;            
                 
             // use the simpler, built-in absorbtion strategy.
             // > This uses the provided form data as our argins, verbatim.  Then it runs
             // > built-in client-side validation, if configured to do so.                                              
             
-            argins = this.formData;
-
-            // Category form. Adds parent_id key to argins
-            if ( _.isUndefined(this.catParentId) === false ) {
-
-                this.$set(argins, 'parent_id' , this.catParentId);
-
-            }            
+            argins = this.formData;                                   
 
             let formData = this.formData;
             let formErrors = {};                

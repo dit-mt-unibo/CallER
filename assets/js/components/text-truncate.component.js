@@ -41,14 +41,18 @@
 
             _.trim(str);
 
-            if ( str.length > len ) {
+            var div = document.createElement("div");
+            div.innerHTML = str.replace(/(<\/p>)/gi, " ");
+            var text = div.textContent || div.innerText || "";        
 
-                return str.substring(0, len) + "...";
+            if ( text.length > len ) {
+
+                return text.substring(0, len) + "...";
 
             }
             else {
 
-                return str;
+                return text;
 
             }
 
