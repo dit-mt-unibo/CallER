@@ -1,0 +1,112 @@
+<script>
+
+  $(document).ready (function () {
+
+    var choices = <%- quiz.choices %> ;
+    $('#choiceA').val(choices[0]);
+    $('#choiceB').val(choices[1]);
+    $('#choiceC').val(choices[2]);
+    $('#choiceD').val(choices[3]);
+
+
+    $(document).on('click', '#formSubmit', function () {
+        var totalChoices = "[ \""+
+        document.getElementById("choiceA").value + "\", \"" +
+        document.getElementById("choiceB").value + "\", \"" +
+        document.getElementById("choiceC").value + "\", \"" +
+        document.getElementById("choiceD").value + "\" ]";
+        $('input[name="choices"]').val(totalChoices);
+
+        return true;
+      });
+    });
+
+    
+
+    </script>
+<div class="container">
+<hr/>
+ <!--
+id, question, choices, answer
+-->
+  <div class="container">
+    
+  </div>
+  <form onload="SplitChoices();" id="createQuiz" action="<%= '/quiz/update/'+  quiz.id %>" method="POST">
+    <div class="form-group">
+      <label>Domanda</label>
+      <input type="text" class="form-control" name="question" value="<%=quiz.question%>">
+    </div>
+
+    <input type="hidden" class="form-control" name="choices" value="<%= quiz.choices%>">
+
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta A</label>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="choiceA" value="">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta B</label>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="choiceB" value="">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta C</label>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="choiceC" value="">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta D</label>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="choiceD" value="">
+      </div>
+    </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label>Risposta Giusta</label>
+        </div>
+        <div class="form-group col-md-2">
+          <select name="answer" class="form-control">
+            <option value=""></option>
+            <% var selected ="selected"; %>
+            <option value="1" <%= (quiz.answer == '1') ? selected : '' %> >A</option>
+            <option value="2" <%= (quiz.answer == '2') ? selected : '' %> >B</option>
+            <option value="3" <%= (quiz.answer == "3") ? selected : '' %> >C</option>
+            <option value="4" <%= (quiz.answer == "4") ? selected : '' %> >D</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Associa al contenuto:</label>
+        <select name="place_id" class="form-control">
+          <option value=""></option>
+          <% places.forEach(element => {
+            var selected = (element.id == quiz.place_id) ? "selected" : ""; %>
+            <option value="<%= element.id %>" <%=selected%> ><%= element.name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      
+      <a class="btn btn-primary" href="/quiz">Indietro</a>
+    <button class="btn btn-success" type="submit" id="formSubmit">Ok</button>
+  </form>
+
+</div>

@@ -92,6 +92,23 @@ module.exports.routes = {
       layout: 'layouts/newlayout'
     }
   },
+  'POST /quiz/create': {
+    action: 'quiz/save'
+  },
+  'GET /quiz/:id': {
+    action: 'quiz/view-update',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+  'POST /quiz/update/:id': {
+    action: 'quiz/save'
+  },
+  'GET /quiz/delete/:id': {
+    action: 'quiz/delete'
+  },
+
+
 
   /***************************************************************************
   *                                                                          *

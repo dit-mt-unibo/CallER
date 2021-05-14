@@ -69,7 +69,11 @@ var jsFilesToInject = [
   // > Be sure to list dependencies that depend on each other in the right order!
   'dependencies/jquery.js',
   'dependencies/bootstrap.min.js',
-  'dependencies/angular.js',
+  'dependencies/lodash.js',
+  'dependencies/cloud.js',
+  'dependencies/vue.js',
+  'dependencies/parasails.js',
+  //'dependencies/angular.js',
   'dependencies/**/*.js',
   'dependencies/**/*.js',
 

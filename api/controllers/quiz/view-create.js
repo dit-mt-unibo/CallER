@@ -18,8 +18,20 @@ module.exports = {
 
   fn: async function () {
 
+    let places = [];
+
+    try {
+
+      places = await Place.find({
+        sort: 'name ASC'
+      });
+
+    }
+    catch (err) {
+      //
+    }        
     // Respond with view.
-    return { pageTitle: "Nuovo Quiz" };
+    return { pageTitle: "Nuovo Quiz", places : places };
 
   }
 
