@@ -39,7 +39,8 @@ var cssFilesToInject = [
   // All of the rest of your custom `.css` files will be injected here,
   // in no particular order.  To customize the ordering, add additional
   // items here, _above_ this one.
-  'styles/**/*.css'
+  'styles/**/*.css',
+  '!dependencies/ui/icons.svg'
 ];
 
 
@@ -69,14 +70,13 @@ var jsFilesToInject = [
   // > Be sure to list dependencies that depend on each other in the right order!
   'dependencies/jquery.js',
   'dependencies/bootstrap.min.js',
-  'dependencies/angular.js',
-  'dependencies/**/*.js',
-  'dependencies/**/*.js',
+  //'dependencies/angular.js',
+  'dependencies/lodash.js',
+  'dependencies/cloud.js',
+  'dependencies/vue.js',
+  'dependencies/parasails.js',
+  'dependencies/trumbowyg.min.js'  
 
-  // All of the rest of your custom client-side js files will be injected here,
-  // in no particular order.  To customize the ordering, add additional items
-  // here, _above_ this one.
-  'js/**/*.js'
 ];
 
 
