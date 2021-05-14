@@ -39,7 +39,8 @@ var cssFilesToInject = [
   // All of the rest of your custom `.css` files will be injected here,
   // in no particular order.  To customize the ordering, add additional
   // items here, _above_ this one.
-  'styles/**/*.css'
+  'styles/**/*.css',
+  '!dependencies/ui/icons.svg'
 ];
 
 
@@ -73,7 +74,6 @@ var jsFilesToInject = [
   'dependencies/cloud.js',
   'dependencies/vue.js',
   'dependencies/parasails.js',
-  //'dependencies/angular.js',
   'dependencies/**/*.js',
   'dependencies/**/*.js',
 
@@ -81,6 +81,9 @@ var jsFilesToInject = [
   // in no particular order.  To customize the ordering, add additional items
   // here, _above_ this one.
   'js/**/*.js'
+  'dependencies/trumbowyg.min.js'  
+
+>>>>>>> 7b3e90bf0fc62f5b6ab4368022cc02fb4ead1064
 ];
 
 
