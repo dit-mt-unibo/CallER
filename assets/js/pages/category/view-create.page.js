@@ -23,7 +23,8 @@ parasails.registerPage('view-create', {
                 required: false, 
                 custom: function(value) {
                     
-                    return value.match(/[0-9]{0,}/);
+                    let parentID = parseInt(value);
+                    return _.isNumber(parentID);
 
                 }
             }
@@ -43,17 +44,31 @@ parasails.registerPage('view-create', {
         if ( _.isUndefined(window.SAILS_LOCALS['item']) == false ) {
 
             this.formData = window.SAILS_LOCALS['item'];
+            this.catParentId = (this.formData.parent_id == null ) ? null : parseInt(this.formData.parent_id);            
 
         } 
 
     },
     mounted: async function () {
-        // ..
+        
+        $( "#tbweditor" ).trumbowyg({
+            btns: [
+                ['undo', 'redo'], // Only supported in Blink browsers
+                ['strong', 'em'],
+                ['link'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['removeformat'],
+                ['fullscreen']
+            ],
+            removeformatPasted: true
+        } );
+
     },
 
     methods: {
         
-        parseForm: function () {
+        parseForm: function () {            
             return argins;
         },
         submittedForm: async function () { 

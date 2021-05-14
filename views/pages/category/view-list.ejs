@@ -1,29 +1,17 @@
 <div id="view-list" v-cloak>
 
-    <modal-box :show="showModalBox" :body="textModalBox">                            
-        <div slot="footer">
-            <button @click="closeModalBox">
-                OK
-            </button>
-        </div>
-    </modal-box>
-
-    <modal-box :show="showModalBoxDelete">                    
+    <modal-editor>
         <div slot="header">
-            ATTENZIONE
+            Modifica descrizione
         </div>
+    </modal-editor>
+    
+    <modal-delete :item-id="deleteItemId" :action="'/category/delete/'">
         <div slot="body">
-            Sicuro di voler cancellare la categoria?
+            <p>Eliminando la categoria, eliminerai anche tutte le sottocategoria associate.</p>
+            <p>Vuoi continuare?</p>
         </div>
-        <div slot="footer">
-            <button @click="deleteCategory">
-                Sì
-            </button>
-            <button @click="closeModalBoxDelete">
-                No
-            </button>
-        </div>
-    </modal-box>
+    </modal-delete>
 
     <div class="container-fluid">
 
@@ -35,7 +23,7 @@
 
 <%  if ( items.length == 0 ) { %>
     
-    <%- partial('../../partials/no-result.ejs') %>
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono state ancora inserite delle categorie. Utilizza il bottone Aggiungi categoria per iniziare."}) %>
     
 <% } else { %>    
 
@@ -52,16 +40,24 @@
         <tbody>
             <tr v-for="item in items">
                 <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td @click="openModalBox(item.description)" class="text-highlight">
+                <td v-if="item.parent_id === null">{{ item.name }}</td>
+                <td v-if="item.parent_id" style="padding-left: 40px;">
+                    <i class="bi bi-arrow-return-right"></i>
+                    {{ item.name }}                   
+                </td>
+                <td v-if="item.id > 1" @click="setEditorContent(item.description)" class="text-highlight">
                     <text-truncate :text="item.description"></text-truncate>                    
                 </td>
+                <td v-if="item.id == 1" >{{item.description}}</td>
                 <td align="center">
                     <i class="bi" :class="[ item.published == 1 ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger']"></i>
                 </td>
                 <td align="center">
-                    <a class="btn btn-primary" :href="'/category/edit/' + item.id">Modifica</a>
-                    <a class="btn btn-danger" href="#" @click="openModalBoxDelete(item.id)">Elimina</a>
+                    <a v-if="item.id > 1" class="btn btn-primary" :href="'/category/edit/' + item.id">Modifica</a>                    
+                    <button v-if="item.id > 1" type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)" 
+                        data-toggle="modal" data-target="#confirmDeleteModal">
+                        Elimina
+                    </button>                    
                 </td>                                                
             </tr>
         </tbody> 
@@ -73,9 +69,11 @@
 
 </div>
 
-<script src="/js/components/modal-box.component.js"></script>
+<script src="/js/components/modal-editor.component.js"></script>
+<script src="/js/components/modal-delete.component.js"></script>
 <script src="/js/components/flash-message.component.js"></script>
 <script src="/js/components/text-truncate.component.js"></script>
 <script src="/js/pages/category/view-list.page.js"></script>
+
 
 

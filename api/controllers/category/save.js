@@ -50,7 +50,7 @@ module.exports = {
 
         if ( _.isUndefined(parent_id) === false ) {
             
-            valuesToSet['parent_id'] = (parent_id == '') ? null : parseInt(parent_id);
+            valuesToSet['parent_id'] = (parent_id == '' || parent_id == null) ? null : parseInt(parent_id);
 
         }
 

@@ -26,13 +26,17 @@ module.exports = {
     fn: async function () {        
 
         let pageTitle = "Categorie"; // page title
-        let items = []; // categories from database 
         let flash = ''; // message to be displayed on the page when session.flash is not empty
         
+        var items = []; // categories. The order of categories follows the parent-child relationship         
+        let parentCategories = []; // parent categories
+        
+        // Firstly, gets parent categories
         try {
 
-            items = await Category.find( { 
-                sort: [ {id: 'ASC'} , {parent_id: 'ASC'} ]
+            parentCategories = await Category.find( { 
+                where: { parent_id: null },
+                sort: 'id ASC' 
             });
 
         }
@@ -44,7 +48,44 @@ module.exports = {
             } };
 
         }
-        
+
+        // Then, iterates through parent categories and gets their children, if any.
+        if ( parentCategories.length > 0 ) {
+
+            for (const element of parentCategories) {
+
+                // Adds parent category to items array
+                items.push(element);
+
+                try {
+
+                    var childrenCategories = await Category.find( {
+                        where: { parent_id: element.id },
+                        sort: 'id ASC'
+                    });
+
+                }
+                catch (err) {
+
+                    var childrenCategories = [];
+
+                } 
+                
+                if ( childrenCategories.length > 0 ) {
+
+                    // Adds children next to their parent category
+                    childrenCategories.forEach( child => {
+
+                        items.push(child);
+
+                    });
+
+                }
+
+            }
+
+        }
+                    
         if ( _.isUndefined( this.req.session.flash ) === false ) {
 
             flash = { 

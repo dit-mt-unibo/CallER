@@ -1,7 +1,8 @@
 <div id="view-create" class="container" v-cloak>
     
     <ajax-form action="save" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
-        :form-rules="formRules" :form-errors.sync="formErrors" :cat-parent-id="catParentId"
+        :form-rules="formRules" :form-errors.sync="formErrors" :cat-parent-id="catParentId" 
+        :tbw-editor-id="'tbweditor'" :tbw-editor-field="'description'"
         @submitted="submittedForm($event)" @rejected="rejectedForm($event)">
 
         <div class="form-group">
@@ -19,8 +20,8 @@
             <label :class="[formErrors.description ? 'text-danger' : '']">
                 Descrizione
             </label>
-            <textarea name="description" class="form-control" :class="[formErrors.description ? 'is-invalid' : '']" 
-                v-model="formData.description" id="description" rows="8"></textarea>
+            <textarea name="description" class="form-control" 
+                v-model="formData.description" id="tbweditor" rows="8"></textarea>
             <cloud-error v-if="cloudError === 'descriptionFail'">Descrizione non valida</cloud-error>
             <cloud-error v-if="formErrors.description === 'required'">Campo obbligatorio</cloud-error>
         </div>
@@ -39,8 +40,16 @@
             <cloud-error v-if="cloudError === 'parentIdFail'">Categoria selezionata non valida</cloud-error>
         </div>
         
-        <button type="button" class="btn btn-primary" onclick="window.location = '/category';">Indietro</button>
-        <ajax-button type="submit" :syncing="syncing"></ajax-button>
+        <div class="row justify-content-center">
+
+            <div class="col-1">
+                <button type="button" class="btn btn-primary" onclick="window.location = '/category';">Indietro</button>
+            </div>
+            <div class="col-1">
+                <ajax-button type="submit" :syncing="syncing">Salva</ajax-button>
+            </div>
+
+        </div>                
     
     </ajax-form>
 

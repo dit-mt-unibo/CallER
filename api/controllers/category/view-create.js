@@ -22,7 +22,7 @@ module.exports = {
         try {
 
             categories = await Category.find({                
-                where: { parent_id: null } ,
+                where: { parent_id: null, id: { '>' : 1} } ,
                 sort: 'name ASC'
             });
 
@@ -35,4 +35,4 @@ module.exports = {
 
     }
 
-}
+};

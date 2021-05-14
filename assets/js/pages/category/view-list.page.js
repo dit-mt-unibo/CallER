@@ -4,24 +4,17 @@
  */
 
 parasails.registerPage('view-list', {
-
-    /*
-     * items: an array object from database query
-     * flashMessage: object {type: 'error|success' , message:'text message'}. Works in pair with flash-message.compontent.js
-     */
+    
     data:  {
         
-        // an array object from database query
+        // an array object of items extracted from database
         items: [],
 
         // object {type: 'error|success' , message:'text message'}. Works in pair with flash-message.compontent.js
         flashMessage: '',
-
-        // show modal box
-        showModalBox: false,
-        textModalBox: '',
-        showModalBoxDelete: false,
-        selectedItemId: '',
+        
+        // Id of the item to delete
+        deleteItemId: '',
         
     },
 
@@ -42,25 +35,16 @@ parasails.registerPage('view-list', {
 
     methods: {
         
-        openModalBox(text) {
-            this.showModalBox = true;
-            this.textModalBox = text;
-        },
-        openModalBoxDelete(id){
-            this.showModalBoxDelete = true;
-            this.selectedItemId = id;
-        },
+        setEditorContent(text) {
 
-        closeModalBox () {
-            this.showModalBox = false;
-        },
-        closeModalBoxDelete () {
-            this.showModalBoxDelete = false;
+            $( "#editor" ).trumbowyg('html' , text);
+            $( "#modalEditor" ).modal('show');      
+
         },
         
-        deleteCategory () {
-            window.location = '/category/delete/' + this.selectedItemId;
-        }
+        setDeleteItemId(id){            
+            this.deleteItemId = id;
+        },
 
 
     }
