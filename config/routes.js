@@ -20,12 +20,13 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
-  '/add': {
+
+  '/place/add': {
     controller: 'PlaceController',
     action: 'prepCreate',
     view: 'addplace'
   },
-  '/place': { 
+  '/place/list': { 
 	controller: 'PlaceController',
   	action: 'lista' 
   },
@@ -43,16 +44,19 @@ module.exports.routes = {
     controller: 'PlaceController',
     action: 'delete'
   },
-
   'GET /place/delete/:id': {
     controller: 'PlaceController',
     action: 'delete'
+  },
+  'GET /place/edit/:id': {
+    controller: 'PlaceController',
+    action: 'trovalo'
   },
 
 
 
   // Routes for categories
-  'GET /category' : {
+  'GET /category/list' : {
     action: 'category/view-list',
     locals: {
       layout: 'layouts/newlayout'
@@ -79,7 +83,7 @@ module.exports.routes = {
   },
 
   // Routes for quiz
-  '/quiz': {
+  '/quiz/list': {
     action: 'quiz/view-list',
     locals: {
       layout: 'layouts/newlayout'
@@ -95,7 +99,7 @@ module.exports.routes = {
   'POST /quiz/create': {
     action: 'quiz/save'
   },
-  'GET /quiz/:id': {
+  'GET /quiz/edit/:id': {
     action: 'quiz/view-update',
     locals: {
       layout: 'layouts/newlayout'

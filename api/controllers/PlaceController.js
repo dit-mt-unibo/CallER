@@ -7,7 +7,7 @@
 
 module.exports = {
 
-
+  /*
   render: async (request, response) => {
     try {
       let place = await Place.findOne(request.params.id);
@@ -18,7 +18,7 @@ module.exports = {
     } catch (err) {
       response.serverError(err);
     }
-  },
+  },*/
 
   lista: async (request, response) => {
     Place.find({}).exec(function (err, data) {
@@ -27,11 +27,11 @@ module.exports = {
         sails.log(err);
         return res.send(500, { error: 'Database Error' }); // note the return!
       }
-      response.view('pages/places', { data: data });
+      response.view('pages/places/places', { data: data });
     });
   },
 
-  findOne: async (request, response) => {
+  trovalo: async (request, response) => {
     var place = await Place.findOne(request.params.id);
     sails.log(place);
     try {
@@ -44,7 +44,7 @@ module.exports = {
     catch (err) {
       //
     }
-    response.view('place', { place , categories });
+    response.view('pages/places/place', { place , categories });
   },
 
   updateOne: async (request, response) => {
@@ -79,7 +79,7 @@ module.exports = {
         } else {
           // return response.view('/place', { place: createdData });
           sails.log("UPDATED Image :" + createdData.image)
-          response.redirect('/place');
+          response.redirect('/place/list');
         }
       });
 
@@ -116,7 +116,7 @@ module.exports = {
           });
         } else {
           // return response.view('/place', { place: createdData });
-          response.redirect('/place');
+          response.redirect('/place/list');
         }
       });
       //response.redirect('/place');
@@ -125,7 +125,7 @@ module.exports = {
 
   createOld: async (request, response) => {
     var place = await Place.create(request.body).fetch();
-    response.redirect('/place');
+    response.redirect('/place/list');
   },
 
 
@@ -136,7 +136,7 @@ module.exports = {
     } else {
       sails.log('The database does not have a Place with id: ' + request.params.id);
     }
-    response.redirect('/place');
+    response.redirect('/place/list');
   },
 
   prepCreate: async (request, response) => {
