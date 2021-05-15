@@ -74,16 +74,14 @@ var jsFilesToInject = [
   'dependencies/cloud.js',
   'dependencies/vue.js',
   'dependencies/parasails.js',
-  'dependencies/**/*.js',
+  'dependencies/trumbowyg.min.js',
+
   'dependencies/**/*.js',
 
   // All of the rest of your custom client-side js files will be injected here,
   // in no particular order.  To customize the ordering, add additional items
   // here, _above_ this one.
   'js/**/*.js'
-  'dependencies/trumbowyg.min.js'  
-
->>>>>>> 7b3e90bf0fc62f5b6ab4368022cc02fb4ead1064
 ];
 
 
