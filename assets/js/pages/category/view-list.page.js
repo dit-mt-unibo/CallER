@@ -10,11 +10,19 @@ parasails.registerPage('view-list', {
         // an array object of items extracted from database
         items: [],
 
+        // selected item
+        item: {},
+
         // object {type: 'error|success' , message:'text message'}. Works in pair with flash-message.compontent.js
         flashMessage: '',
         
         // Id of the item to delete
         deleteItemId: '',
+
+        // Trumbowyg modal editor
+        syncing: false,
+        formMessage: '',
+        required: true,
         
     },
 
@@ -30,21 +38,52 @@ parasails.registerPage('view-list', {
 
     },
     mounted: async function () {
-        // ..
+        //
     },
 
     methods: {
         
-        setEditorContent(text) {
+        openModalEditor(item) {
 
-            $( "#editor" ).trumbowyg('html' , text);
+            this.item = item;
+            $( "#editor" ).trumbowyg('html' , item.description);
             $( "#modalEditor" ).modal('show');      
 
         },
         
-        setDeleteItemId(id){            
+        setDeleteItemId(id) {            
             this.deleteItemId = id;
         },
+
+        async publishCategory(item) {
+
+            this.flashMessage = '';
+            var value = (item.published == 0) ? 1 : 0;
+            var data = { id: item.id , published: value };
+
+            // Submit the form
+            var failedWithCloudExit;
+
+            await Cloud['publishcategory'].with(data)                                 
+                    .tolerate((err) => {                  
+                    failedWithCloudExit = err.exit || 'error';
+                    });
+
+            // When an error occurs, tolerate it, but set the userland "flashMessage"
+            if (failedWithCloudExit) {
+                this.flashMessage = { type: 'error' , message: 'Errore durante la modifica' };
+            }
+
+            // Data update wa successful, sends a message to user
+            if (!failedWithCloudExit) {
+            
+                item.published = value;
+                let message = (value == 0) ? 'Pubblicazione categoria annullata' : 'Categoria pubblicata';
+                this.flashMessage = { type: 'success' , message: message };                
+
+            } 
+
+        }
 
 
     }

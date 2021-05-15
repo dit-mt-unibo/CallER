@@ -73,6 +73,8 @@
   
   /* Message */
 .message-box {
+    position:absolute;
+    left: 50%;
     width: 80%;
     max-width: 600px; 
 }
@@ -81,24 +83,26 @@
 }
 
 .message-box-error {
+    position: relative; 
+    left: -50%;
     padding: 10px 15px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
-    border-radius: 5px;
-    margin: 15px auto 25px auto;
+    border-radius: 5px;    
     border: 1px solid #AA3939;
     background-color: #D46A6A;
     color: #FFF; 
 }
 
 .message-box-success {
+    position: relative; 
+    left: -50%;
     padding: 10px 15px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     border-radius: 5px;
-    margin: 15px auto 25px auto;
     border: 1px solid #38AE2C;
     background-color: #66BB6A;
     color: #FFF; 
@@ -132,4 +136,13 @@
     cursor: pointer;
     text-decoration: underline;
     color: #66BB6A;
+}
+
+.cursor-pointer:hover {
+    cursor: pointer;
+}
+
+/* Trumbowyg */
+.tbw-is-invalid{
+    border: 1px solid #dc3545;
 }

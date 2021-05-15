@@ -13,7 +13,11 @@
 Cloud.setup({
 
   /* eslint-disable */
-  methods: {"save":{"verb":"POST","url":"/category/save"}}
+  methods: {
+    "save": { "verb":"POST", "url":"/category/save" },
+    "updatedescription": { "verb": "POST", "url": "/category/description-update"},
+    "publishcategory": { "verb": "POST", "url": "/category/publish"}
+  }
   /* eslint-enable */
 
 });

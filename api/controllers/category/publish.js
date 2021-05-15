@@ -1,4 +1,4 @@
-/*
+/**
  * Action publish
  *
  * @description :: Publish/unpublish a category.
@@ -39,20 +39,22 @@ module.exports = {
 
     fn: async function( {id, published} ) {
 
-        var valuesToSet = { id: id , published: published};
-
-        var result = await Category.updateOne( valuesToSet )
+        var result = await Category.updateOne( { id: id } ).set( { published: published} )
                         .intercept( {published: 'UsageError'} , (err) => {
 
-                            throw 'publishedFail';
+                            return 'publishedFail';
 
                         });
 
         if (result) {
-            throw 'success';
+            
+            return 'success';
+
         }
         else {
-            throw 'fail';
+            
+            return 'fail';
+
         }
     }
 }

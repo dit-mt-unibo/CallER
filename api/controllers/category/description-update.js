@@ -38,20 +38,24 @@ module.exports = {
 
     fn: async function( {id, description} ) {
 
-        var valuesToSet = { id: id , description: description};
+        var valuesToSet = { description: description};
 
-        var result = await Category.updateOne( valuesToSet )
+        var result = await Category.updateOne( { id: id} ).set( valuesToSet )
                         .intercept( {description: 'UsageError'} , (err) => {
 
-                            throw 'descriptionFail';
+                            return 'descriptionFail';
 
                         });
 
         if (result) {
-            throw 'success';
+            
+            return 'success';
+
         }
         else {
-            throw 'fail';
+            
+            return 'fail';
+
         }
     }
 }

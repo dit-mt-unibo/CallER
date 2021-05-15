@@ -1,10 +1,9 @@
-/*
+/**
  * <modal-delete>
  * 
  *  Bootstrap's modal component for delete button
  * 
- * ----SLOTS---
- * @slot body : sets the text inside the modal window
+ * @slot body
  * 
  */
 
