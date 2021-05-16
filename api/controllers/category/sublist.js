@@ -37,7 +37,7 @@ module.exports = {
     try {
 
       items = await Category.find({
-        where: { parent_id: inputs.id },
+        where: { parent_id: inputs.id, id: { nin: [1] } }, // escludi la categoria speciale #1 (home) per adesso.
         sort: 'id ASC'
       });
 
@@ -46,7 +46,6 @@ module.exports = {
 
       throw {
         fail: {
-          pageTitle: pageTitle,
           error: { title: "Errore database", message: "Impossibile effetuare query select sulla tabella category" }
         }
       };

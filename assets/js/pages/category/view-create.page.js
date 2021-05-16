@@ -74,7 +74,7 @@ parasails.registerPage('view-create', {
         submittedForm: async function () { 
             
             this.syncing = true;            
-            window.location = '/category';
+            window.location = '/category/list';
 
         },
         rejectedForm (err) {
