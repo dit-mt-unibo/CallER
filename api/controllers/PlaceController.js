@@ -5,9 +5,11 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+//const Place = require("../models/Place");
+
 module.exports = {
 
-  
+  // this is used by client app only. It should be moved to its own action
   render: async (request, response) => {
     try {
       let place = await Place.findOne(request.params.id);
@@ -49,6 +51,17 @@ module.exports = {
 
   updateOne: async (request, response) => {
     var params = request.allParams();
+    if ((params.image == null) || (params.image == "")) {
+      sails.log("image=" + params.image + ", image_old=" + params.image_old);
+      request.body.image = request.body.image_old;
+      var updatedData = await Place.updateOne(request.params.id).set(request.body);
+      sails.log(updatedData);
+      response.redirect('/place/list');
+      return;
+    }
+
+    sails.log("Params: image=" + params.image + ", video="+params.video);
+
     request.file('image').upload({
       dirname: '../../assets/images/contenuti',
       maxBytes: 10000000 // limit to 10 Mb
@@ -58,9 +71,10 @@ module.exports = {
       }
       sails.log(uploadedFile);
 
-      if (uploadedFile.length === 0) {
+      if (uploadedFile.length === 0)
+      {
+        sails.log('Contenuto non creato!');
         return response.redirect('/');
-        return sails.log('Contenuto non creato!');
       }
 
       var fileName = uploadedFile[0].filename;
@@ -78,6 +92,7 @@ module.exports = {
           });
         } else {
           // return response.view('/place', { place: createdData });
+          sails.log("Updated Place: " + createdData);
           sails.log("UPDATED Image :" + createdData.image)
           response.redirect('/place/list');
         }

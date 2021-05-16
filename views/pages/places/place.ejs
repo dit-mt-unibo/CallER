@@ -67,6 +67,7 @@ id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, ta
     <div class="container">
       <img class=""rounded mx-auto d-block" src="<%='/images/contenuti/'+place.imageUID %>"></img>
     </div>
+    <input type="hidden" name="image_old" value="<%= place.image %>" >
     <div class="form-group">
       <label>Immagine</label>
       <input type="file" class="form-control" id="imageUpload" name="image" value="<%= place.image %>">

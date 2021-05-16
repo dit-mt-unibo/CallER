@@ -1,37 +1,40 @@
-<h2>
+<div class="titolo">
   <%= item.name %>
-</h2>
+</div>
 
 <div class="container">
-
-  <img class=""rounded="" mx-auto="" d-block=""" src="<%='/images/contenuti/'+item.imageUID %>">
+  <img class="img-fluid" src="<%='/images/contenuti/'+item.imageUID %>">
   </img>
-  
+</div>
+
 <div class="container">
   <%= item.intro_text %>
 </div>
-<div class="card">
+<hr></hr>
+<div class="container">
   <label>Posizione (coordinate)</label>
   lat : <%= item.lat %> , long : <%= item.long %>
 </div>
-
+<hr></hr>
   <div class="container">
     <%= item.full_text %>
 </div>
-
-  <a class="btn btn-primary" href="/category/<%=item.category_id %>">Indietro</a>
-
+<hr></hr>
 <div class="container">
   <label>Audio</label>
   <%= item.audio %>
 </div>
 
-<div class="container">
-  <label>Video</label> : <%= item.video %>
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="<%= item.video %>">
+  </iframe>
 </div>
+<hr></hr>
 
 <div class="container">
   <label>Tags</label> : <%= item.tags %>
 </div>
+
+<a class="btn btn-primary" href="/category/<%=item.category_id %>">Indietro</a>
 
 </div>
