@@ -7,18 +7,18 @@
 
 module.exports = {
 
-  /*
+  
   render: async (request, response) => {
     try {
       let place = await Place.findOne(request.params.id);
       if (!place) {
         return response.notFound('The place was NOT found!');
       }
-      response.view('place', { place });
+      response.view('pages/clientapp/place', { item : place });
     } catch (err) {
       response.serverError(err);
     }
-  },*/
+  },
 
   lista: async (request, response) => {
     Place.find({}).exec(function (err, data) {

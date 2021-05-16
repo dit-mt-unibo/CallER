@@ -125,4 +125,44 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  // routes per la client app
+  'GET /home': {
+    action: 'category/sublist',
+    // view: 'pages/clientapp/home',
+    locals: {
+      layout: 'layouts/app-layout'
+    }
+  },
+
+  'GET /place/sublist:id': {
+    action: 'place/sublist',
+    view: 'pages/clientapp/category',
+    locals: {
+      layout: 'layouts/app-layout'
+    }
+  },
+
+  'GET /place/:id': {
+    controller: 'PlaceController',
+    action: 'render',
+   // view: 'pages/clientapp/home',
+    locals: {
+      layout: 'layouts/app-layout'
+    }
+  },
+
+  'GET /category/:id': {
+    action: 'category/render',
+    // view: 'pages/clientapp/home',
+    locals: {
+      layout: 'layouts/app-layout'
+    }
+  },
+  'GET /quiz/:id': {
+    action: 'quiz/render',
+    //view: 'pages/quiz/create',
+    locals: {
+      layout: 'layouts/app-layout'
+    }
+  },
 };

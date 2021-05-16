@@ -1,0 +1,28 @@
+<h2>
+  <%= item.name %>
+</h2>
+
+
+<div class="container">
+
+  <% for(var i = 0; i< childrenCategories.length; i++){ %>
+  <div class="card card-inverse mb-3 text-center" style="background-color: green; border-color: #333;">
+    <div class="card-block">
+      <a class="card-title" href="/category/<%= childrenCategories[i].id %>"><%= childrenCategories[i].name %></a>
+    </div>
+  </div>
+  <% } %>
+</div>
+
+
+<div class="container">
+
+  <% for(var i = 0; i< childrenPlaces.length; i++){ %>
+  <div class="card card-inverse mb-3 text-center" style="background-color: #fff; border-color: #333;">
+    <div class="card-block">
+      <a class="card-title" href="/place/<%= childrenPlaces[i].id %>"><%= childrenPlaces[i].name %>
+        </a>
+    </div>
+  </div>
+  <% } %>
+</div>
