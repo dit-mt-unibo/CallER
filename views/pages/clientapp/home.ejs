@@ -1,22 +1,17 @@
+<div class="container">
+  <div class="row">
+    <% for(var i = 0; i< items.length; i++){ %>
+      <div class="col menu">
+        <a href="/category/<%= items[i].id %>">
+          <i class="fas fa-user-graduate fa-3x" ></i>
+          <br><%= items[i].name %>
+        </a>
+      </div>
 
-
-  <div class="container">
-
-    <% for(var i = 0; i < items.length; i++){ %>
-        <% if(i % 3 == 0) { %>
-          <div class="row">
-        <% } %>
-          <div class="col-sm">
-            <div class="card card-inverse mb-3 text-center" style="background-color: #fff; border-color: #333;">
-              <div class="card-block">
-              <a class="card-title" href="/category/<%= items[i].id %>"><%= items[i].name %></a>
-              </div>
-            </div>
-          </div>
-        <% if(i % 3 == 2) { %>
-        </div>
-        <% } %>
-     <% } %>
-      
+      <% if(i % 2 == 1) { %>
+        <div class="w-100"></div>
+      <% } %>
+    <% } %>
   </div>
+</div>
   

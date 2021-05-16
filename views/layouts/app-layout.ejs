@@ -36,7 +36,12 @@
     <!--STYLES END-->
 
     <!-- questi sono MIEI! -->
-        <link rel="stylesheet" href="/dependencies/bootstrap-4.css">
+        
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/0f23103c70.js" crossorigin="anonymous"></script>
 
         <!--
 
@@ -63,34 +68,56 @@
 
     <!--SCRIPTS-->
     <script src="/dependencies/sails.io.js"></script>
-    <script src="/dependencies/jquery.js"></script>
-    <script src="/dependencies/bootstrap.min.js"></script>
     <script src="/dependencies/lodash.js"></script>
     <script src="/dependencies/cloud.js"></script>
     <script src="/dependencies/vue.js"></script>
     <script src="/dependencies/parasails.js"></script>
     <script src="/dependencies/trumbowyg.min.js"></script>
-    <script src="/js/cloud.setup.js"></script>
-    <script src="/js/components/ajax-button.component.js"></script>
-    <script src="/js/components/ajax-form.component.js"></script>
-    <script src="/js/components/cloud-error.component.js"></script>
-    <script src="/js/components/flash-message.component.js"></script>
-    <script src="/js/components/modal-delete.component.js"></script>
-    <script src="/js/components/modal-editor.component.js"></script>
-    <script src="/js/components/text-truncate.component.js"></script>
-    <script src="/js/pages/category/view-create.page.js"></script>
-    <script src="/js/pages/category/view-list.page.js"></script>
     <!--SCRIPTS END-->
+
+
+    <style>
+    .menu 
+	{
+		padding: 20px; 
+		margin: 10px; 
+		border: 1px solid; 
+		border-radius: 15px;
+		text-align:center; 
+		font-size: 1em; 
+		color: Dodgerblue;
+	}
+	
+	.titolo
+	{
+		padding: 20px; 
+		margin: 10px; 
+		text-align:center; 
+		font-size: 2em; 
+		color: Red;
+	}
+	
+	.fondo
+	{
+		padding: 5px; 
+		margin: 1px; 
+		text-align:center; 
+		font-size: 1em; 
+		color: White;
+		background-color: lightgrey;
+	}
+	
+  </style>
+
   </head>
 
   <body>
 
-  <div class="container centered">
-    <a class="navbar-brand" href="/home">
-      <img src="/images/hot-air-balloon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-      CallER
-    </a>
-  </div>
+  <div class="titolo">
+			<i class="fab fa-fort-awesome" ></i>CallER
+		</div>
+
+
 
     <%- body %>
 
@@ -133,6 +160,17 @@
         https://sailsjs.com/docs/concepts/views/locals#?escaping-untrusted-data-using-exposelocalstobrowser
 
     -->
+
+    <nav class="fixed-bottom">
+		  <div class="row">
+			  <div class="col fondo">
+				  <a href="#"><i class="fas fa-home fa-2x" style="color:black"></i></a>
+			  </div>	
+			  <div class="col fondo"">
+				  <a href="/word"><i class="fas fa-book fa-2x" style="color:black"></i></a>
+			  </div>
+		  </div>
+	  </nav>
 
   </body>
 </html>
