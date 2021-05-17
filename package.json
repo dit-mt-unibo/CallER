@@ -12,6 +12,7 @@
     "grunt": "1.0.4",
     "sails": "^1.4.2",
     "sails-hook-grunt": "^4.0.0",
+    "sails-hook-organics": "^2.2.0",
     "sails-hook-orm": "^3.0.2",
     "sails-hook-sockets": "^2.0.0",
     "trumbowyg": "^2.23.0"
