@@ -1,0 +1,83 @@
+<div id="view-create" class="container" v-cloak>
+    
+    <ajax-form action="saveUser" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
+        :form-rules="formRules" :form-errors.sync="formErrors"
+        @submitted="submittedForm($event)" @rejected="rejectedForm($event)">
+
+        <cloud-error v-if="cloudError === 'error'">Qualcosa è andato storto, impossibile modificare l'utente</cloud-error>
+
+        <div class="form-group">
+            <label :class="[formErrors.name ? 'text-danger' : '']">
+                Nome
+            </label>
+            <input type="text" name="name" class="form-control" :class="[formErrors.name ? 'is-invalid' : '']" 
+                v-model="formData.name" maxlength="200" id="name" />
+            <cloud-error v-if="cloudError === 'nameFail'">Nome non valido</cloud-error>
+            <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 200 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.surname ? 'text-danger' : '']">
+                Cognome
+            </label>
+            <input type="text" name="surname" class="form-control" :class="[formErrors.surname ? 'is-invalid' : '']" 
+                v-model="formData.surname" maxlength="255" id="surname" />            
+            <cloud-error v-if="cloudError === 'surnameFail'">Cognome non valido</cloud-error>
+            <cloud-error v-if="formErrors.surname === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.surname === 'maxLength'">Il campo può contenere al max. 255 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.username ? 'text-danger' : '']">
+                Username
+            </label>
+            <input type="text" name="username" class="form-control" :class="[formErrors.username ? 'is-invalid' : '']" 
+                v-model="formData.username" maxlength="100" id="username" />            
+            <cloud-error v-if="cloudError === 'usernameFail'">Nome utente non valido</cloud-error>
+            <cloud-error v-if="cloudError === 'uniqueFail'">Nome utente già in uso</cloud-error>
+            <cloud-error v-if="formErrors.username === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.username === 'maxLength'">Il campo può contenere al max. 100 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.password ? 'text-danger' : '']">
+                Nuova password
+            </label>
+            <input type="password" name="new-password" class="form-control" :class="[formErrors.newPassword ? 'is-invalid' : '']" 
+                v-model="formData.newPassword" id="new-password" autocomplete="new-password" v-on:change="activeConfirmPasswordCheck()" />            
+            <cloud-error v-if="cloudError === 'passwordFail'">Password non valida</cloud-error>
+            <cloud-error v-if="formErrors.newPassword === 'required'">Campo obbligatorio</cloud-error>            
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.confirmPassword ? 'text-danger' : '']">
+                Conferma nuova password
+            </label>
+            <input type="password" name="confirm-password" class="form-control" :class="[formErrors.confirmPassword ? 'is-invalid' : '']" 
+                v-model="formData.confirmPassword" autocomplete="new-password" id="confirm-password" />                                    
+            <cloud-error v-if="formErrors.confirmPassword === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.confirmPassword === 'custom'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.confirmPassword === 'sameAs'">La password di conferma e la password non coincidono</cloud-error>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-1">
+                <button type="button" class="btn btn-primary" onclick="window.location = '/user';">Indietro</button>
+            </div>
+            <div class="col-1">
+                <ajax-button type="submit" :syncing="syncing">Salva</ajax-button>
+            </div>
+
+        </div>                
+    
+    </ajax-form>
+
+</div>
+
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/ajax-button.component.js"></script>
+<script src="/js/components/ajax-form.component.js"></script>
+<script src="/js/components/cloud-error.component.js"></script>
+<script src="/js/pages/user/view-create.page.js"></script>

@@ -16,7 +16,9 @@ Cloud.setup({
   methods: {
     "save": { "verb":"POST", "url":"/category/save" },
     "updatedescription": { "verb": "POST", "url": "/category/description-update"},
-    "publishcategory": { "verb": "POST", "url": "/category/publish"}
+    "publishcategory": { "verb": "POST", "url": "/category/publish"},
+    "login": { "verb": "POST", "url": "/check-account"},
+    "saveUser": { "verb":"POST", "url":"/user/save" },
   }
   /* eslint-enable */
 

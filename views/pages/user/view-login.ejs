@@ -1,0 +1,52 @@
+<div id="view-login" class="container-fluid">
+    <div class="row justify-content-md-center">
+
+        <div class="col-4 p-5 mt-5 border rounded">
+
+            <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
+                :form-rules="formRules" :form-errors.sync="formErrors"
+                @submitted="submittedForm($event)" @rejected="rejectedForm($event)">
+
+                <cloud-error v-if="cloudError">Username o password sbagliate</cloud-error>
+
+                <div class="form-group">
+                    <label :class="[formErrors.username ? 'text-danger' : '']">
+                        Username
+                    </label>
+                    <input type="text" name="username" class="form-control" :class="[formErrors.username ? 'is-invalid' : '']" 
+                        v-model="formData.username" maxlength="100" id="username" />                    
+                    <cloud-error v-if="formErrors.username === 'required'">Inserire username</cloud-error>                    
+                </div>
+
+                <div class="form-group">
+                    <label :class="[formErrors.password ? 'text-danger' : '']">
+                        Password
+                    </label>
+                    <input type="password" name="password" class="form-control" :class="[formErrors.password ? 'is-invalid' : '']" 
+                        v-model="formData.password" id="password" />                    
+                    <cloud-error v-if="formErrors.password === 'required'">Inserire password</cloud-error>                    
+                </div>                
+
+                <div class="row justify-content-center mt-5">
+
+                    <div class="col-2">
+                        <ajax-button type="submit" :syncing="syncing">
+                            Login
+                            <span slot="syncing-state">Login in corso...</span>
+                        </ajax-button>
+                    </div>
+        
+                </div>
+
+            </ajax-form>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/ajax-button.component.js"></script>
+<script src="/js/components/ajax-form.component.js"></script>
+<script src="/js/components/cloud-error.component.js"></script>
+<script src="/js/pages/user/view-login.page.js"></script>

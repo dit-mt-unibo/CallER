@@ -1,0 +1,49 @@
+<div id="view-list" v-cloak>
+    
+    <modal-delete :item-id="deleteItemId" :action="'/user/delete/'">
+        <div slot="body">
+            <p>Vuoi eliminare l'utente?</p>
+        </div>
+    </modal-delete>
+
+    <div class="container-fluid">
+
+        <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
+
+        <div class="container-fluid" style="margin:30px 0">
+            <a class="btn btn-success" href="/user/add">Nuovo utente</a>
+        </div>    
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th width="5%">#</th>
+                    <th width="30%">Nome</th>
+                    <th width="30%">Cognome</th>
+                    <th style="text-align: center" width="20%">Username</th>
+                    <th width="15"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in items">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.surname }}</td>
+                    <td>{{ item.username }}</td>
+                    <td align="center">
+                        <a class="btn btn-primary" :href="'/user/edit/' + item.id">Modifica</a>                    
+                        <button v-if="item.id != <%= req.session.userId %>" type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)" 
+                            data-toggle="modal" data-target="#confirmDeleteModal">
+                            Elimina
+                        </button>                    
+                    </td>                                                
+                </tr>
+            </tbody> 
+        </table>
+    </div>
+
+</div>
+
+<script src="/js/components/modal-delete.component.js"></script>
+<script src="/js/components/flash-message.component.js"></script>
+<script src="/js/pages/user/view-list.page.js"></script>

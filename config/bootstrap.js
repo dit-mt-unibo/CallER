@@ -27,6 +27,15 @@ module.exports.bootstrap = async function() {
   // ]);
   // ```
 
+  // Creates default user
+  defUserValue = {
+    name: 'Admin',
+    surname: 'Admin',
+    username: 'Admin',
+    password: await sails.helpers.passwords.hashPassword('Admin')
+  };
+  await User.findOrCreate( { username: 'Admin' } , defUserValue );
+
   // Creates a generic category called "Home"
   defCategoryValue = {
     name: 'Home' , 

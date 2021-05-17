@@ -19,12 +19,14 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/homepage' },
+  '/': { 
+    action: 'homepage'
+  },
 
   '/place/add': {
     controller: 'PlaceController',
     action: 'prepCreate',
-    view: 'addplace'
+    view: 'pages/places/addplace'
   },
   '/place/list': { 
 	controller: 'PlaceController',
@@ -81,6 +83,12 @@ module.exports.routes = {
   'GET /category/delete/:id': {
     action: 'category/delete'
   },
+  'POST /category/description-update': {
+    action: 'category/description-update'
+  },
+  'POST /category/publish': {
+    action: 'category/publish'
+  },
 
   // Routes for quiz
   '/quiz/list': {
@@ -110,6 +118,46 @@ module.exports.routes = {
   },
   'GET /quiz/delete/:id': {
     action: 'quiz/delete'
+  },
+
+  // Routes for user
+  '/login': {
+    action: 'user/view-login',
+    view: 'pages/user/view-login',
+    locals: {
+      layout: 'layouts/guest'
+    }
+  },
+  '/logout': {
+    action: 'user/logout'
+  },
+  'POST /check-account': {
+    action: 'user/login'
+  },
+  'GET /user' : {
+    action: 'user/view-list',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+  'GET /user/add': {
+    action: 'user/view-create',
+    view: 'pages/user/view-create',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+  'GET /user/edit/:id': {
+    action: 'user/view-update',
+    locals: {
+      layout: 'layouts/newlayout'
+    }
+  },
+  'POST /user/save': {
+    action: 'user/save'
+  },
+  'GET /user/delete/:id': {
+    action: 'user/delete'
   },
 
 

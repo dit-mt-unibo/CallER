@@ -1,0 +1,39 @@
+<!-- Base layout for guest user. Page login -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Call-ER App per l'apprendimento dell'italiano</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <%/* If you want to discourage search engines from indexing this site, uncomment the following line: */%>
+    <%/* <meta name="robots" content="noindex"> */%>
+    
+    <link rel="stylesheet" href="/dependencies/bootstrap-4.css">
+       
+    <script src="/dependencies/sails.io.js"></script>
+    <script src="/dependencies/jquery.js"></script>
+    <script src="/dependencies/bootstrap.min.js"></script>
+    <script src="/dependencies/lodash.js"></script>
+    <script src="/dependencies/cloud.js"></script>
+    <script src="/dependencies/vue.js"></script>
+    <script src="/dependencies/parasails.js"></script>
+    
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/">
+          <img src="/images/hot-air-balloon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+          Portale CallER
+        </a>
+      </nav>     
+
+    <%- exposeLocalsToBrowser() %>  
+
+    <%- body %>            
+    
+  </body>
+</html>
