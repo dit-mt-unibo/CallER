@@ -159,7 +159,7 @@ module.exports = {
       where: { parent_id: null },
       sort: 'name ASC'
     });
-    response.view('addplace', { categories });
+    response.view('pages/places/addplace', { categories });
   },
 
 
