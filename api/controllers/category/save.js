@@ -17,6 +17,10 @@ module.exports = {
             type: 'string',
             required: true
         },
+        icon: {
+            type: 'string',
+            allowNull: true
+        },
         parent_id: {
             type: 'ref'
         },
@@ -36,6 +40,10 @@ module.exports = {
             description: 'validation field description failed',
             statusCode: 409
         },
+        iconFail: {
+            description: 'validation field icon failed',
+            statusCode: 409
+        },
         parentIdFail: {
             description: 'validation field parent_id failed',
             statusCode: 409
@@ -43,10 +51,10 @@ module.exports = {
 
     },
 
-    fn: async function({name, description, parent_id, id}) {
+    fn: async function({name, description, icon, parent_id, id}) {
 
         // new values for query
-        let valuesToSet = { name: name , description: description };
+        let valuesToSet = { name: name , description: description , icon: icon };
 
         if ( _.isUndefined(parent_id) === false ) {
             
@@ -67,6 +75,11 @@ module.exports = {
                             return 'descriptionFail';
                             
                         })
+                        .intercept( {icon: 'UsageError'} , (err) => {
+
+                            return 'iconFail';
+                            
+                        })
                         .intercept( {parent_id: 'UsageError'} , (err) => {
 
                             return 'parentIdFail';
@@ -85,6 +98,11 @@ module.exports = {
                                     .intercept( {description: 'UsageError'} , (err) => {
 
                                         return 'descriptionFail';
+                                        
+                                    })
+                                    .intercept( {icon: 'UsageError'} , (err) => {
+
+                                        return 'iconFail';
                                         
                                     })
                                     .intercept( {parent_id: 'UsageError'} , (err) => {

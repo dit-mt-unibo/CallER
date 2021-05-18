@@ -30,6 +30,12 @@
             min: 0,
             max: 1
         },
+
+        icon: {
+            type: 'string',
+            allowNull: true,
+            maxLength: 100
+        },
         
         parent_id: {
             type: 'number',
