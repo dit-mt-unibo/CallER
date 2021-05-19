@@ -199,13 +199,11 @@ module.exports.routes = {
     }
   },
 
+  
   'GET /category/:id': {
-    action: 'category/render',
-    // view: 'pages/clientapp/home',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
+    action: 'category/render'
   },
+  /*
   'GET /quiz/:id': {
     action: 'quiz/render',
     //view: 'pages/quiz/create',
@@ -213,4 +211,5 @@ module.exports.routes = {
       layout: 'layouts/app-layout'
     }
   },
+  */
 };

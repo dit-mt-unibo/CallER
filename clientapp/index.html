@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Page App</title>
+
+    <!-- Because of running on GH Pages and the way this SPA works, the main CSS and JS files have to be relative. Putting a prefix here breaks local usage. -->
+    <link rel="stylesheet" href="static/css/index.css">
+</head>
+
+<body>
+    <!-- Paths start with baseurl for use on GH Pages. -->
+    <nav class="nav">
+        <a href="/single-page-app-vanilla-js/" class="nav__link" data-link>Home</a>
+        <a href="/single-page-app-vanilla-js/categorie" class="nav__link" data-link>Categorie</a>
+        <a href="/single-page-app-vanilla-js/settings" class="nav__link" data-link>Settings</a>
+    </nav>
+
+    <div id="app"></div>
+    <script type="module" src="static/js/index.js"></script>
+</body>
+
+</html>

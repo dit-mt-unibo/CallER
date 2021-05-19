@@ -17,13 +17,13 @@ module.exports = {
 
   exits: {
     success: {
-      returnType: 'view',
-      viewTemplatePath: 'pages/clientapp/category'
+      returnType: 'json',
+      //viewTemplatePath: 'pages/clientapp/category'
     },
     fail: {
       description: 'when query fails or return an empty result',
-      returnType: 'view',
-      viewTemplatePath: 'pages/error'
+      returnType: 'json',
+      // viewTemplatePath: 'pages/error'
     }
   },
 
