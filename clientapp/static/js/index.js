@@ -68,6 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       navigateTo(e.target.href);
     }
+    else if (e.target.parentNode.matches('a')) {
+      e.preventDefault();
+      navigateTo(e.target.parentNode.href);
+    }
   });
 
   router();
