@@ -16,7 +16,7 @@ export default class extends AbstractView {
     var response = await fetch(url);
     // Begin accessing JSON data here
     var data = await response.json();
-    if (response.status >= 200 && request.status < 400) {
+    if (response.status >= 200 && response.status < 400) {
       
       html += "<div class='titolo'>" + data.item.name + "</div>";
       html += "<div class='container'>" + data.item.description + "</div><span>&nbsp;</span>";
@@ -26,7 +26,7 @@ export default class extends AbstractView {
       data.childrenCategories.forEach((childCat) => {
         html += "<div class='card card-inverse mb-3 text-center' style='background-color: blue; border-color: #333;'>";
         html += "<div class='card-block'>";
-        html += "a class='card-title' href='/category/" + childCat.id + "'>" + childCat.name + "</a>";
+        html += "<a class='card-title' href='" + u('/categorie/' + childCat.id)  + "' data-link>" + childCat.name + "</a>";
         html += "</div></div>";
       })
       html += "</div>";
@@ -36,7 +36,7 @@ export default class extends AbstractView {
       data.childrenPlaces.forEach((childPlace) => {
         html += "<div class='card text-center' style='color: green; background-color: white; border-color: green;'>";
         html += "<div class='card-block'>";
-        html += "a class='card-title' href='/place/" + childPlace.id + "'>" + childPlace.name + "</a>";
+        html += "<a class='card-title' href='" + u('/contenuti/' + childPlace.id) + "' data-link>" + childPlace.name + "</a>";
         html += "</div></div>";
       })
       html += "</div>";

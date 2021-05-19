@@ -21,7 +21,7 @@ export default class extends AbstractView {
         html += "<div class='card'>";
         html += "<h2>" + category.name + "</h2>";
         html += "<p>" + category.description + "</p>";
-        html += "<a class='btn' href='/categorie/"+ category.id + "' data-link>Go</a>";
+        html += "<a class='btn' href='" + u('/categorie/'+ category.id) + "' data-link>Go</a>";
         html += "</div>"; // end card
       })
 
@@ -35,6 +35,29 @@ export default class extends AbstractView {
 
   }
 
+  /* qui vorremmo:
+   * <div class="titolo">
+  <i class="fab fa-fort-awesome" ></i>CallER
+</div>
+
+<div class="container">
+  <div class="row">
+    <% for(var i = 0; i< items.length; i++){ %>
+      <div class="col menu">
+        <a href="/category/<%= items[i].id %>">
+          <i class="fas fa-user-graduate fa-3x" ></i>
+          <br><%= items[i].name %>
+        </a>
+      </div>
+
+      <% if(i % 2 == 1) { %>
+        <div class="w-100"></div>
+      <% } %>
+    <% } %>
+  </div>
+</div>
+   * 
+   * */
   async getHtmlFilms() {
 
     var html = "<h1>Movies</h1> <div class='container'>";

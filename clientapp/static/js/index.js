@@ -1,6 +1,7 @@
 import Home from './views/Home.js';
 import Categories from './views/Categories.js';
 import CategoryView from './views/CategoryView.js';
+import PlaceView from './views/PlaceView.js';
 import Settings from './views/Settings.js';
 import { u } from './lib.js';
 
@@ -31,6 +32,7 @@ const router = async () => {
     { path: u('/'), view: Home },
     { path: u('/categorie'), view: Categories },
     { path: u('/categorie/:id'), view: CategoryView },
+    { path: u('/contenuti/:id'), view: PlaceView },
     { path: u('/settings'), view: Settings }
   ];
 

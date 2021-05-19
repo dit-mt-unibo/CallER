@@ -1,9 +1,35 @@
-body {
-    --nav-width: 200px;
-    margin: 0 0 0 var(--nav-width);
-    font-family: 'Quicksand', sans-serif;
-    font-size: 18px;
+.menu {
+  padding: 20px;
+  margin: 10px;
+  border: 1px solid;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1em;
+  color: Dodgerblue;
 }
+
+.titolo {
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  font-size: 2em;
+  color: Red;
+}
+
+.fondo {
+  padding: 5px;
+  margin: 1px;
+  text-align: center;
+  font-size: 1em;
+  color: White;
+  background-color: lightgrey;
+}
+
+body {
+  margin-bottom: 50px;
+  margin-top: 10px;
+}
+
 
 .nav {
     position: fixed;
@@ -32,6 +58,3 @@ body {
     font-weight: 500;
 }
 
-a {
-    color: #009579;
-}

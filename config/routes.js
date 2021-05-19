@@ -174,7 +174,16 @@ module.exports.routes = {
   ***************************************************************************/
 
   // routes per la client app
-  'GET /home': {
+  // questa è necessaria perché restituisce un json con
+    // category
+    // childCategories : le categorie collegate (se esistono)
+    // childPlaces: i contenuti di questa category (se esistono)
+  'GET /category/:id': {
+    action: 'category/render'
+  },
+
+  /*
+   * 'GET /home': {
     action: 'category/sublist',
     // view: 'pages/clientapp/home',
     locals: {
@@ -189,7 +198,6 @@ module.exports.routes = {
       layout: 'layouts/app-layout'
     }
   },
-
   'GET /place/:id': {
     controller: 'PlaceController',
     action: 'render',
@@ -199,11 +207,7 @@ module.exports.routes = {
     }
   },
 
-  
-  'GET /category/:id': {
-    action: 'category/render'
-  },
-  /*
+ 
   'GET /quiz/:id': {
     action: 'quiz/render',
     //view: 'pages/quiz/create',

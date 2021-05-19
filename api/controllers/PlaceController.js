@@ -10,6 +10,7 @@
 module.exports = {
 
   // this is used by client app only. It should be moved to its own action
+  /*
   render: async (request, response) => {
     try {
       let place = await Place.findOne(request.params.id);
@@ -21,6 +22,7 @@ module.exports = {
       response.serverError(err);
     }
   },
+  */
 
   lista: async (request, response) => {
     Place.find({}).exec(function (err, data) {
