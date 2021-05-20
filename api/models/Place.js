@@ -56,13 +56,8 @@ module.exports = {
         
         audio: {
             type: 'string',
-            description: 'filename. Allowed file extensions mp3',
-            allowNull: true,
-            custom: function(filename) {
-                
-                return validateExtension(filename, ['mp3']);                
-                
-            }
+            description: 'url of an audio file, or just track name from soundcloud',
+          allowNull: true,
         },
         
         photo_gallery: {

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>CallER</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<!--STYLES-->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+		<!--STYLES END-->
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script> -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+		<script src="https://kit.fontawesome.com/0f23103c70.js" crossorigin="anonymous"></script>
+
+		<!-- Because of running on GH Pages and the way this SPA works, the main CSS and JS files have to be relative. Putting a prefix here breaks local usage. -->
+		<link rel="stylesheet" href="static/css/index.css">
+	</head>
+  <body>
+	<div id="app" class="container-fluid px-0 bg-light" style="">
+
+		<div class='titolo'><i class='fab fa-fort-awesome' ></i>CallER</div>
+		<div class='container'>
+			<div class='row'>
+				<div class='col menu'> 	
+					<a class='btn' href='/categorie/2' data-link><i class='fas fa-user-graduate fa-3x home' ></i>  
+						<p class='home'>Vita Universitaria</p> 
+					</a>
+				</div>
+				<div class='col menu'>
+					<a class='btn' href='/categorie/3' data-link>
+						<i class='fas fa-utensils fa-3x' ></i>   
+						<br>Mangiare e Bere 
+					</a>
+				</div>
+				<div class='w-100'></div>
+				<div class='col menu'> 
+					<a class='btn' href='/categorie/4' data-link>   
+						<i class='fas fa-map-signs fa-3x' ></i>   
+						<br>Itinerari 
+					</a>
+				</div>
+				
+				<div class='col menu'> <a class='btn' href='/categorie/5' data-link>   <i class='fas fa-landmark fa-3x' ></i>   <br>Luoghi </a></div>
+				<div class='w-100'></div>
+				<div class='col menu'> <a class='btn' href='/categorie/6' data-link>   <i class='fas fa-clipboard-list fa-3x' ></i>   <br>Vita Pratica </a></div>
+				
+				<div class='col menu'> <a class='btn' href='/categorie/7' data-link>   <i class='fas fa-ticket-alt fa-3x' ></i>   <br>Eventi </a></div>
+				<div class='w-100'></div>
+			</div>
+		</div>
+	
+	</div>
+
+
+    <nav class="fixed-bottom">
+		  <div class="row">
+			  <div class="col fondo">
+				  <a href="/home"><i class="fas fa-home fa-2x" style="color:black"></i></a>
+			  </div>	
+			  <div class="col fondo"">
+				  <a href="/word"><i class="fas fa-book fa-2x" style="color:black"></i></a>
+			  </div>
+		  </div>
+	  </nav>
+
+  </body>
+</html>

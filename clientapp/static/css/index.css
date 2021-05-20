@@ -1,11 +1,26 @@
-.menu {
-  padding: 20px;
+.oldmenu {
+  padding: 10px;
   margin: 10px;
   border: 1px solid;
   border-radius: 15px;
   text-align: center;
   font-size: 1em;
   color: Dodgerblue;
+}
+
+.home {
+	color:white;
+}
+
+.menu {
+  padding: 20px;
+  margin: 0px;
+  border: 1px solid;
+  /* border-radius: 15px; */
+  text-align: center;
+  font-size: 1em;
+  color: white;
+  background-color: #6ab187;
 }
 
 .titolo {
@@ -53,7 +68,7 @@ body {
 }
 
 #app {
-    margin: 2em;
+    /* margin: 2em; */
     line-height: 1.5;
     font-weight: 500;
 }

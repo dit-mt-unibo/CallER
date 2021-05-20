@@ -3,7 +3,8 @@
 const PROJECT_TITLE = 'caller';
 
 export function u(url) {
-  return `/${PROJECT_TITLE}${url}`;
+  // return `/${PROJECT_TITLE}${url}`;
+  return `${url}`;
 }
 
 export const apiUrl = 'http://localhost:1337'; // for development only

@@ -10,7 +10,7 @@ export default class extends AbstractView {
 
   async getHtml() {
 
-    var html = "<h1>CallER</h1> <div class='container'>";
+    var html = "<div class='container'>";
 
     var url = apiUrl + '/category/' + this.categoryID;
     var response = await fetch(url);

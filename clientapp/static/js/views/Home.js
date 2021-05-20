@@ -9,23 +9,40 @@ export default class extends AbstractView {
 
   async getHtml() {
 
-    var html = "<h1>CallER</h1> <div class='container'>";
+    var html = "<div class='titolo'><i class='fab fa-fort-awesome' ></i>CallER</div>";
+    html +="<div class='container'>";
 
     var request = new XMLHttpRequest();
     var url = apiUrl + '/category';
     var response = await fetch(url);
     // Begin accessing JSON data here
     var data = await response.json();
+    var count = 0;
+ 
     if (response.status >= 200 && request.status < 400) {
-      data.forEach((category) => {
-        html += "<div class='card'>";
-        html += "<h2>" + category.name + "</h2>";
-        html += "<p>" + category.description + "</p>";
-        html += "<a class='btn' href='" + u('/categorie/'+ category.id) + "' data-link>Go</a>";
-        html += "</div>"; // end card
-      })
 
-      html += "</div>";
+      // tabella con 2 icone su ogni riga (ma utilizzando una singola row entity..)
+      html += "<div class='row'>";
+
+      data.forEach((category) => {
+
+        if ((category.id != 1) && (category.parent_id == null)) {
+          html += "<div class='col menu'>";
+          html += " <a class='btn' href='" + u('/categorie/' + category.id) + "' data-link>";
+          if (category.icon == null || category.icon == "")
+            category.icon = "info";
+          html += "   <i class='fas fa-" + category.icon + " fa-3x home' ></i>";
+          html += "   <p class='home'>" + category.name + "</p>";
+          html += " </a>";
+          html += "</div>"; // end card
+          count++;
+          if (count % 2 == 0) // ogni due icone inserisci un div
+            html += "<div class='w-100'></div>";
+        }
+      });
+      html += "</div>"; // close row
+      html += "</div>"; // close container
+
     } else {
       html += "<marquee>" + "It's not working!" + "</marquee>";
       html += "</div>";
@@ -41,11 +58,11 @@ export default class extends AbstractView {
 </div>
 
 <div class="container">
-  <div class="row">
+  <div class='row'>
     <% for(var i = 0; i< items.length; i++){ %>
       <div class="col menu">
         <a href="/category/<%= items[i].id %>">
-          <i class="fas fa-user-graduate fa-3x" ></i>
+          <i class='fas fa-user-graduate fa-3x' ></i>
           <br><%= items[i].name %>
         </a>
       </div>
