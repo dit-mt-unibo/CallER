@@ -21,7 +21,8 @@ parasails.registerComponent('modalEditor', {
       'required', // true | false
       'action', // form action
       'formMessage', //  2-way bound (:form-message.sync="")
-      'item'
+      'item',
+      'field',
     
     ],
 
@@ -121,7 +122,8 @@ parasails.registerComponent('modalEditor', {
 
         }
 
-        var data = { id: this.item.id , description: tbwValue };
+        var data = { id: this.item.id };
+        data[this.field] = tbwValue;
 
         // Set syncing state to `true` on userland "syncing" prop.
         this.$emit('update:syncing', true);
@@ -145,7 +147,7 @@ parasails.registerComponent('modalEditor', {
         // Data update wa successful, sends a message to user
         if (!failedWithCloudExit) {
           
-          this.item.description = tbwValue;
+          this.item[this.field] = tbwValue;
           this.$emit('update:formMessage', { type: 'success' , message: 'Modifica salvata' });          
 
         } 

@@ -32,8 +32,10 @@ parasails.registerComponent('ajaxForm', {
         'formData',
         'formRules',
         'catParentId', // category parent ID
+        'categoryId', // category id for places
         'tbwEditorId', // trumbowyg editor ID
         'tbwEditorField', // trumbowyg field name
+        'placeImage', // place field image
 
     ],
 
@@ -128,6 +130,20 @@ parasails.registerComponent('ajaxForm', {
                 this.$set(this.formData, 'parent_id' , this.catParentId);
 
             } 
+
+            // Place form. Adds category_id key to the formData object
+            if ( _.isUndefined(this.categoryId) === false ) {
+
+                this.$set(this.formData, 'category_id' , this.categoryId);
+
+            }
+            
+            // Place form. Adds image key to the formaData object
+            if ( _.isUndefined(this.placeImage) === false ) {
+
+                this.$set(this.formData, 'image' , this.placeImage);
+
+            }
 
             // Adds trumbowyg content to the formData object
             if ( _.isUndefined(this.tbwEditorId) === false ) {

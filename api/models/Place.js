@@ -1,8 +1,8 @@
 /**
  * Model table place
  *
- * Table fields: id, name, intro_text, full_text, image, video, audio, photo_gallery, blocked, tags, gps, 
- *              published, category_id, createdAt, updatedAt
+ * Table fields: id, name, intro_text, full_text, image, imageUID, video, video_block audio, audio_block,
+ *              photo_gallery, photo_gallery_block, tags, lat, long, published, category_id, createdAt, updatedAt
  *
  */
  
@@ -42,10 +42,10 @@ module.exports = {
             }
         },
 
-    imageUID: {
-      type: 'string',
-      description: 'uuid of the image file, which has been uploaded under assets/images/contenuti',
-      },
+        imageUID: {
+            type: 'string',
+            description: 'uuid of the image file, which has been uploaded under assets/images/contenuti',
+        },
 
         video: {
             type: 'string',
@@ -53,11 +53,28 @@ module.exports = {
             allowNull: true,
             isURL: true
         },
+
+        video_block: {
+            type: 'number',
+            description: '0=unblocked, user can play the video. 1=blocked, user can not play the video',
+            defaultsTo: 0,
+            min: 0,
+            max: 1
+        },
         
         audio: {
             type: 'string',
             description: 'url of an audio file, or just track name from soundcloud',
-          allowNull: true,
+            allowNull: true,
+            isURL: true
+        },
+
+        audio_block: {
+            type: 'number',
+            description: '0=unblocked, user can play the audio. 1=blocked, user can not play the audio',
+            defaultsTo: 0,
+            min: 0,
+            max: 1
         },
         
         photo_gallery: {
@@ -65,10 +82,10 @@ module.exports = {
             description: 'folder name. The folder contains images for a photo gallery',
             allowNull: true
         },
-        
-        blocked: {
+
+        photo_gallery_block: {
             type: 'number',
-            description: '0=unblocked, user can access the content. 1=blocked, user can not access the content',
+            description: '0=unblocked, user can open the gallery. 1=blocked, user can not open the gallery',
             defaultsTo: 0,
             min: 0,
             max: 1

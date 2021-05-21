@@ -1,6 +1,7 @@
 <div id="view-list" v-cloak>    
 
-    <modal-editor action="updatedescription" :syncing.sync="syncing" :form-message.sync="formMessage" :required="required" :item="item">
+    <modal-editor action="updateDescription" :syncing.sync="syncing" :form-message.sync="formMessage" 
+        :required="required" :item="item" :field="'description'">
         <div slot="header">
             Modifica descrizione
         </div>
@@ -23,7 +24,7 @@
 
 <%  if ( items.length == 0 ) { %>
     
-    <%- partial('../../partials/no-result.ejs' , {message: "Non sono state ancora inserite delle categorie. Utilizza il bottone Aggiungi categoria per iniziare."}) %>
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono state ancora inserite delle categorie. Utilizza il bottone Nuova categoria per iniziare."}) %>
     
 <% } else { %>    
 
@@ -45,7 +46,7 @@
                     <i class="bi bi-arrow-return-right"></i>
                     {{ item.name }}                   
                 </td>
-                <td v-if="item.id > 1" @click="openModalEditor(item)" class="text-highlight">
+                <td v-if="item.id > 1" @click="openModalEditor(item, 'description')" class="text-highlight">
                     <text-truncate :text="item.description"></text-truncate>                    
                 </td>
                 <td v-if="item.id == 1" >{{item.description}}</td>
@@ -76,7 +77,7 @@
 <script src="/js/components/modal-delete.component.js"></script>
 <script src="/js/components/flash-message.component.js"></script>
 <script src="/js/components/text-truncate.component.js"></script>
-<script src="/js/pages/category/view-list.page.js"></script>
+<script src="/js/pages/view-list.page.js"></script>
 
 
 

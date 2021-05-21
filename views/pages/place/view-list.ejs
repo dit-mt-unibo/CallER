@@ -1,0 +1,78 @@
+<div id="view-list" v-cloak>    
+
+    <modal-editor action="updateFullText" :syncing.sync="syncing" :form-message.sync="formMessage" 
+        :required="required" :item="item" :field="'full_text'">
+        <div slot="header">
+            Modifica testo
+        </div>
+    </modal-editor>
+    
+    <modal-delete :item-id="deleteItemId" :action="'/place/delete/'">
+        <div slot="body">
+            <p>Vuoi eliminare il luogo?</p>
+        </div>
+    </modal-delete>
+
+    <div class="container-fluid">
+
+    <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
+
+    <div class="container-fluid" style="margin:30px 0">
+        <a class="btn btn-success" href="/place/add">Nuovo luogo</a>
+    </div>    
+
+<%  if ( items.length == 0 ) { %>
+    
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono stati ancora inseriti dei luoghi. Utilizza il bottone Nuovo luogo per iniziare."}) %>
+    
+<% } else { %>    
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="20%">Nome</th>
+                <th with="20%">Testo</th>
+                <th style="text-align: center" width="10%">Pubblicato</th>
+                <th style="text-align: center" width="5%">Creato</th>
+                <th style="text-align: center" width="5%">Modificato</th>
+                <th width="20%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in items">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td @click="openModalEditor(item, 'full_text')" class="text-highlight">
+                    <text-truncate :text="item.full_text"></text-truncate>                    
+                </td>
+                <td align="center">  
+                    <i @click="publishPlace(item)" class="bi cursor-pointer"
+                        :class="[ item.published == 1 ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger']">                      
+                    </i>                                 
+                </td>
+                <td align="center">{{ item.createdAt }}</td>
+                <td align="center">{{ item.updatedAt }}</td>
+                <td align="center">
+                    <a class="btn btn-primary" :href="'/place/details/' + item.id">Visualizza</a>                    
+                    <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)" 
+                        data-toggle="modal" data-target="#confirmDeleteModal">
+                        Elimina
+                    </button>                    
+                </td>                                                
+            </tr>
+        </tbody> 
+    </table>        
+
+<% } %>
+
+    </div>    
+
+</div>
+
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/modal-editor.component.js"></script>
+<script src="/js/components/modal-delete.component.js"></script>
+<script src="/js/components/flash-message.component.js"></script>
+<script src="/js/components/text-truncate.component.js"></script>
+<script src="/js/pages/view-list.page.js"></script>

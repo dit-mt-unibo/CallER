@@ -23,59 +23,41 @@ module.exports.routes = {
     action: 'homepage'
   },
 
-  '/place/add': {
-    controller: 'PlaceController',
-    action: 'prepCreate',
-    view: 'pages/places/addplace'
+  // Routes for places
+  'GET /place/list': {    
+    action: 'place/view-list'
   },
-  '/place/list': { 
-	controller: 'PlaceController',
-  	action: 'lista' 
+  'GET /place/add': {
+    action: 'place/view-create'
   },
-  'POST /place/update/:id': {
-    controller: 'PlaceController',
-    action: 'updateOne'
+  'GET /place/edit/:id': {    
+    action: 'place/view-update'
   },
-
-  'POST /place/create': {
-    controller: 'PlaceController',
-    action: 'create'
+  'POST /place/save': {    
+    action: 'place/save'
   },
-
-  'POST /place/delete/:id': {
-    controller: 'PlaceController',
-    action: 'delete'
+  'GET /place/delete/:id': {    
+    action: 'place/delete'
   },
-  'GET /place/delete/:id': {
-    controller: 'PlaceController',
-    action: 'delete'
+  'POST /place/publish/': {    
+    action: 'place/publish'
   },
-  'GET /place/edit/:id': {
-    controller: 'PlaceController',
-    action: 'trovalo'
+  'POST /place/fulltext-update': {
+    action: 'place/fulltext-update'
   },
 
 
 
   // Routes for categories
   'GET /category/list' : {
-    action: 'category/view-list',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    action: 'category/view-list'
   },
   'GET /category/add': {
     action: 'category/view-create',
-    view: 'pages/category/view-create',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    view: 'pages/category/view-create'
   },
   'GET /category/edit/:id': {
-    action: 'category/view-update',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    action: 'category/view-update'
   },
   'POST /category/save': {
     action: 'category/save'
@@ -92,26 +74,17 @@ module.exports.routes = {
 
   // Routes for quiz
   '/quiz/list': {
-    action: 'quiz/view-list',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    action: 'quiz/view-list'
   },
   'GET /quiz/add': {
     action: 'quiz/view-create',
-    view: 'pages/quiz/create',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    view: 'pages/quiz/create'
   },
   'POST /quiz/create': {
     action: 'quiz/save'
   },
   'GET /quiz/edit/:id': {
-    action: 'quiz/view-update',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    action: 'quiz/view-update'
   },
   'POST /quiz/update/:id': {
     action: 'quiz/save'
@@ -135,23 +108,14 @@ module.exports.routes = {
     action: 'user/login'
   },
   'GET /user' : {
-    action: 'user/view-list',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    action: 'user/view-list'
   },
   'GET /user/add': {
     action: 'user/view-create',
-    view: 'pages/user/view-create',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    view: 'pages/user/view-create'
   },
   'GET /user/edit/:id': {
-    action: 'user/view-update',
-    locals: {
-      layout: 'layouts/newlayout'
-    }
+    action: 'user/view-update'
   },
   'POST /user/save': {
     action: 'user/save'

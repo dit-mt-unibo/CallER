@@ -14,11 +14,14 @@ Cloud.setup({
 
   /* eslint-disable */
   methods: {
-    "save": { "verb":"POST", "url":"/category/save" },
-    "updatedescription": { "verb": "POST", "url": "/category/description-update"},
-    "publishcategory": { "verb": "POST", "url": "/category/publish"},
+    "saveCategory": { "verb":"POST", "url":"/category/save" },
+    "updateDescription": { "verb": "POST", "url": "/category/description-update"},
+    "publishCategory": { "verb": "POST", "url": "/category/publish"},
     "login": { "verb": "POST", "url": "/check-account"},
     "saveUser": { "verb":"POST", "url":"/user/save" },
+    "savePlace": { "verb":"POST" , "url":"/place/save" },
+    "updateFullText": { "verb":"POST" , "url":"/place/fulltext-update" },
+    "publishPlace": { "verb":"POST" , "url":"/place/publish" },
   }
   /* eslint-enable */
 

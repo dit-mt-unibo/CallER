@@ -1,6 +1,6 @@
 <div id="view-create" class="container" v-cloak>
     
-    <ajax-form action="save" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
+    <ajax-form action="saveCategory" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
         :form-rules="formRules" :form-errors.sync="formErrors" :cat-parent-id="catParentId" 
         :tbw-editor-id="'tbweditor'" :tbw-editor-field="'description'"
         @submitted="submittedForm($event)" @rejected="rejectedForm($event)">
@@ -28,7 +28,7 @@
 
         <div class="form-group">
             <label :class="[formErrors.icon ? 'text-danger' : '']">
-                Icona
+                Icona <span class="small">(opzionale)</span>
             </label>
             <input type="text" name="icon" class="form-control" :class="[formErrors.icon ? 'is-invalid' : '']"
                 v-model="formData.icon" maxlength="100" id="icon">
@@ -38,7 +38,7 @@
 
         <div class="form-group">
             <label :class="[formErrors.parent_id ? 'text-danger' : '']">
-                Collega ad una categoria
+                Collega ad una categoria <span class="small">(opzionale)</span>
             </label>
             <select name="parent_id" ref="catParentId" class="form-control" :class="[formErrors.parent_id ? 'is-invalid' : '']" 
                 id="parent_id" v-on:change="selectOption()">
