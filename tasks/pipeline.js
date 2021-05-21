@@ -40,6 +40,8 @@ var cssFilesToInject = [
   // in no particular order.  To customize the ordering, add additional
   // items here, _above_ this one.
   // 'styles/**/*.css',
+  'dependencies/trumbowyg.min.css',
+  'dependencies/bootstrap-4.css',
   'styles/custom.css',
   '!dependencies/ui/icons.svg'
 ];
@@ -69,10 +71,12 @@ var jsFilesToInject = [
   // Bring in `.js` files for any other client-side JavaScript dependencies.
   // (e.g. Lodash, Vue.js, jQuery, Bootstrap, Ember, Angular, etc.)
   // > Be sure to list dependencies that depend on each other in the right order!
+  'dependencies/jquery.js',
+  'dependencies/bootstrap.min.js',
   'dependencies/lodash.js',
   'dependencies/cloud.js',
   'dependencies/vue.js',
-  'dependencies/parasails.js',
+  'dependencies/parasails.js',  
   'dependencies/trumbowyg.min.js',
 
   //'dependencies/**/*.js',
