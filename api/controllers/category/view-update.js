@@ -32,7 +32,7 @@ module.exports = {
 
     fn: async function( {id} ) {        
 
-        let pagetTitle = "Modifica categoria";
+        let pageTitle = "Modifica categoria";
         // Items for the form
         let item = {};
         // Provides options to the select box. Only main categories will be available in the select box
@@ -46,7 +46,7 @@ module.exports = {
         catch (err) {
 
             throw { fail : {
-                pageTitle: pagetTitle ,
+                pageTitle: pageTitle ,
                 error: { title: "Errore database" , message: "Impossibile trovare la categoria richiesta" }
             } };
 
@@ -55,7 +55,7 @@ module.exports = {
         if ( _.isEmpty(item) ) {
 
             throw { fail : {
-                pageTitle: pagetTitle ,
+                pageTitle: pageTitle ,
                 error: { title: "Categoria non trovata" , message: "La categoria richiesta non esiste nel database" }
             } };
 
@@ -73,7 +73,7 @@ module.exports = {
             //
         }   
 
-        return { item: item , pageTitle: pagetTitle , categories: categories };
+        return { item: item , pageTitle: pageTitle , categories: categories };
 
     }
 

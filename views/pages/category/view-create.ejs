@@ -31,7 +31,7 @@
             </label>
             <input type="text" name="icon" class="form-control" :class="[formErrors.icon ? 'is-invalid' : '']"
                 v-model="formData.icon" maxlength="100" id="icon">
-            <cloud-error v-if="cloudError === 'iconFail'">Descrizione non valida</cloud-error>
+            <cloud-error v-if="cloudError === 'iconFail'">Icona non valida</cloud-error>
             <cloud-error v-if="formErrors.icon === 'maxLength'">Il campo può contenere al max. 100 caratteri</cloud-error>
         </div>
 
