@@ -16,7 +16,7 @@
 
     fn: async function() {   
 
-        // Provides options to the select box. Only main categories will be available in the select box
+        // Provides options to the select box. Only child-categories will be available in the select box
         let categories = [];
         
         try {

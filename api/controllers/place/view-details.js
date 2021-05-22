@@ -32,7 +32,7 @@
 
     fn: async function( {id} ) {        
 
-        let pagetTitle = "Luogo";
+        var pageTitle = "Luogo";
         // Item for the form
         let item = {};
 
@@ -44,7 +44,7 @@
         catch (err) {
 
             throw { fail : {
-                pageTitle: pagetTitle ,
+                pageTitle: pageTitle ,
                 error: { title: "Errore database" , message: "Impossibile trovare il luogo richiesto" }
             } };
 
@@ -53,7 +53,7 @@
         if ( _.isEmpty(item) ) {
 
             throw { fail : {
-                pageTitle: pagetTitle ,
+                pageTitle: pageTitle ,
                 error: { title: "Luogo non trovato" , message: "Il luogo richiesto non esiste nel database" }
             } };
 
@@ -62,9 +62,17 @@
 
             pageTitle = item.name;
 
+            var catResults = await Category.findOne({ id: item.category_id});
+
+            if ( _.isEmpty(catResults) == false ) {
+
+                item.category = catResults.name;
+
+            }
+
         }
 
-        return { item: item , pageTitle: pagetTitle };
+        return { item: item , pageTitle: pageTitle};
 
     }
 

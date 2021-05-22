@@ -246,7 +246,8 @@ parasails.registerPage('view-create', {
 
                     if ( _.isNull(match2) === false) {
 
-                        youTubeVideoId = url.split('=').slice(-1);
+                        tmpArray = url.split('=');
+                        youTubeVideoId = tmpArray[1].split('&')[0];
 
                     }
 

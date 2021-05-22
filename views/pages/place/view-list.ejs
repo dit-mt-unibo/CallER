@@ -31,12 +31,12 @@
         <thead>
             <tr>
                 <th width="5%">#</th>
-                <th width="20%">Nome</th>
-                <th with="20%">Testo</th>
-                <th style="text-align: center" width="10%">Pubblicato</th>
-                <th style="text-align: center" width="5%">Creato</th>
-                <th style="text-align: center" width="5%">Modificato</th>
-                <th width="20%"></th>
+                <th width="25%">Nome</th>
+                <th with="30%">Testo</th>
+                <th style="text-align: center" width="5%">Pubblicato</th>
+                <th style="text-align: center" width="10%">Creato</th>
+                <th style="text-align: center" width="10%">Modificato</th>
+                <th width="15%"></th>
             </tr>
         </thead>
         <tbody>
@@ -51,8 +51,8 @@
                         :class="[ item.published == 1 ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger']">                      
                     </i>                                 
                 </td>
-                <td align="center">{{ item.createdAt }}</td>
-                <td align="center">{{ item.updatedAt }}</td>
+                <td align="center">{{ new Date(item.createdAt).toLocaleString() }}</td>
+                <td align="center">{{ new Date(item.updatedAt).toLocaleString() }}</td>
                 <td align="center">
                     <a class="btn btn-primary" :href="'/place/details/' + item.id">Visualizza</a>                    
                     <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)" 

@@ -1,6 +1,6 @@
 <div id="view-create" class="container" v-cloak>
 
-    <video-preview :src="youtubeSrc"></video-preview>
+    <video-preview :src="youtubeSrc"></video-preview>    
     
     <ajax-form action="savePlace" enctype="multipart/form-data" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
         :form-rules="formRules" :form-errors.sync="formErrors" :category-id="categoryId" 
@@ -12,8 +12,7 @@
                 Nome
             </label>
             <input type="text" name="name" class="form-control" :class="[formErrors.name ? 'is-invalid' : '']" 
-                v-model="formData.name" maxlength="150" id="name" />
-            <cloud-error v-if="cloudError === 'nameFail'">Nome non valido</cloud-error>
+                v-model="formData.name" maxlength="150" id="name" />            
             <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
             <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
         </div>
@@ -28,8 +27,7 @@
             <button type="button" @click="setPublishedStatus(1)" class="btn btn-sm" :class="[published == 1 ? 'btn-success' : 'btn-outline-secondary']">
                 Sì
             </button>
-            <input type="hidden" name="published" v-model="formData.published" id="published">
-            <cloud-error v-if="cloudError === 'publishedFail'">Valore non valido</cloud-error>
+            <input type="hidden" name="published" v-model="formData.published" id="published">            
             <cloud-error v-if="formErrors.published === 'required'">Campo obbligatorio</cloud-error>            
         </div>
 
@@ -38,16 +36,14 @@
                 Introduzione <span class="small">(opzionale)</span>
             </label>
             <textarea name="intro_text" class="form-control" 
-                v-model="formData.intro_text" id="intro_text" rows="3"></textarea>
-            <cloud-error v-if="cloudError === 'introTextFail'">Introduzione non valida</cloud-error>
+                v-model="formData.intro_text" id="intro_text" rows="3"></textarea>            
         </div>
 
         <div class="form-group">
             <label :class="[formErrors.full_text ? 'text-danger' : '']">
                 Testo
             </label>
-            <textarea name="full_text" class="form-control" id="tbweditor" rows="8"></textarea>
-            <cloud-error v-if="cloudError === 'fullTextFail'">Testo non valido</cloud-error>
+            <textarea name="full_text" class="form-control" id="tbweditor" rows="8"></textarea>            
             <cloud-error v-if="formErrors.full_text === 'required'">Campo obbligatorio</cloud-error>
         </div>
 
@@ -60,8 +56,7 @@
                     id="fake-image" readonly style="background-color: #FFF;">
                 <button type="button" @click="openResources()" class="btn btn-outline-secondary">Sfoglia</button>                                
             </div>
-            <input type="file" style="display:none;" ref="file" name="image" v-on:change="setPlaceImg()">
-            <cloud-error v-if="cloudError === 'imageFail'">Impossibile caricare l'immagine</cloud-error>
+            <input type="file" style="display:none;" ref="file" name="image" v-on:change="setPlaceImg()">            
             <cloud-error v-if="formErrors.image === 'required'">Campo obbligatorio</cloud-error>
             <cloud-error v-if="formErrors.image === 'custom'">Estensione non valida</cloud-error>
         </div> 
@@ -74,8 +69,7 @@
                 <input type="text" ref="newTag" class="form-control" :class="[formErrors.tags ? 'is-invalid' : '']" maxlength="50">
                 <button type="button" @click="addTag()" class="btn btn-outline-secondary">Aggiungi</button>
                 <input type="hidden" name="tags" v-model="formData.tags" id="tags">                
-            </div>
-            <cloud-error v-if="cloudError === 'tagsFail'">Valore non valido</cloud-error>
+            </div>            
             <ul class="list-group">
                 <li class="list-group-item" v-for="tag in arrayTags">
                     <div style="display: inline-block; width:50%;">{{tag}}</div>
@@ -97,8 +91,6 @@
                 <input type="text" name="long" class="form-control" :class="[formErrors.long ? 'is-invalid' : '']"
                     v-model="formData.long" id="long" autocomplete="off">
             </div>
-            <cloud-error v-if="cloudError === 'latFail'">Valore latitudine non valido</cloud-error>
-            <cloud-error v-if="cloudError === 'longFail'">Valore longitudine non valido</cloud-error>
             <cloud-error v-if="formErrors.lat === 'custom'">Valore latitudine non valido</cloud-error>
             <cloud-error v-if="formErrors.long === 'custom'">Valore longitudine non valido</cloud-error>
         </div>
@@ -112,8 +104,7 @@
                     v-model="formData.video" id="video" 
                     placeholder="url video es: https://www.youtube.com/watch?v=xxxxx" autocomplete="off" />
                 <button type="button" @click="videoPreview()" class="btn btn-outline-secondary">Anteprima</button>
-            </div>            
-            <cloud-error v-if="cloudError === 'video'">Url video non valido</cloud-error>            
+            </div>      
             <cloud-error v-if="formErrors.video === 'custom'">Formato url non corretto</cloud-error>
         </div>
 
@@ -122,8 +113,7 @@
                 Audio <span class="small">(opzionale)</span>
             </label>
             <input type="text" name="audio" class="form-control" :class="[formErrors.audio ? 'is-invalid' : '']" 
-                v-model="formData.audio" id="audio" placeholder="url file audio" autocomplete="off" />
-            <cloud-error v-if="cloudError === 'audio'">Url audio non valido</cloud-error>            
+                v-model="formData.audio" id="audio" placeholder="url file audio" autocomplete="off" />                 
             <cloud-error v-if="formErrors.audio === 'custom'">Formato url non corretto</cloud-error>
         </div>
 
@@ -137,10 +127,15 @@
                 <% categories.forEach(element => { %>
                     <option value="<%= element.id %>"><%= element.name %></option>
                 <% }) %>                
-            </select>
-            <cloud-error v-if="cloudError === 'categoryIdFail'">Categoria selezionata non valida</cloud-error>
+            </select>            
             <cloud-error v-if="formErrors.category_id === 'required'">Campo obbligatorio</cloud-error>
         </div>
+
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <cloud-error  v-if="cloudError === 'saveFail'" >Salvataggio non riuscito, controllare i dati</cloud-error>
+            </div>
+        </div>    
         
         <div class="row justify-content-center">
 
@@ -151,7 +146,7 @@
                 <ajax-button type="submit" :syncing="syncing">Salva</ajax-button>
             </div>
 
-        </div>                
+        </div>                 
     
     </ajax-form>
 

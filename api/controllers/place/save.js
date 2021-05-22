@@ -4,8 +4,6 @@
  * @description save or update place
  */
 
-const Place = require('../../models/Place');
-
  module.exports = {
 
     inputs: {
@@ -73,79 +71,27 @@ const Place = require('../../models/Place');
 
     exits: {
 
-        nameFail: {
-            description: 'validation field name failed',
-            statusCode: 409
-        },
-        introTextFail: {
-            description: 'validation field intro_text failed',
-            statusCode: 409
-        },
-        fullTextFail: {
-            description: 'validation field full_text failed',
-            statusCode: 409
-        },
-        imageFail: {
-            description: 'validation field image failed',
-            statusCode: 409
-        },
-        videoFail: {
-            description: 'validation field video failed',
-            statusCode: 409
-        },
-        videoBlockFail: {
-            description: 'validation field video_block failed',
-            statusCode: 409
-        },
-        audioFail: {
-            description: 'validation field audio failed',
-            statusCode: 409
-        },
-        audioBlockFail: {
-            description: 'validation field audio_block failed',
-            statusCode: 409
-        },
-        photoGalleryFail: {
-            description: 'validation field photo_gallery failed',
-            statusCode: 409
-        },
-        photoGalleryBlockFail: {
-            description: 'validation field photo_gallery_block failed',
-            statusCode: 409
-        },
-        tagsFail: {
-            description: 'validation field tags failed',
-            statusCode: 409
-        },
-        latFail: {
-            description: 'validation field lat failed',
-            statusCode: 409
-        },
-        longFail: {
-            description: 'validation field long failed',
-            statusCode: 409
-        },
-        publishedFail: {
-            description: 'validation field published failed',
-            statusCode: 409
-        },
-        categoryIdFail: {
-            description: 'validation field category_id failed',
+        saveFail: {
+            description: 'when save/update query fails',
             statusCode: 409
         },
         uploadFail: {
-            description: 'when upload failed',
+            description: 'when image upload fails',
             statusCode: 409
-        },
-        sizeFail: {
-            description: 'when image is too large',
-            statusCode: 409
-        }        
+        }      
 
     },
 
     fn: async function(inputs, exits) {
         
+        var session = this.req.session;
+
+        if ( _.isEmpty(inputs.video) === false ) {
+
+            inputs.video = youtubeEmbedUrl(inputs.video);
+
+        }
+
         if ( _.isUndefined(inputs.id) ) {
             
             this.req.file('image').upload({
@@ -158,31 +104,29 @@ const Place = require('../../models/Place');
                if(err) return exits.uploadFail();  
 
                inputs.image = uploadedFiles[0].filename;
-               inputs.imageUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');
+               inputs.imageUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');                            
 
-               var result = await Place.create(inputs)               
-                        .intercept( {name: 'UsageError'} , (err) => { return exits.nameFail(); } )
-                        .intercept( {intro_text: 'UsageError'} , (err) => { return exits.introTextFail(); } )
-                        .intercept( {full_text: 'UsageError'} , (err) => { return exits.fullTextFail(); } )
-                        .intercept( {image: 'UsageError'} , (err) => { return exits.imageFail(); } )
-                        .intercept( {imageUID: 'UsageError'} , (err) => { return exits.imageFail(); } )
-                        .intercept( {video: 'UsageError'} , (err) => { return exits.videoFail(); } )
-                        .intercept( {video_block: 'UsageError'} , (err) => { return exits.videoBlockFail(); } )
-                        .intercept( {audio: 'UsageError'} , (err) => { return exits.audioFail(); } )
-                        .intercept( {audio_block: 'UsageError'} , (err) => { return exits.audioBlockFail(); } )
-                        .intercept( {photo_gallery: 'UsageError'} , (err) => { return exits.photoGalleryFail(); } )
-                        .intercept( {photo_gallery_block: 'UsageError'} , (err) => { return exits.photoGalleryBlockFail(); } )
-                        .intercept( {tags: 'UsageError'} , (err) => { return exits.tagsFail(); } )
-                        .intercept( {lat: 'UsageError'} , (err) => { return exits.latFail(); } )
-                        .intercept( {long: 'UsageError'} , (err) => { return exits.longFail(); } )
-                        .intercept( {published: 'UsageError'} , (err) => { return exits.publishedFail(); } )
-                        .intercept( {category_id: 'UsageError'} , (err) => { return exits.categoryIdFail(); } );
-
-                if (result) {
-
-                    return exits.success();
+                try {
                     
-                }                
+                    var result = await Place.create(inputs)
+                    .intercept( (err) => {                         
+                        
+                        return exits.saveFail();
+
+                    } )                    
+                    .fetch();
+
+                }   
+                catch(err) {
+                    //
+                }                                     
+
+                if (result) {                  
+
+                    session.flash = {type: 'success' , message: 'Dati luogo salvati correttamente'};
+                    return exits.success(); 
+
+                }                              
         
             });             
 
@@ -202,15 +146,59 @@ const Place = require('../../models/Place');
 
             }
 
-        }
-        
-        this.req.session.flash = {type: 'success' , message: 'Dati luogo salvati correttamente'};        
+            this.req.session.flash = {type: 'success' , message: 'Dati luogo salvati correttamente'};
+                
+            return exits.success();  
+
+        }              
         
         /*
          * Redirects to the places homepage.
          * Redirection is provided by the method submittedForm of parasails object see view-create.page.js
          */
 
+    }    
+
+}
+
+/**
+ * Returns embed url for youtube video
+ * @param url value sent by user
+ * @returns string
+ */
+function youtubeEmbedUrl(url) {
+
+    var embedUrl = "https://www.youtube.com/embed/";    
+    var youTubeVideoId = "";
+    
+    const pattern1 = /^https:\/\/youtu.be\//;
+    const match1 = url.match(pattern1);
+
+    if ( _.isNull(match1) === false) {
+
+        youTubeVideoId = url.split('/').slice(-1);
+
     }
+    else {
+        
+        const pattern2 = /^https:\/\/www.youtube.com\/watch\?v=/;
+        const match2 = url.match(pattern2);
+
+        if ( _.isNull(match2) === false) {
+
+            tmpArray = url.split('=');
+            youTubeVideoId = tmpArray[1].split('&')[0];
+
+        }
+
+    }
+
+    if ( _.isEmpty(youTubeVideoId) === false ) {
+
+        return embedUrl  + youTubeVideoId;        
+
+    }       
+
+    return "";
 
 }

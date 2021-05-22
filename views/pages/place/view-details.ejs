@@ -1,0 +1,126 @@
+<div id="view-details" class="row justify-content-center" v-cloak>
+
+    <nav class="col-10">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-tab1-tab" data-toggle="tab" href="#nav-tab1" role="tab" aria-controls="nav-tab1" aria-selected="true">
+                Dati
+            </a>
+            <a class="nav-item nav-link" id="nav-tab2-tab" data-toggle="tab" href="#nav-tab2" role="tab" aria-controls="nav-tab2" aria-selected="false">
+                Immagine
+            </a>
+            <a class="nav-item nav-link" id="nav-tab3-tab" data-toggle="tab" href="#nav-tab3" role="tab" aria-controls="nav-tab3" aria-selected="false">
+                Video
+            </a>
+            <a class="nav-item nav-link" id="nav-tab3-tab" data-toggle="tab" href="#nav-tab4" role="tab" aria-controls="nav-tab4" aria-selected="false">
+                Audio
+            </a>
+            <a class="nav-item nav-link" id="nav-tab3-tab" data-toggle="tab" href="#nav-tab5" role="tab" aria-controls="nav-tab5" aria-selected="false">
+                Quiz
+            </a>
+        </div>
+    </nav>
+
+    <div class="col-10">
+
+        <div class="tab-content" id="nav-tabContent">
+
+            <div class="tab-pane p-4 fade show active" id="nav-tab1" role="tabpanel" aria-labelledby="nav-tab1-tab">                
+                <div class="mtb-4">
+                    <p v-if="item.published == 1" class="text-success">
+                        <i class="bi-check-circle-fill mr-1"></i>Pubblicato
+                    </p>
+                    <p v-if="item.published == 0" class="text-danger">
+                        <i class="bi-x-circle-fill mr-1"></i>Non pubblicato
+                    </p>                   
+                </div>
+                <div>
+                    <h5>Introduzione:</h5>
+                    <div class="border rounded p-4" style="height: 150px; overflow-y: scroll;">
+                        {{ item.intro_text }}
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <h5>Testo:</h5>
+                    <div class="border rounded p-4" style="height: 300px; overflow-y: scroll;">
+                        <%- item.full_text %> 
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h5>Tags:                        
+                        <% item.tags.forEach(tag => { %>
+                         <small class="mrl-2 text-primary">@<%= tag %></small>
+                        <% }) %>
+                    </h5>
+                </div> 
+                <div class="mt-3">
+                    <h5>Categoria: <small><%= item.category %></small></h5>
+                </div>           
+                <div class="mt-3">
+                    <h5>Creato il: <small><%= new Date(item.createdAt).toLocaleString() %></small></h5>
+                </div>
+                <div class="mt-3">
+                    <h5>Ultima modifica: <small><%= new Date(item.updatedAt).toLocaleString() %></small></h5>
+                </div>
+            </div>
+
+            <div class="tab-pane p-4 fade" align="center" id="nav-tab2" role="tabpanel" aria-labelledby="nav-tab2-tab">                
+                <div class="card" style="width:50%">
+                    <img id="img-box" src="<%- '/images/contenuti/' + item.imageUID %>" width="100%">
+                    <div id="img-form" class="form-group">
+                        <div class="input-group">                            
+                            <input type="text" name="fake-image" :value.sync="placeImg.name" class="form-control"
+                                id="fake-image" readonly style="background-color: #FFF;">
+                            <button type="button" @click="openResources()" class="btn btn-outline-secondary">Sfoglia</button>                                
+                        </div>
+                        <input type="file" style="display:none;" ref="file" name="image" v-on:change="setPlaceImg()">            
+                        <!--<cloud-error v-if="formErrors.image === 'required'">Campo obbligatorio</cloud-error>
+                        <cloud-error v-if="formErrors.image === 'custom'">Estensione non valida</cloud-error>-->
+                    </div>
+                    <div class="card-body" align="center">                                             
+                        <button type="button" @click="showImageForm()" class="btn btn-primary">Modifica</button>
+                    </div>                    
+                </div>
+            </div>
+            <div class="tab-pane p-4 fade" align="center" id="nav-tab3" role="tabpanel" aria-labelledby="nav-tab3-tab">
+                <div class="card" style="width:50%">
+                    <div class="card-body">
+                        <p v-if="!item.video" class="card-text">
+                            Non hai ancora aggiunto un video
+                        </p>
+                        <iframe v-if="item.video" width="560" height="315" src="<%- item.video %>" 
+                            title="YouTube video player" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                        <div style="margin-top:10px;">
+                            <button type="button" v-if="!item.video" class="btn btn-success">Aggiungi</button>
+                            <button type="button" v-if="item.video" class="btn btn-primary">Modifica</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane p-4 fade" align="center" id="nav-tab4" role="tabpanel" aria-labelledby="nav-tab4-tab">
+                <div class="card" style="width:50%">
+                    <div class="card-body">
+                        <p v-if="!item.audio" class="card-text">
+                            Non hai ancora aggiunto un audio
+                        </p>                  
+                        <div style="margin-top:10px;">
+                            <button type="button" v-if="!item.audio" class="btn btn-success">Aggiungi</button>
+                            <button type="button" v-if="item.audio" class="btn btn-primary">Modifica</button>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane p-4 fade" align="center" id="nav-tab5" role="tabpanel" aria-labelledby="nav-tab5-tab">
+                <div class="card" style="width:50%">
+                    <div class="card-body">
+                      <p class="card-text">No Quiz No Party</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/js/pages/place/view-details.page.js"></script>

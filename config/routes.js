@@ -33,6 +33,9 @@ module.exports.routes = {
   'GET /place/edit/:id': {    
     action: 'place/view-update'
   },
+  'GET /place/details/:id': {
+    action: 'place/view-details'
+  },
   'POST /place/save': {    
     action: 'place/save'
   },
