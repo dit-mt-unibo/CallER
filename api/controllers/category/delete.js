@@ -42,7 +42,7 @@ module.exports = {
              * sets field parent_id of children categories to 'Default'
              * sets field category_id of associated places to 'Default'
              */            
-            await Category.update({ parent_id: 'id' }).set( { parent_id: 1 } )
+            await Category.update({ parent_id: id }).set( { parent_id: 1 } )
                 .intercept( (err) => {
                     
                     return { 
@@ -97,7 +97,7 @@ module.exports = {
 
         }        
 
-       return this.res.redirect('/category');
+       return this.res.redirect('/category/list');
 
     }
 

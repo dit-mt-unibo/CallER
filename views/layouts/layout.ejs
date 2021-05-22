@@ -39,9 +39,13 @@
 
       <%- partial('../partials/menu.ejs') %> 
     
-      <div class="row p-2" style="background-color: #ECEFF1;">
-        <h2 style="color:#1565C0"><%= pageTitle %></h2> 
-      </div>               
+      <% if ( typeof pageTitle != 'undefined' ) { %>
+
+        <div class="row p-2" style="background-color: #ECEFF1;">
+          <h2 style="color:#1565C0"><%= pageTitle %></h2> 
+        </div>
+       
+      <% } %>                  
 
       <div class="container-fluid mt-3 mb-3">
         <%- body %> 

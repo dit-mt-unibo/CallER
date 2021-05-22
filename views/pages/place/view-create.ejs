@@ -46,8 +46,7 @@
             <label :class="[formErrors.full_text ? 'text-danger' : '']">
                 Testo
             </label>
-            <textarea name="full_text" class="form-control" 
-                v-model="formData.full_text" id="tbweditor" rows="8"></textarea>
+            <textarea name="full_text" class="form-control" id="tbweditor" rows="8"></textarea>
             <cloud-error v-if="cloudError === 'fullTextFail'">Testo non valido</cloud-error>
             <cloud-error v-if="formErrors.full_text === 'required'">Campo obbligatorio</cloud-error>
         </div>
