@@ -48,6 +48,12 @@ module.exports.routes = {
   'POST /place/fulltext-update': {
     action: 'place/fulltext-update'
   },
+  'POST /place/image-update': {
+    action: 'place/image-update'
+  },
+  'POST /place/video-update': {
+    action: 'place/video-update'
+  },
 
 
 

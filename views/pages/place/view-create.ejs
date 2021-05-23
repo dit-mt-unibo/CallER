@@ -102,7 +102,7 @@
             <div class="input-group">
                 <input type="text" name="video" class="form-control" :class="[formErrors.video ? 'is-invalid' : '']" 
                     v-model="formData.video" id="video" 
-                    placeholder="url video es: https://www.youtube.com/watch?v=xxxxx" autocomplete="off" />
+                    placeholder="url video es: https://www.youtube.com/embed/xxx" autocomplete="off" />
                 <button type="button" @click="videoPreview()" class="btn btn-outline-secondary">Anteprima</button>
             </div>      
             <cloud-error v-if="formErrors.video === 'custom'">Formato url non corretto</cloud-error>

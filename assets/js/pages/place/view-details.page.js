@@ -10,22 +10,11 @@ parasails.registerPage('view-details', {
         // place
         item: '',
 
-        // object {type: 'error|success' , message:'text message'}. Works in pair with flash-message.compontent.js
-        flashMessage: '',
-
-        // Trumbowyg modal editor
-        syncing: false,
-        formMessage: '',
-        required: true,
-
         // Category ID. Select box
         categoryId: '',
 
         // Place status published/unpublished
         published: '',
-
-        // Place image
-        placeImg: '',
 
         // Youtube url for video preview
         youtubeSrc: '',
@@ -38,7 +27,7 @@ parasails.registerPage('view-details', {
     // Populates formData only in update mode.
     beforeMount: function () {
         
-        this.item = window.SAILS_LOCALS['item'];        
+        this.item = window.SAILS_LOCALS['item'];   
         
     },
     mounted: async function () {
@@ -54,9 +43,7 @@ parasails.registerPage('view-details', {
                 ['fullscreen']
             ],
             removeformatPasted: true
-        } );
-
-        $( "#img-form" ).fadeOut();
+        } );        
 
     },
 
@@ -109,25 +96,6 @@ parasails.registerPage('view-details', {
 
         },
 
-        showImageForm() {
-            $( "#img-box" ).fadeOut();
-            $( "#img-form" ).fadeIn();
-        },
-
-        // Opens local resources
-        openResources() {
-            
-            this.$refs.file.click();
-
-        },
-
-        // Sets place image
-        setPlaceImg() {
-
-            this.placeImg = this.$refs.file.files[0];
-
-        },
-
         // Opens video preview modal
         videoPreview() {
 
@@ -169,7 +137,6 @@ parasails.registerPage('view-details', {
             }
 
         }
-
-
+        
     }
 });

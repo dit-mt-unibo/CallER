@@ -1,4 +1,4 @@
-<div id="view-details" class="row justify-content-center" v-cloak>
+<div id="view-details" class="row justify-content-center" v-cloak>    
 
     <nav class="col-10">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -18,7 +18,7 @@
                 Quiz
             </a>
         </div>
-    </nav>
+    </nav>    
 
     <div class="col-10">
 
@@ -51,6 +51,9 @@
                          <small class="mrl-2 text-primary">@<%= tag %></small>
                         <% }) %>
                     </h5>
+                </div>
+                <div class="mt-3">
+                    <h5>Geolocalizzazione: <small><%= item.lat %>,<%= item.long %></small></h5>
                 </div> 
                 <div class="mt-3">
                     <h5>Categoria: <small><%= item.category %></small></h5>
@@ -64,38 +67,11 @@
             </div>
 
             <div class="tab-pane p-4 fade" align="center" id="nav-tab2" role="tabpanel" aria-labelledby="nav-tab2-tab">                
-                <div class="card" style="width:50%">
-                    <img id="img-box" src="<%- '/images/contenuti/' + item.imageUID %>" width="100%">
-                    <div id="img-form" class="form-group">
-                        <div class="input-group">                            
-                            <input type="text" name="fake-image" :value.sync="placeImg.name" class="form-control"
-                                id="fake-image" readonly style="background-color: #FFF;">
-                            <button type="button" @click="openResources()" class="btn btn-outline-secondary">Sfoglia</button>                                
-                        </div>
-                        <input type="file" style="display:none;" ref="file" name="image" v-on:change="setPlaceImg()">            
-                        <!--<cloud-error v-if="formErrors.image === 'required'">Campo obbligatorio</cloud-error>
-                        <cloud-error v-if="formErrors.image === 'custom'">Estensione non valida</cloud-error>-->
-                    </div>
-                    <div class="card-body" align="center">                                             
-                        <button type="button" @click="showImageForm()" class="btn btn-primary">Modifica</button>
-                    </div>                    
-                </div>
+                <image-form :item="item"></image-form>
             </div>
             <div class="tab-pane p-4 fade" align="center" id="nav-tab3" role="tabpanel" aria-labelledby="nav-tab3-tab">
-                <div class="card" style="width:50%">
-                    <div class="card-body">
-                        <p v-if="!item.video" class="card-text">
-                            Non hai ancora aggiunto un video
-                        </p>
-                        <iframe v-if="item.video" width="560" height="315" src="<%- item.video %>" 
-                            title="YouTube video player" frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-                        <div style="margin-top:10px;">
-                            <button type="button" v-if="!item.video" class="btn btn-success">Aggiungi</button>
-                            <button type="button" v-if="item.video" class="btn btn-primary">Modifica</button>
-                        </div>
-                    </div>
-                </div>
+                <video-form :item="item" @preview="videoPreview()"></video-form>
+                <video-preview :src="youtubeSrc"></video-preview>
             </div>
             <div class="tab-pane p-4 fade" align="center" id="nav-tab4" role="tabpanel" aria-labelledby="nav-tab4-tab">
                 <div class="card" style="width:50%">
@@ -123,4 +99,8 @@
 
 </div>
 
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/image-form.component.js"></script>
+<script src="/js/components/video-form.component.js"></script>
+<script src="/js/components/video-preview.component.js"></script>
 <script src="/js/pages/place/view-details.page.js"></script>

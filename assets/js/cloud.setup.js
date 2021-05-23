@@ -21,6 +21,8 @@ Cloud.setup({
     "saveUser": { "verb":"POST", "url":"/user/save" },
     "savePlace": { "verb":"POST" , "url":"/place/save" },
     "updateFullText": { "verb":"POST" , "url":"/place/fulltext-update" },
+    "updateImage": { "verb":"POST" , "url":"/place/image-update" },
+    "updateVideo": { "verb":"POST" , "url":"/place/video-update" },
     "publishPlace": { "verb":"POST" , "url":"/place/publish" },
   }
   /* eslint-enable */
