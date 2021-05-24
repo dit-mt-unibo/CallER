@@ -92,6 +92,12 @@
 
         }
 
+      if (_.isEmpty(inputs.audio) === false) {
+
+        inputs.audio = vocarooEmbedUrl(inputs.audio);
+
+      } 
+
         if ( _.isUndefined(inputs.id) ) {
             
             this.req.file('image').upload({
@@ -200,5 +206,34 @@ function youtubeEmbedUrl(url) {
     }       
 
     return "";
+
+}
+
+/**
+ * Returns embed url for vocaroo audio
+ * @param url value sent by user
+ * @returns string
+ */
+function vocarooEmbedUrl(url) {
+
+  var embedUrl = "https://vocaroo.com/embed/";
+  var vocarooAudioId = "";
+
+  // es. https://voca.ro/1k4QJmNqQgnu
+  const pattern = /^https:\/\/voca.ro\/|^https:\/\/www.vocaroo.com\/|^https:\/\/vocaroo.com\//;
+  const match = url.match(pattern);
+
+  if (_.isNull(match) === false) {
+
+    vocarooAudioId = url.split('/').slice(-1);
+
+  }
+  
+  if (_.isEmpty(vocarooAudioId) === false) {
+    return embedUrl + vocarooAudioId;
+  }
+
+  // if all fails, return the url as is, let's trust the user!
+  return url;
 
 }

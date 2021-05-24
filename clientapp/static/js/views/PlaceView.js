@@ -24,8 +24,10 @@ export default class extends AbstractView {
 
       html += "<div class='titolo'>" + item.name + "</div>";
       //html += "<div class='container'>";
-      html += " <img class='img-fluid w-100' src='" + getImageUrl(item.imageUID) + "'></img>";
+      html += " <img class='img-fluid w-90' src='" + getImageUrl(item.imageUID) + "'></img>";
       //html += "</div>";
+
+      html += "<hr></hr>";
 
       html += "<div class='container'>";
       html += item.intro_text;
@@ -47,11 +49,10 @@ export default class extends AbstractView {
 
       if (item.audio) {
         html += "<div class='container-fluid'>";
-        html += "<label>Audio: </label>" + item.audio + "<br/>";
-        html += " <iframe src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/294796516&color=%23000000&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&show_artwork=false'></iframe>";
+        html += "<label>Ascolta questo audio: </label>" + "<br/>";
+        html += " <iframe width='100%' height='60' src='" + item.audio +"'></iframe>";
         html += "</div>";
       }
-
       html += "<hr></hr>";
 
       if (item.video) {
@@ -69,7 +70,7 @@ export default class extends AbstractView {
       
       // close main container
       // html += "</div>";
-
+      
     } else {
       html += "<marquee>" + "It's not working!" + "</marquee>";
       html += "</div>";
