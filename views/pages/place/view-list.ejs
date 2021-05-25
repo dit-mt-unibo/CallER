@@ -9,7 +9,7 @@
     
     <modal-delete :item-id="deleteItemId" :action="'/place/delete/'">
         <div slot="body">
-            <p>Vuoi eliminare il luogo?</p>
+            <p>Stai per eliminare un contenuto, vuoi proseguire?</p>
         </div>
     </modal-delete>
 
@@ -18,12 +18,12 @@
     <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
 
     <div class="container-fluid" style="margin:30px 0">
-        <a class="btn btn-success" href="/place/add">Nuovo luogo</a>
+        <a class="btn btn-success" href="/place/add">Nuovo contenuto</a>
     </div>    
 
 <%  if ( items.length == 0 ) { %>
     
-    <%- partial('../../partials/no-result.ejs' , {message: "Non sono stati ancora inseriti dei luoghi. Utilizza il bottone Nuovo luogo per iniziare."}) %>
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono stati ancora inseriti dei contenuti. Utilizza il bottone Nuovo contenuto per iniziare."}) %>
     
 <% } else { %>    
 

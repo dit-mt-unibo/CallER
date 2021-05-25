@@ -32,7 +32,7 @@
 
     fn: async function( {id} ) {        
 
-        var pageTitle = "Luogo";
+        var pageTitle = "Contenuto";
         // Item for the form
         let item = {};
 
@@ -45,7 +45,7 @@
 
             throw { fail : {
                 pageTitle: pageTitle ,
-                error: { title: "Errore database" , message: "Impossibile trovare il luogo richiesto" }
+                error: { title: "Errore database" , message: "Impossibile trovare il contenuto richiesto" }
             } };
 
         }
@@ -54,7 +54,7 @@
 
             throw { fail : {
                 pageTitle: pageTitle ,
-                error: { title: "Luogo non trovato" , message: "Il luogo richiesto non esiste nel database" }
+                error: { title: "Contenuto non trovato" , message: "Il contenuto richiesto non esiste nel database" }
             } };
 
         }

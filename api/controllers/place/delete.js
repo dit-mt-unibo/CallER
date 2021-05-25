@@ -35,7 +35,7 @@
                             sqlFail: { 
                                 error: { 
                                     title: 'Errore database' , 
-                                    message: 'La query di delete luogo ha prodotto un errore'
+                                    message: 'La query di delete contenuto ha prodotto un errore'
                                 } 
                             } 
                         };
@@ -52,12 +52,12 @@
             fs.unlink(filePath, function(err) {});
             fs.unlink(filePathTmp, function(err) { });
 
-            this.req.session.flash = {type: 'success' , message: 'Luogo eliminato correttamente'};
+            this.req.session.flash = {type: 'success' , message: 'Dati eliminati correttamente'};
 
         }
         else {
 
-            this.req.session.flash = {type: 'error' , message: 'Eliminazione luogo non riuscita'};
+            this.req.session.flash = {type: 'error' , message: 'Eliminazione non riuscita'};
 
         } 
         
