@@ -129,7 +129,7 @@
 
                 if (result) {                  
 
-                    session.flash = {type: 'success' , message: 'Dati luogo salvati correttamente'};
+                    session.flash = {type: 'success' , message: 'Dati salvati correttamente'};
                     return exits.success(); 
 
                 }                              
@@ -148,11 +148,11 @@
 
             if ( _.isUndefined(result) ) {
 
-                this.req.session.flash = {type: 'error' , message: 'Aggiornamento luogo non riuscito'};
+                this.req.session.flash = {type: 'error' , message: 'Aggiornamento dati non riuscito'};
 
             }
 
-            this.req.session.flash = {type: 'success' , message: 'Dati luogo salvati correttamente'};
+            this.req.session.flash = {type: 'success' , message: 'Dati salvati correttamente'};
                 
             return exits.success();  
 

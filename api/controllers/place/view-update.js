@@ -32,7 +32,7 @@
 
     fn: async function( {id} ) {        
 
-        let pageTitle = "Modifica luogo";
+        let pageTitle = "Modifica contenuto";
         // Item for the form
         let item = {};
         // Provides options to the select box. Only child-categories will be available in the select box
@@ -59,7 +59,7 @@
 
             throw { fail : {
                 pageTitle: pageTitle ,
-                error: { title: "Errore database" , message: "Impossibile trovare il luogo richiesto" }
+                error: { title: "Errore database" , message: "Impossibile trovare il contenuto richiesto" }
             } };
 
         }
@@ -68,7 +68,7 @@
 
             throw { fail : {
                 pageTitle: pageTitle ,
-                error: { title: "Luogo non trovato" , message: "Il luogo richiesto non esiste nel database" }
+                error: { title: "Contenuto non trovato" , message: "Il contenuto richiesto non esiste nel database" }
             } };
 
         }

@@ -31,7 +31,7 @@
             //
         }    
 
-        return { pageTitle: "Nuovo luogo" , categories: categories };
+        return { pageTitle: "Nuovo contenuto" , categories: categories };
 
     }
 

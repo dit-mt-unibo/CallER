@@ -25,7 +25,7 @@ module.exports = {
 
     fn: async function () {        
 
-        let pageTitle = "Luoghi"; // page title
+        let pageTitle = "Contenuti"; // page title
         let flash = ''; // message to be displayed on the page when session.flash is not empty
         
         var items = []; // places    
