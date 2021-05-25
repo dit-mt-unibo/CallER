@@ -2,7 +2,7 @@ import AbstractView from './AbstractView.js';
 import { u, apiUrl } from '../lib.js';
 
 function getImageUrl(imageName) {
-  return apiUrl + "/images/contenuti/" + imageName;
+  return apiUrl() + "/images/contenuti/" + imageName;
 }
 
 export default class extends AbstractView {
@@ -16,7 +16,7 @@ export default class extends AbstractView {
 
     var html = ""; //"<div class='container'>";
     
-    var url = apiUrl + '/place/' + this.placeID;
+    var url = apiUrl() + '/place/' + this.placeID;
     var response = await fetch(url);
     // Begin accessing JSON data here
     var item = await response.json();

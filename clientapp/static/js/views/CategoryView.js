@@ -12,7 +12,7 @@ export default class extends AbstractView {
 
     var html = "<div class='container'>";
 
-    var url = apiUrl + '/category/' + this.categoryID;
+    var url = apiUrl() + '/category/' + this.categoryID;
     var response = await fetch(url);
     // Begin accessing JSON data here
     var data = await response.json();

@@ -7,5 +7,9 @@ export function u(url) {
   return `${url}`;
 }
 
-export const apiUrl = 'http://localhost:1337'; // for development only
+export function apiUrl() {
+  var host = window.location.host
+  console.log(host);
+  return 'http://' + host + ':1337';
+}
 

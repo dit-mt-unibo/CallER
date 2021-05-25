@@ -13,13 +13,13 @@ export default class extends AbstractView {
     html +="<div class='container'>";
 
     var request = new XMLHttpRequest();
-    var url = apiUrl + '/category';
+    var url = apiUrl() + '/category';
     var response = await fetch(url);
     // Begin accessing JSON data here
     var data = await response.json();
     var count = 0;
- 
-    if (response.status >= 200 && request.status < 400) {
+
+    if (response.status >= 200 && response.status < 400) {
 
       // tabella con 2 icone su ogni riga (ma utilizzando una singola row entity..)
       html += "<div class='row'>";
