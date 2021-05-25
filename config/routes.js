@@ -54,6 +54,9 @@ module.exports.routes = {
   'POST /place/video-update': {
     action: 'place/video-update'
   },
+  'POST /place/audio-update': {
+    action: 'place/audio-update'
+  },  
 
 
 

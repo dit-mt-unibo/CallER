@@ -23,6 +23,7 @@ Cloud.setup({
     "updateFullText": { "verb":"POST" , "url":"/place/fulltext-update" },
     "updateImage": { "verb":"POST" , "url":"/place/image-update" },
     "updateVideo": { "verb":"POST" , "url":"/place/video-update" },
+    "updateAudio": { "verb":"POST" , "url":"/place/audio-update"},
     "publishPlace": { "verb":"POST" , "url":"/place/publish" },
   }
   /* eslint-enable */
