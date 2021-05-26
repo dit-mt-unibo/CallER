@@ -9,7 +9,6 @@ export function u(url) {
 
 export function apiUrl() {
   var host = window.location.host
-  console.log(host);
   return 'http://' + host + ':1337';
 }
 

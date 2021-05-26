@@ -22,7 +22,11 @@ export default class extends AbstractView {
     var item = await response.json();
     if (response.status >= 200 && response.status < 400) {
 
-      html += "<div class='titolo'>" + item.name + "</div>";
+      var parent = u('/categorie/' + item.category_id);
+      html += "<div class='container'><div class='row bg-light'>";
+      html += "<div class='col titolo'><a href='" + parent + "' data-link >&lt;</a></div>"
+      html += "<div class='col-8 titolo'>" + item.name + "</div><div class='col'>&nbsp;</div>";
+      html += "</div>";
 
       html += "<div class='container coords'>";
       html += "<p>lat: " + item.lat + " , long : " + item.long + "&nbsp;<i class='fas fa-map-marker-alt'></i></p>";
@@ -56,7 +60,6 @@ export default class extends AbstractView {
       html += "<div class='container mb-2'>";
       html += "<label>Tags: </label>&nbsp;" + item.tags;
       html += "</div>";
-      html += "<div class='mx-auto text-center'><a class='btn btn-primary' href='" + u('/categorie/' + item.category_id) + "' data-link>Altri contenuti</a></div>";
       
       // close main container
       // html += "</div>";

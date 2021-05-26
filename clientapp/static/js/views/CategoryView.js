@@ -17,16 +17,27 @@ export default class extends AbstractView {
     // Begin accessing JSON data here
     var data = await response.json();
     if (response.status >= 200 && response.status < 400) {
-      
-      html += "<div class='titolo'>" + data.item.name + "</div>";
+
+      var parent = data.item.parent_id
+      if (parent == null) {
+        parent = '/';
+      } else {
+        parent = u('/categorie/' + data.item.parent_id);
+      }
+
+      html += "<div class='container'><div class='row bg-light'>";
+      html += "<div class='col titolo'><a href='" + parent + "' data-link >&lt;</a></div>"
+      html += "<div class='col-8 titolo'>" + data.item.name + "</div><div class='col'>&nbsp;</div>";
+      html += "</div>";
+      // html += "<div class='titolo'>" + data.item.name + "</div>";
       html += "<div class='container'>" + data.item.description + "</div><span>&nbsp;</span>";
 
       // child categories
       html += "<div class='container'>";
       data.childrenCategories.forEach((childCat) => {
-        html += "<div class='card card-inverse mb-3 text-center' style='background-color: blue; border-color: #333;'>";
+        html += "<div class='card p-1 text-center bg-primary'>";
         html += "<div class='card-block'>";
-        html += "<a class='card-title' href='" + u('/categorie/' + childCat.id)  + "' data-link>" + childCat.name + "</a>";
+        html += "<a class='bg-primary text-white font-weight-bold' href='" + u('/categorie/' + childCat.id)  + "' data-link>" + childCat.name + "</a>";
         html += "</div></div>";
       })
       html += "</div>";
@@ -34,13 +45,13 @@ export default class extends AbstractView {
       // child places
       html += "<div class='container'>";
       data.childrenPlaces.forEach((childPlace) => {
-        html += "<div class='card text-center' style='color: green; background-color: white; border-color: green;'>";
+        html += "<div class='card p-1 text-center text-success' >";
         html += "<div class='card-block'>";
-        html += "<a class='card-title' href='" + u('/contenuti/' + childPlace.id) + "' data-link>" + childPlace.name + "</a>";
+        html += "<a class='text-success font-weight-bold' href='" + u('/contenuti/' + childPlace.id) + "' data-link>" + childPlace.name + "</a>";
         html += "</div></div>";
       })
       html += "</div>";
-
+      
       // close main container
       html += "</div>";
 
