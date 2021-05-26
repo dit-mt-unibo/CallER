@@ -18,6 +18,7 @@ parasails.registerPage('view-create', {
         // Form rules
         formRules: {
             name: { required: true , maxLength: 150},
+            intro_text: { maxLength: 150},
             full_text: { required: true },
             image: { 
                 required: true ,
@@ -65,7 +66,7 @@ parasails.registerPage('view-create', {
 
                 }
             },
-            lat: {
+            lat: {                
                 custom: function(value) {
 
                     const pattern = /^[1-9]{1}[0-9]{0,1}[.]{0,1}[0-9]{0,}$/;
@@ -77,8 +78,7 @@ parasails.registerPage('view-create', {
 
                 }
             } ,
-            long: {
-
+            long: {                
                 custom: function(value) {
 
                     const pattern = /^[1-9]{1}[0-9]{0,2}[.]{0,1}[0-9]{0,}$/;
@@ -128,7 +128,13 @@ parasails.registerPage('view-create', {
         if ( _.isUndefined(window.SAILS_LOCALS['item']) == false ) {
 
             this.formData = window.SAILS_LOCALS['item'];
-            this.categoryId = (this.formData.category_id == null ) ? null : parseInt(this.formData.category_id);            
+            this.categoryId = (this.formData.category_id == null ) ? null : parseInt(this.formData.category_id); 
+            this.arrayTags = this.formData.tags;
+            this.published = this.formData.published;
+            this.formData.lat = ( _.isNull(this.formData.lat) === false ) ? String(this.formData.lat) : null;
+            this.formData.long = ( _.isNull(this.formData.long) === false ) ? String(this.formData.long) : null;
+
+            this.formRules["image"] = {}; // image validation is not required in update mode                                
 
         }
         else {
@@ -165,6 +171,12 @@ parasails.registerPage('view-create', {
             
             this.syncing = true;            
             window.location = '/place/list';
+
+        },
+        submittedUpdateForm: async function() {
+            
+            this.syncing = true;            
+            window.location = '/place/details/' + this.item.id;
 
         },
         rejectedForm (err) {

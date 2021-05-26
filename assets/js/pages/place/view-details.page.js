@@ -13,6 +13,9 @@ parasails.registerPage('view-details', {
         // Category ID. Select box
         categoryId: '',
 
+        // object {type: 'error|success' , message:'text message'}. Works in pair with flash-message.compontent.js
+        flashMessage: '',
+
         // Place status published/unpublished
         published: '',
 
@@ -27,7 +30,13 @@ parasails.registerPage('view-details', {
     // Populates formData only in update mode.
     beforeMount: function () {
         
-        this.item = window.SAILS_LOCALS['item'];   
+        this.item = window.SAILS_LOCALS['item'];
+
+        if ( _.isUndefined(window.SAILS_LOCALS['flash']) == false ) {
+
+            this.flashMessage = window.SAILS_LOCALS['flash'];
+
+        }  
         
     },
     mounted: async function () {

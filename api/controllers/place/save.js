@@ -4,6 +4,8 @@
  * @description save or update place
  */
 
+const { exit } = require('process');
+
  module.exports = {
 
     inputs: {
@@ -48,12 +50,10 @@
             type: 'json'            
         },        
         lat: {
-            type: 'number',
-            allowNull: true            
+            type: 'ref'          
         },
         long: {
-          type: 'number',
-          allowNull: true
+          type: 'ref'
         },        
         published: {
             type: 'number',
@@ -66,7 +66,7 @@
         id: {
             type: 'number',
             allowNull: true
-        }
+        }   
     },
 
     exits: {
@@ -92,11 +92,23 @@
 
         }
 
-      if (_.isEmpty(inputs.audio) === false) {
+        if (_.isEmpty(inputs.audio) === false) {
 
-        inputs.audio = vocarooEmbedUrl(inputs.audio);
+            inputs.audio = vocarooEmbedUrl(inputs.audio);
 
-      } 
+        }
+        
+        if ( _.isEmpty(inputs.lat) ) {
+            
+            inputs.lat = null;
+
+        }
+
+        if ( _.isEmpty(inputs.long) ) {
+            
+            inputs.long = null;
+            
+        }
 
         if ( _.isUndefined(inputs.id) ) {
             
@@ -139,29 +151,24 @@
         }
         else {                        
 
-            var result = await Place.update( {id: inputs.id} ).set(inputs)
-                                    .intercept( {name: 'UsageError'} , (err) => {
-
-                                        return 'nameFail';
+            var result = await Place.updateOne( {id: inputs.id} ).set(inputs)
+                                    .intercept( (err) => {
+                                        console.log(err);
+                                        return exit.saveFail();
 
                                     } );
 
             if ( _.isUndefined(result) ) {
 
-                this.req.session.flash = {type: 'error' , message: 'Aggiornamento dati non riuscito'};
+                session.flash = {type: 'error' , message: 'Aggiornamento dati non riuscito'};
 
             }
 
-            this.req.session.flash = {type: 'success' , message: 'Dati salvati correttamente'};
+            session.flash = {type: 'success' , message: 'Dati salvati correttamente'};
                 
             return exits.success();  
 
-        }              
-        
-        /*
-         * Redirects to the places homepage.
-         * Redirection is provided by the method submittedForm of parasails object see view-create.page.js
-         */
+        }
 
     }    
 

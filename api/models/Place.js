@@ -98,11 +98,13 @@ module.exports = {
         
         lat: {
             type: 'number',
+            allowNull: true,
             description: 'latitudine'            
         },
 
         long: {
           type: 'number',
+          allowNull: true,
           description: 'longitudine'
         },
         

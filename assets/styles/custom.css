@@ -76,7 +76,8 @@
     position:absolute;
     left: 50%;
     width: 80%;
-    max-width: 600px; 
+    max-width: 600px;
+    z-index: 1000;
 }
 .message-box a {
     color: inherit; 

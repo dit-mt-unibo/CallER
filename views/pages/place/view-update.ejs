@@ -1,0 +1,127 @@
+<div id="view-create" class="container" v-cloak>      
+    
+    <ajax-form action="savePlace" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
+        :form-rules="formRules" :form-errors.sync="formErrors" :category-id="categoryId" 
+        :tbw-editor-id="'tbweditor'" :tbw-editor-field="'full_text'"
+        @submitted="submittedUpdateForm($event)" @rejected="rejectedForm($event)">
+
+        <div class="form-group">
+            <label :class="[formErrors.name ? 'text-danger' : '']">
+                Titolo
+            </label>
+            <input type="text" name="name" class="form-control" :class="[formErrors.name ? 'is-invalid' : '']" 
+                v-model="formData.name" maxlength="150" id="name" />            
+            <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.published ? 'text-danger' : '']">
+                Pubblicato
+            </label>
+            <button type="button" @click="setPublishedStatus(0)" class="btn btn-sm" :class="[published == 0 ? 'btn-success' : 'btn-outline-secondary']">
+                No
+            </button>
+            <button type="button" @click="setPublishedStatus(1)" class="btn btn-sm" :class="[published == 1 ? 'btn-success' : 'btn-outline-secondary']">
+                Sì
+            </button>
+            <input type="hidden" name="published" v-model="formData.published" id="published">            
+            <cloud-error v-if="formErrors.published === 'required'">Campo obbligatorio</cloud-error>            
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.intro_text ? 'text-danger' : '']">
+                Introduzione <span class="small">(opzionale)</span>
+            </label>
+            <textarea name="intro_text" class="form-control" maxlength="150"
+                v-model="formData.intro_text" id="intro_text" rows="3"></textarea>
+            <cloud-error v-if="formErrors.intro_text === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.full_text ? 'text-danger' : '']">
+                Testo
+            </label>
+            <textarea name="full_text" class="form-control" id="tbweditor" rows="8">{{ item.full_text }}</textarea>            
+            <cloud-error v-if="formErrors.full_text === 'required'">Campo obbligatorio</cloud-error>
+        </div>       
+
+        <div class="form-group">
+            <label :class="[formErrors.tags ? 'text-danger' : '']">
+                Tags <span class="small">(opzionale)</span>
+            </label>
+            <div class="input-group">            
+                <input type="text" ref="newTag" class="form-control" :class="[formErrors.tags ? 'is-invalid' : '']" maxlength="50">
+                <button type="button" @click="addTag()" class="btn btn-outline-secondary">Aggiungi</button>
+                <input type="hidden" name="tags" v-model="formData.tags" id="tags">                
+            </div>            
+            <ul class="list-group">
+                <li class="list-group-item" v-for="tag in arrayTags">
+                    <div style="display: inline-block; width:50%;">{{tag}}</div>
+                    <div style="display: inline-block; width:30%;">
+                        <i @click="removeTag(tag)" class="bi cursor-pointer bi-trash"></i>
+                    </div>                    
+                </li>
+            </ul>
+        </div>        
+
+        <div class="form-group">
+            <label :class="[formErrors.lat || formErrors.long ? 'text-danger' : '']">
+                Coordinate <span class="small">(opzionale)</span>
+            </label>
+            <div class="input-group">
+                <span class="input-group-text">Latitudine e Longitudine</span>            
+                <input type="text" name="lat" class="form-control" :class="[formErrors.lat ? 'is-invalid' : '']"
+                    v-model="formData.lat" id="lat" autocomplete="off">
+                <input type="text" name="long" class="form-control" :class="[formErrors.long ? 'is-invalid' : '']"
+                    v-model="formData.long" id="long" autocomplete="off">
+            </div>
+            <cloud-error v-if="formErrors.lat === 'custom'">Valore latitudine non valido</cloud-error>
+            <cloud-error v-if="formErrors.long === 'custom'">Valore longitudine non valido</cloud-error>
+        </div>                
+
+        <div class="form-group">
+            <label :class="[formErrors.category_id ? 'text-danger' : '']">
+                Categoria
+            </label>
+            <select name="category_id" ref="categoryId" class="form-control" :class="[formErrors.category_id ? 'is-invalid' : '']" 
+                id="category_id" v-on:change="selectOption()">
+                <option value=""></option>
+                <% categories.forEach(element => { %>
+                    <option value="<%= element.id %>"
+                        <% if ( element.id == item.category_id ) { %> selected <% } %> >
+                        <%= element.name %>
+                    </option>
+                <% }) %>                
+            </select>            
+            <cloud-error v-if="formErrors.category_id === 'required'">Campo obbligatorio</cloud-error>
+        </div>
+
+        <input type="hidden" name="id" v-model="formData.id">        
+
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <cloud-error  v-if="cloudError === 'saveFail'" >Salvataggio non riuscito, controllare i dati</cloud-error>
+            </div>
+        </div>    
+        
+        <div class="row justify-content-center">
+
+            <div class="col-1">
+                <button type="button" class="btn btn-primary" onclick="window.location = '/place/details/<%= item.id %>';">Indietro</button>
+            </div>
+            <div class="col-1">
+                <ajax-button type="submit" :syncing="syncing">Salva</ajax-button>
+            </div>
+
+        </div>                 
+    
+    </ajax-form>
+
+</div>
+
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/ajax-button.component.js"></script>
+<script src="/js/components/ajax-form.component.js"></script>
+<script src="/js/components/cloud-error.component.js"></script>
+<script src="/js/pages/place/view-create.page.js"></script>

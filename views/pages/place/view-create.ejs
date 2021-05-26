@@ -36,7 +36,8 @@
                 Introduzione <span class="small">(opzionale)</span>
             </label>
             <textarea name="intro_text" class="form-control" maxlength="150"
-                v-model="formData.intro_text" id="intro_text" rows="3"></textarea>            
+                v-model="formData.intro_text" id="intro_text" rows="3"></textarea>
+            <cloud-error v-if="formErrors.intro_text === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
         </div>
 
         <div class="form-group">
@@ -113,7 +114,7 @@
                 Audio <span class="small">(opzionale)</span>
             </label>
             <input type="text" name="audio" class="form-control" :class="[formErrors.audio ? 'is-invalid' : '']" 
-                v-model="formData.audio" id="audio" placeholder="url file audio" autocomplete="off" />                 
+                v-model="formData.audio" id="audio" placeholder="url audio es: https://voca.ro/xxx" autocomplete="off" />                 
             <cloud-error v-if="formErrors.audio === 'custom'">Formato url non corretto</cloud-error>
         </div>
 
