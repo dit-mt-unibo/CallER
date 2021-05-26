@@ -54,7 +54,17 @@ parasails.registerPage('view-create', {
                     return ( _.isNull(match1) === false || _.isNull(match2) == false );
 
                 }
-             },
+            },
+            audio: {
+                custom: function(value) {
+                                        
+                    const pattern = /^https:\/\/voca.ro\/|^https:\/\/www.vocaroo.com\/|^https:\/\/vocaroo.com\//;
+                    const match = value.match(pattern);
+                    
+                    return ( _.isNull(match) === false );
+
+                }
+            },
             lat: {
                 custom: function(value) {
 

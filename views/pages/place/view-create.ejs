@@ -35,7 +35,7 @@
             <label :class="[formErrors.intro_text ? 'text-danger' : '']">
                 Introduzione <span class="small">(opzionale)</span>
             </label>
-            <textarea name="intro_text" class="form-control" 
+            <textarea name="intro_text" class="form-control" maxlength="150"
                 v-model="formData.intro_text" id="intro_text" rows="3"></textarea>            
         </div>
 

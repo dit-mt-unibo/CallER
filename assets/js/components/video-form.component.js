@@ -1,7 +1,7 @@
 /**
  * <video-form>
  * 
- * Mainly shows a preview of a youtube videoe.
+ * Shows a video player for youtube video.
  * By button "Modifica" shows a form to update the link
  * 
  * @type {Component}
@@ -10,7 +10,6 @@
  * @event submit: form submit
  * @event save: save button click event
  * @event changeMode: switches between form mode and view mode
- * @event openResources: files browser
  * 
  */
 
@@ -21,8 +20,7 @@
       'syncing',      
       'formMessage',
       'item',
-      'mode', // view (shows video preview) || form (shows form)
-      'videoSrc',  
+      'mode', // view (shows video preview) || form (shows form)       
     
     ],
 
@@ -48,8 +46,9 @@
             title="YouTube video player" frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
         <div style="margin:10px 0 20px 0;">
-            <button type="button" v-if="!item.video" @click="changeMode('form')" class="btn btn-success">Aggiungi</button>
-            <button type="button" v-if="item.video" @click="changeMode('form')" class="btn btn-primary">Modifica</button>
+            <button type="button" v-if="!item.video" @click="changeMode('form')" class="btn btn-success col-2">Aggiungi</button>
+            <button type="button" v-if="item.video" @click="deleteLink()" class="btn btn-danger mr-2 col-2">Rimuovi</button>
+            <button type="button" v-if="item.video" @click="changeMode('form')" class="btn btn-primary col-2">Modifica</button>
         </div>
       </div>
       <div v-if="mode == 'form'" class="card-body">        
@@ -59,7 +58,7 @@
             <div class="input-group">
                 <input type="text" name="video" class="form-control" id="video" 
                     placeholder="url video es: https://www.youtube.com/embed/xxxx" autocomplete="off" />
-                <button type="button" @click="openPreview()" class="btn btn-outline-secondary">Anteprima</button>              
+                <!--<button type="button" @click="openPreview()" class="btn btn-outline-secondary">Anteprima</button>-->
             </div>
             <p align="left" v-if="formMessage" class="text-danger">{{formMessage}}</p>            
           </div>
@@ -91,7 +90,7 @@
 
         openPreview: function() {
 
-            this.$emit('preview');
+          this.$emit('preview');
 
         },
         
@@ -110,6 +109,37 @@
         this.formMessage = '';        
 
         },
+
+        deleteLink: async function() {
+
+          this.syncing = true;
+
+          var data = { id: this.item.id , video: ''}
+
+          // Submit the form
+          var failedWithCloudExit;
+
+          var result =await Cloud['updateVideo'].with(data)                                 
+                  .tolerate((err) => {                  
+                      failedWithCloudExit = err.exit || 'error';
+                  });
+
+          // When an error occurs, tolerate it, but set the userland "formMessage"
+          if (failedWithCloudExit) {
+              this.formMessage = "Errore durante la rimozione del link";          
+          }
+
+          this.syncing = false;
+
+          // Data update was successful
+          if (!failedWithCloudExit) {
+
+              this.item.video = result.video;
+              this.mode = 'view';          
+
+          }
+
+      },
 
         submit: async function() {        
 

@@ -41,7 +41,7 @@
     template: `
     <div class="card" style="width:50%">      
       <div v-if="mode == 'view'">        
-        <img id="img" :src="imgSrc" width="100%">                    
+        <img id="img" :src="imgSrc" width="100%" style="max-width:400px;">                    
         <div class="card-body" align="center">                                             
             <button type="button" @click="changeMode('form')" class="btn btn-primary col-2">Modifica</button>
         </div>  
