@@ -1,11 +1,13 @@
-.oldmenu {
-  padding: 10px;
-  margin: 10px;
-  border: 1px solid;
-  border-radius: 15px;
+.container {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}
+
+.coords {
+  font-style: italic;
   text-align: center;
-  font-size: 1em;
-  color: Dodgerblue;
 }
 
 .home {
