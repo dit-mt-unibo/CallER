@@ -10,11 +10,20 @@
 
 module.exports.policies = {
 
-  //'*': 'is-logged-in',
+  '*': 'is-logged-in',
 
   // Bypass the 'is-logged-in' policy for:  
-  //'user/logout': true,
-  //'user/view-login': true,
-  //'user/login': true,
+  'user/logout': true,
+  'user/view-login': true,
+  'user/login': true,
+
+  // unlock / bypass for reading list and single items, so app work anonymously 
+  'place/find': true,
+  'place/findOne': true,
+  'category/find': true,
+  'category/render': true, // category has a custom action for findOne, aka GET /category/:id
+  'quiz/find': true,
+  'quiz/findOne': true,
+
 
 };
