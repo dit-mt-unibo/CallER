@@ -34,48 +34,89 @@ module.exports = {
     place_id: {
       type: 'number',
       required: true
+    },
+
+    video_block: {
+      type: 'number',
+      required: true
+    },
+    
+    audio_block: {
+      type: 'number',
+      required: true
     }
   },
 
 
   exits: {
-    success: {
-      responseType: 'view',
-      viewTemplatePath: 'pages/homepage'
+    
+    saveFail: {
+      description: 'when save/update query fails',
+      statusCode: 409
+    },
+    blocksFail: {
+      description: 'when place query fails',
+      statusCode: 409
     }
 
   },
 
 
-  fn: async function (inputs) {
+  fn: async function (inputs, exits) {        
 
-    if (_.isUndefined(inputs.id)) {
+    var result = [];
+    var video_block = inputs.video_block;
+    var audio_block = inputs.audio_block;
 
-      await Quiz.create(inputs)
-        .intercept({ question: 'UsageError' }, (err) => {
+    if ( _.isUndefined(inputs.id) ) {
 
-          return 'nameFail';
+      try {
 
-        })
-        .intercept({ choices: 'UsageError' }, (err) => {
+        result = await Quiz.create(inputs)
+                .intercept( (err) => {
 
-          return 'descriptionFail';
+                  return exits.saveFail();
 
-        });
+                }).fetch();
+
+      }
+      catch (err) {
+        
+        return exits.saveFail();
+
+      }   
 
     }
     else {
 
-      var result = await Quiz.updateOne(inputs.id).set(inputs)
-        .intercept({ question: 'UsageError' }, (err) => {
-          return 'questionFail';
-        });
-    }
+      try {
 
-    // All done.
-    return;
+        result = await Quiz.updateOne( {id: inputs.id} ).set(inputs)
+            .intercept((err) => {
+              
+              return exits.saveFail();
+
+            }); 
+
+      }
+      catch(err) {
+
+        return exits.saveFail();
+
+      }      
+
+    }    
+
+    // Enable/Disable blocks on place table
+    await Place.updateOne({ id: inputs.place_id }).set({ video_block: video_block , audio_block: audio_block })
+              .intercept((err) => {
+                
+                return exits.blocksFail();
+
+              }); 
+    
+    return exits.success({ quiz: result, video_block: video_block, audio_block: audio_block });
 
   }
-
 
 };

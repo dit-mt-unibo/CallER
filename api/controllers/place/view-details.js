@@ -3,7 +3,6 @@
  * 
  * @description Shows full details of a place
  */
- 
 
  module.exports = {
 
@@ -63,13 +62,15 @@
 
             pageTitle = item.name;
 
-            var catResults = await Category.findOne({ id: item.category_id});
+            var catResults = await Category.findOne({ id: item.category_id });
 
             if ( _.isEmpty(catResults) == false ) {
 
                 item.category = catResults.name;
 
             }
+
+            item.quiz = await Quiz.findOne({ place_id: item.id });
 
         }
 

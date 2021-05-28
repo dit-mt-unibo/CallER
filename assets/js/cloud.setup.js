@@ -25,6 +25,8 @@ Cloud.setup({
     "updateVideo": { "verb":"POST" , "url":"/place/video-update" },
     "updateAudio": { "verb":"POST" , "url":"/place/audio-update"},
     "publishPlace": { "verb":"POST" , "url":"/place/publish" },
+    "saveQuiz": { "verb":"POST" , "url":"/quiz/save" },
+    "deleteQuiz": { "verb":"POST" , "url":"/quiz/delete"},
   }
   /* eslint-enable */
 

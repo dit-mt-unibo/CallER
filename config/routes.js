@@ -85,7 +85,15 @@ module.exports.routes = {
   },
 
   // Routes for quiz
-  '/quiz/list': {
+  'POST /quiz/save' : {
+    action: 'quiz/save'
+  },
+  'POST /quiz/delete': {
+    action: 'quiz/delete'
+  },
+
+  // Potrebbero tornare utili in futuro
+  /*'/quiz/list': {
     action: 'quiz/view-list'
   },
   'GET /quiz/add': {
@@ -103,7 +111,7 @@ module.exports.routes = {
   },
   'GET /quiz/delete/:id': {
     action: 'quiz/delete'
-  },
+  },*/
 
   // Routes for user
   '/login': {
@@ -119,7 +127,7 @@ module.exports.routes = {
   'POST /check-account': {
     action: 'user/login'
   },
-  'GET /user' : {
+  'GET /user/list' : {
     action: 'user/view-list'
   },
   'GET /user/add': {
