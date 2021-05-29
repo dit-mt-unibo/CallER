@@ -119,7 +119,7 @@ const { exit } = require('process');
             },
             async function whenDone (err, uploadedFiles) {
                     
-               if(err) return exits.uploadFail();  
+              if (err) return exits.uploadFail({ description : 'upload image failed. Server error:' + err });  
 
                inputs.image = uploadedFiles[0].filename;
                inputs.imageUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');                            
