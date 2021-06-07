@@ -48,11 +48,13 @@ parasails.registerPage('view-create', {
                     
                     const pattern1 = /^https:\/\/youtu.be\//;
                     const pattern2 = /^https:\/\/www.youtube.com\/watch\?v=/;                    
+                    const pattern3 = /^https:\/\/www.youtube.com\/embed/;
 
                     const match1 = value.match(pattern1);
                     const match2 = value.match(pattern2);
+                    const match3 = value.match(pattern3);
 
-                    return ( _.isNull(match1) === false || _.isNull(match2) == false );
+                  return (_.isNull(match1) === false || _.isNull(match2) == false || _.isNull(match3) == false);
 
                 }
             },

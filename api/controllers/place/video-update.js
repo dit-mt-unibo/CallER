@@ -65,6 +65,8 @@
  */
  function youtubeEmbedUrl(url) {
 
+    //TODO: sposta in una funzione comune, duplicato del codice in save.js
+
     var embedUrl = "https://www.youtube.com/embed/";    
     var youTubeVideoId = "";
     

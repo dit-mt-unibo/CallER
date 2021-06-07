@@ -183,7 +183,12 @@ function youtubeEmbedUrl(url) {
 
     var embedUrl = "https://www.youtube.com/embed/";    
     var youTubeVideoId = "";
-    
+
+    if (url.startsWith(embedUrl))
+      return url; // video url is already in the desired format
+
+    sails.log("Save::youtubeEmbedUrl");
+
     const pattern1 = /^https:\/\/youtu.be\//;
     const match1 = url.match(pattern1);
 

@@ -198,7 +198,7 @@
             const match1 = link.match(pattern1);
             const match2 = link.match(pattern2);
 
-            return ( _.isNull(match1) === false || _.isNull(match2) == false );                
+          return ( _.isNull(match1) === false || _.isNull(match2) == false );                
 
         },              
 
