@@ -114,6 +114,13 @@ module.exports = {
             min: 0,
             max: 1
         },
+
+        level:{
+            type: 'number',
+            defaultsTo: 0,
+            min:0,
+            max:2
+        },
         
         category_id: {
             type: 'number',

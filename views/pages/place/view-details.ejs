@@ -51,6 +51,22 @@
                     </div>
                 </div>
                 <div class="mt-4">
+                    <h5>Livello difficoltà:
+                        <small v-if="item.level == 0" class="ml-2">
+                            <span class="border-success rounded bg-success" style="display: inline-block; width: 13px; height: 13px;"></span>
+                            Facile
+                        </small>
+                        <small v-if="item.level == 1" class="ml-2">
+                            <span class="border-warning rounded bg-warning" style="display: inline-block; width:13px; height: 13px;"></span>
+                            Intermedio
+                        </small>
+                        <small v-if="item.level == 2" class="ml-2">
+                            <span class="border-danger rounded bg-danger" style="display: inline-block; width: 13px; height: 13px;"></span>
+                            Difficile
+                        </small>
+                    </h5>
+                </div>
+                <div class="mt-3">
                     <h5>Tags:                        
                         <% item.tags.forEach(tag => { %>
                          <small class="mrl-2 text-primary">@<%= tag %></small>
@@ -67,10 +83,10 @@
                     <h5>Categoria: <small><%= item.category %></small></h5>
                 </div>           
                 <div class="mt-3">
-                    <h5>Creato il: <small><%= new Date(item.createdAt).toLocaleString() %></small></h5>
+                    <h5>Creato il: <small><%= new Date(item.createdAt).toLocaleString("it-IT") %></small></h5>
                 </div>
                 <div class="mt-3">
-                    <h5>Ultima modifica: <small><%= new Date(item.updatedAt).toLocaleString() %></small></h5>
+                    <h5>Ultima modifica: <small><%= new Date(item.updatedAt).toLocaleString("it-IT") %></small></h5>
                 </div>
             </div>
 

@@ -3,7 +3,7 @@
     <video-preview :src="youtubeSrc"></video-preview>    
     
     <ajax-form action="savePlace" enctype="multipart/form-data" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
-        :form-rules="formRules" :form-errors.sync="formErrors" :category-id="categoryId" 
+        :form-rules="formRules" :form-errors.sync="formErrors" :category-id="categoryId" :level="level"
         :tbw-editor-id="'tbweditor'" :tbw-editor-field="'full_text'" :place-image="placeImg"
         @submitted="submittedForm($event)" @rejected="rejectedForm($event)">
 
@@ -46,6 +46,19 @@
             </label>
             <textarea name="full_text" class="form-control" id="tbweditor" rows="8"></textarea>            
             <cloud-error v-if="formErrors.full_text === 'required'">Campo obbligatorio</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.level ? 'text-danger' : '']">
+                Livello difficoltà
+            </label>
+            <select name="level" ref="level" class="form-control" :class="[formErrors.level ? 'is-invalid' : '']" 
+                id="level" v-on:change="selectOptionLevel()">
+                <option value="0">Facile</option>
+                <option value="1">Intermedio</option>
+                <option value="2">Difficile</option>              
+            </select>            
+            <cloud-error v-if="formErrors.level === 'required'">Campo obbligatorio</cloud-error>
         </div>
 
         <div class="form-group">

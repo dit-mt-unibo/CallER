@@ -10,20 +10,11 @@ parasails.registerPage('view-details', {
         // place
         item: '',
 
-        // Category ID. Select box
-        categoryId: '',
-
         // object {type: 'error|success' , message:'text message'}. Works in pair with flash-message.compontent.js
         flashMessage: '',
 
-        // Place status published/unpublished
-        published: '',
-
         // Youtube url for video preview
         youtubeSrc: '',
-
-        // Array tags
-        arrayTags: [],
         
     },
 
@@ -40,70 +31,9 @@ parasails.registerPage('view-details', {
         
     },
     mounted: async function () {
-        
-        $( "#tbweditor" ).trumbowyg({
-            btns: [
-                ['undo', 'redo'], // Only supported in Blink browsers
-                ['strong', 'em'],
-                ['link'],
-                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
-                ['unorderedList', 'orderedList'],
-                ['removeformat'],
-                ['fullscreen']
-            ],
-            removeformatPasted: true
-        } );        
-
     },
 
-    methods: {                
-
-        // Sets category ID
-        selectOption () {            
-            
-            this.categoryId = this.$refs.categoryId.value;
-            
-        },
-
-        // Sets published status
-        setPublishedStatus(value) {
-                        
-            this.published = value;
-            this.formData.published = value;
-
-        },
-
-        // Adds a new tag
-        addTag() {
-            
-            if ( this.$refs.newTag.value == "" ) return;
-                        
-            this.formData.tags.push(this.$refs.newTag.value);            
-            this.$refs.newTag.value = "";
-
-            this.arrayTags = this.formData.tags;
-
-        },
-
-        // removes tag
-        removeTag(value) {
-            
-            var arrayTmp = this.formData.tags;
-
-            this.formData.tags.forEach( function (elm, id) {
-                
-                if ( elm == value ) {
-
-                    arrayTmp.splice(id, 1);
-
-                }
-
-            });
-
-            this.formData.tags = arrayTmp;
-            this.arrayTags = this.formData.tags;
-
-        },
+    methods: {        
 
         // Opens video preview modal
         videoPreview() {

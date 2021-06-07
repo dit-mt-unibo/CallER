@@ -92,7 +92,10 @@ parasails.registerPage('view-create', {
 
                 }
 
-            },      
+            },
+            level: {
+                required: true
+            },
             category_id: { 
                 required: true, 
                 custom: function(value) {
@@ -121,6 +124,9 @@ parasails.registerPage('view-create', {
 
         // Array tags
         arrayTags: [],
+
+        // Content difficulty level
+        level: '',
         
     },
 
@@ -135,6 +141,7 @@ parasails.registerPage('view-create', {
             this.published = this.formData.published;
             this.formData.lat = ( _.isNull(this.formData.lat) === false ) ? String(this.formData.lat) : null;
             this.formData.long = ( _.isNull(this.formData.long) === false ) ? String(this.formData.long) : null;
+            this.level = this.formData.level;
 
             this.formRules["image"] = {}; // image validation is not required in update mode                                
 
@@ -144,6 +151,7 @@ parasails.registerPage('view-create', {
             this.published = 1; 
             this.formData.tags = [];
             this.formData.published = 1;
+            this.level = 0;
 
         }
     },
@@ -190,6 +198,13 @@ parasails.registerPage('view-create', {
             
             this.categoryId = this.$refs.categoryId.value;
             
+        },
+
+        // Sets level
+        selectOptionLevel() {
+
+            this.level = this.$refs.level.value;
+
         },
 
         // Sets published status

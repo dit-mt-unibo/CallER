@@ -58,7 +58,11 @@ const { exit } = require('process');
         published: {
             type: 'number',
             allowNull: true
-        },        
+        },
+        level: {
+            type: 'number',
+            allowNull: true
+        },
         category_id: {
             type: 'number',
             required: true
