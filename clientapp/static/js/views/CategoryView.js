@@ -10,6 +10,11 @@ export default class extends AbstractView {
 
   async getHtml() {
 
+    var stylesByLevel = [
+      "badge badge-success",
+      "badge badge-warning",
+      "badge badge-danger"
+    ];
     var html = "<div class='container'>";
 
     var url = apiUrl() + '/category/' + this.categoryID;
@@ -47,6 +52,7 @@ export default class extends AbstractView {
       data.childrenPlaces.forEach((childPlace) => {
         html += "<div class='card p-1 text-center text-success' >";
         html += "<div class='card-block'>";
+        html += "<span class='" + stylesByLevel[childPlace.level] + "'>&nbsp;</span>&nbsp;";
         html += "<a class='text-success font-weight-bold' href='" + u('/contenuti/' + childPlace.id) + "' data-link>" + childPlace.name + "</a>";
         html += "</div></div>";
       })

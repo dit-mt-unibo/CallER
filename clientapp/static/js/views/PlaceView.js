@@ -14,6 +14,12 @@ export default class extends AbstractView {
 
   async getHtml() {
 
+    var stylesByLevel = [
+      "text-success",
+      "text-warning",
+      "text-danger"
+    ];
+
     var html = ""; //"<div class='container'>";
     
     var url = apiUrl() + '/place/' + this.placeID;
@@ -25,7 +31,8 @@ export default class extends AbstractView {
       var parent = u('/categorie/' + item.category_id);
       html += "<div class='container'><div class='row bg-light'>";
       html += "<div class='col titolo'><a href='" + parent + "' data-link >&lt;</a></div>"
-      html += "<div class='col-8 titolo'>" + item.name + "</div><div class='col'>&nbsp;</div>";
+      html += "<div class='col-8 titolo'>" + item.name + "</div>";
+      html += "<div class='col titolo'><span class='" + stylesByLevel[item.level] + "'><i class='fas fa-certificate'></i></span></div>";
       html += "</div>";
 
       html += "<div class='container coords'>";
