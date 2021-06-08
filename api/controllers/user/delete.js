@@ -63,7 +63,7 @@ module.exports = {
 
         }        
 
-        return this.res.redirect('/user');
+        return this.res.redirect('/user/list');
 
     }
 
