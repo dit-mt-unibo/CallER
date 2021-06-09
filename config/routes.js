@@ -144,6 +144,27 @@ module.exports.routes = {
     action: 'user/delete'
   },
 
+  // Routes for glossary
+  'GET /glossary/list' : {
+    action: 'glossary/view-list'
+  },
+  'GET /glossary/add': {
+    action: 'glossary/view-create',
+    view: 'pages/glossary/view-create'
+  },
+  'GET /glossary/edit/:id': {
+    action: 'glossary/view-update'
+  },
+  'POST /glossary/save': {
+    action: 'glossary/save'
+  },
+  'GET /glossary/delete/:id': {
+    action: 'glossary/delete'
+  },
+  'POST /glossary/definition-update': {
+    action: 'glossary/definition-update'
+  },
+
 
 
   /***************************************************************************

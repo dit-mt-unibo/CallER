@@ -27,6 +27,8 @@ Cloud.setup({
     "publishPlace": { "verb":"POST" , "url":"/place/publish" },
     "saveQuiz": { "verb":"POST" , "url":"/quiz/save" },
     "deleteQuiz": { "verb":"POST" , "url":"/quiz/delete"},
+    "saveGlossary": { "verb":"POST", "url":"/glossary/save" },
+    "updateGlossaryDefinition": { "verb": "POST", "url": "/glossary/definition-update" }
   }
   /* eslint-enable */
 

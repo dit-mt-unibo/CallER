@@ -1,0 +1,70 @@
+<div id="view-list" v-cloak>    
+
+    <modal-editor action="updateGlossaryDefinition" :syncing.sync="syncing" :form-message.sync="formMessage" 
+        :required="required" :item="item" :field="'definition'">
+        <div slot="header">
+            Modifica definizione
+        </div>
+    </modal-editor>
+    
+    <modal-delete :item-id="deleteItemId" :action="'/glossary/delete/'">
+        <div slot="body">
+            <p>Stai per eliminare un vocabolo dal glossario. Vuoi proseguire?</p>
+        </div>
+    </modal-delete>
+
+    <div class="container-fluid">
+
+    <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
+
+    <div class="container-fluid" style="margin:30px 0">
+        <a class="btn btn-success" href="/glossary/add">Nuovo vocabolo</a>
+    </div>    
+
+<%  if ( items.length == 0 ) { %>
+    
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono stati ancora inseriti vocaboli nel glossario. Utilizza il bottone Nuovo vocabolo per iniziare."}) %>
+    
+<% } else { %>    
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="20%">Identificativo</th>
+                <th width="20%">Vocabolo</th>
+                <th style="text-align: center" width="40%">Definizione</th>
+                <th width="15%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in items">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.term }}</td>
+                <td @click="openModalEditor(item, 'definition')" class="text-highlight">
+                    <text-truncate :text="item.definition"></text-truncate>
+                </td>
+                <td align="center">
+                    <a class="btn btn-primary" :href="'/glossary/edit/' + item.id">Modifica</a>                    
+                    <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)" 
+                        data-toggle="modal" data-target="#confirmDeleteModal">
+                        Elimina
+                    </button>                    
+                </td>                                                
+            </tr>
+        </tbody> 
+    </table>        
+
+<% } %>
+
+    </div>    
+
+</div>
+
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/modal-editor.component.js"></script>
+<script src="/js/components/modal-delete.component.js"></script>
+<script src="/js/components/flash-message.component.js"></script>
+<script src="/js/components/text-truncate.component.js"></script>
+<script src="/js/pages/view-list.page.js"></script>
