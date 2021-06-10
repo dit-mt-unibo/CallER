@@ -186,7 +186,10 @@ module.exports.routes = {
   'GET /category/:id': {
     action: 'category/render'
   },
-
+  // aggiungi quiz all'oggetto place:
+  'GET /place/:id': {
+    action: 'place/render'
+  },
   /*
    * 'GET /home': {
     action: 'category/sublist',

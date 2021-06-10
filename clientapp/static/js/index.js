@@ -3,7 +3,7 @@ import Categories from './views/Categories.js';
 import CategoryView from './views/CategoryView.js';
 import PlaceView from './views/PlaceView.js';
 import Settings from './views/Settings.js';
-import { u } from './lib.js';
+import { u, apiUrl } from './lib.js';
 
 const pathToRegex = path =>
   new RegExp('^' + path.replace(/\//g, '\\/').replace(/:\w+/g, '(.+)') + '$');
@@ -67,6 +67,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.matches('[data-link]')) {
       e.preventDefault();
       navigateTo(e.target.href);
+    }
+    else if (e.target.matches('[glossary-link]')) {
+      e.preventDefault();
+      var glossaryUrl = apiUrl() + '/glossary?name=' + e.target.target;
+
+      // AJAX request
+      $.ajax({
+        url: glossaryUrl,
+        type: 'get',
+        success: function (response) {
+          var definition = response[0];
+          $('.modal-title').text(definition['term']);
+          // Add response in Modal body
+          $('.modal-body').html(definition['definition']);
+
+          // Display Modal
+          $('#defModal').modal('show');
+        }
+      });
+
     }
     else if (e.target.parentNode.matches('a')) {
       e.preventDefault();

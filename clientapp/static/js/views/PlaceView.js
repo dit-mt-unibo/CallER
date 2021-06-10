@@ -25,10 +25,24 @@ export default class extends AbstractView {
     var url = apiUrl() + '/place/' + this.placeID;
     var response = await fetch(url);
     // Begin accessing JSON data here
-    var item = await response.json();
+    var data = await response.json();
     if (response.status >= 200 && response.status < 400) {
 
+      var item = data.item;
       var parent = u('/categorie/' + item.category_id);
+
+      html += "<div class='modal fade' id='defModal' role='dialog'>";
+      html += "    <div class='modal-dialog'>";
+      html += "      <div class='modal-content'>";
+      html += "        <div class='modal-header'>";
+      html += "          <h4 class='modal-title'>Definizione</h4>";
+      html += "          <button type='button' class='close' data-dismiss='modal'>&times;</button>";
+      html += "        </div>";
+      html += "        <div class='modal-body'></div>";
+      html += "      </div>";
+      html += "    </div>";
+      html += "</div>";
+
       html += "<div class='container'><div class='row bg-light'>";
       html += "<div class='col titolo'><a href='" + parent + "' data-link >&lt;</a></div>"
       html += "<div class='col-8 titolo'>" + item.name + "</div>";
