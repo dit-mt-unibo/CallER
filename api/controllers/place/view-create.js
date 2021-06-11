@@ -18,6 +18,8 @@
 
         // Provides options to the select box. Only child-categories will be available in the select box
         let categories = [];
+        // Terms from glossary table
+        let terms = [];
         
         try {
 
@@ -26,12 +28,14 @@
                 sort: 'name ASC'
             });
 
+            terms = await Glossary.find( {sort: 'name ASC'} );
+
         } 
         catch (err) {
             //
         }    
 
-        return { pageTitle: "Nuovo contenuto" , categories: categories };
+        return { pageTitle: "Nuovo contenuto" , categories: categories , terms: terms };
 
     }
 

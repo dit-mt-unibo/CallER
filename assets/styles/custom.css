@@ -147,3 +147,11 @@
 .tbw-is-invalid{
     border: 1px solid #dc3545;
 }
+
+/* Glossary table */
+.glossary-table tbody tr:hover {    
+    cursor: pointer;
+}
+.glossary-table-tr-selected {
+    background-color: #ffffb3;
+}

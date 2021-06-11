@@ -1,4 +1,6 @@
-<div id="view-create" class="container" v-cloak>      
+<div id="view-create" class="container" v-cloak>
+    
+    <modal-glossary :terms="terms" @click="saveLinkGlossary()"></modal-glossary>
     
     <ajax-form action="savePlace" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
         :form-rules="formRules" :form-errors.sync="formErrors" :category-id="categoryId" :level="level"
@@ -137,4 +139,5 @@
 <script src="/js/components/ajax-button.component.js"></script>
 <script src="/js/components/ajax-form.component.js"></script>
 <script src="/js/components/cloud-error.component.js"></script>
+<script src="/js/components/modal-glossary.component.js"></script>
 <script src="/js/pages/place/view-create.page.js"></script>

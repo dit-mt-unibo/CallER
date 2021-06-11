@@ -37,6 +37,8 @@
         let item = {};
         // Provides options to the select box. Only child-categories will be available in the select box
         let categories = [];
+        // Terms from glossary table
+        let terms = [];
         
         try {
 
@@ -44,6 +46,8 @@
                 where: { parent_id: { '!=' : null }, id: { '>' : 1} } ,
                 sort: 'name ASC'
             });
+
+            terms = await Glossary.find( {sort: 'name ASC'} );
 
         } 
         catch (err) {
@@ -73,7 +77,7 @@
 
         }
 
-        return { item: item , pageTitle: pageTitle , categories: categories };
+        return { item: item , pageTitle: pageTitle , categories: categories, terms: terms };
 
     }
 

@@ -127,6 +127,9 @@ parasails.registerPage('view-create', {
 
         // Content difficulty level
         level: '',
+
+        // Glossary terms
+        terms: []
         
     },
 
@@ -154,25 +157,42 @@ parasails.registerPage('view-create', {
             this.level = 0;
 
         }
+
+        this.terms = window.SAILS_LOCALS['terms'];
+
     },
     mounted: async function () {
         
         $( "#tbweditor" ).trumbowyg({
+            btnsDef: {
+                glossary: {
+                    fn: openGlossaryModal,
+                    tag: 'a',
+                    title: 'Collega parola al glossario',
+                    text: 'Glossario',
+                    isSupported: function () { return true; },
+                    key: 'G',
+                    param: '',
+                    forceCss: false,
+                    class: '',
+                    hasIcon: false
+                }
+            },
             btns: [
                 ['undo', 'redo'], // Only supported in Blink browsers
                 ['strong', 'em'],
                 ['link'],
                 ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
                 ['unorderedList', 'orderedList'],
-                ['removeformat'],
+                ['removeformat', 'glossary', 'viewHTML'],
                 ['fullscreen']
             ],
             removeformatPasted: true
-        } );
+        } );        
 
     },
 
-    methods: {
+    methods: {        
         
         parseForm: function () {            
             return argins;
@@ -301,8 +321,40 @@ parasails.registerPage('view-create', {
 
             }
 
+        },
+
+        saveLinkGlossary() {
+            linkToGlossary();
         }
 
 
-    }
+    },    
 });
+
+var range;
+
+function openGlossaryModal() {
+    
+    var selection = this.document.getSelection();
+    var value = selection.baseNode.data;
+    var start = selection.anchorOffset;
+    var end = selection.focusOffset;
+    range = selection.getRangeAt(0);     
+    $( "#glossarySelectedTerm" ).html( value.substring(start, end) );
+    $( "#modalGlossary" ).modal('show');
+
+}
+
+function linkToGlossary() {
+    
+    var word = $( "#glossarySelectedTerm" ).html();
+    var wordId = $( "#glossarySelection" ).val();  
+    var node = document.createElement("a");
+    node.appendChild(document.createTextNode(word));
+    node.setAttribute("href", "#");
+    node.setAttribute("title" , wordId);
+    node.setAttribute("target", "glossary");
+    range.deleteContents();
+    range.insertNode(node);
+
+}
