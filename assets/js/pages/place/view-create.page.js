@@ -1,8 +1,150 @@
-/*
- * Parasails for places forms
- *
+/**
+ * Glossary Trumbowyg plugin
  */
+ (function ($) {
+    'use strict';
 
+    // Contains the DOM node selected by the user
+    var range;
+
+    var defaultOptions = { };    
+
+    /**
+     * Defines plugin buttons. Shows the buttons in a dropdown list.
+     * The buttons are: 
+     * - add: adds new link 
+     * - remove: removes the link
+     * 
+     * @param trumbowyg object
+     * @returns dropdown
+     */
+    function buildButtonDef(trumbowyg) {
+
+        var main = {
+            dropdown: ['add', 'remove'],
+            text: 'Glossario',
+            ico: '',
+            hasIcon: false,
+        };
+
+        var add = {
+            fn: openGlossaryModal,
+            tag: '',
+            title: 'Crea collegamento al glossario',
+            text: 'Crea collegamento',         
+            isSupported: function () { return true; },
+            key: '',
+            param: '',
+            forceCss: false,
+            class: '',
+            hasIcon: false
+        };
+
+        var remove = {
+            fn: removeLinkGlossary,
+            tag: 'span',
+            title: 'Rimuovi collegamento al glossario',
+            text: 'Rimuovi collegamento'        ,
+            isSupported: function () { return true; },
+            key: '',
+            param: '',
+            forceCss: false,
+            class: '',
+            hasIcon: false
+        }
+
+        trumbowyg.addBtnDef('add', add);
+        trumbowyg.addBtnDef('remove', remove);        
+
+        return main;
+
+    }
+
+    /**
+     * Extends Trumbowyg object adding glossary plugin.
+     * 
+     * Defines createLink method.
+     */
+    $.extend(true, $.trumbowyg, {
+        plugins: {
+            glossary: {
+                init: function(trumbowyg) {
+                    trumbowyg.o.plugins.glossary = $.extend(true, {}, defaultOptions, trumbowyg.o.plugins.glossary || {});
+
+                    trumbowyg.addBtnDef('glossary', buildButtonDef(trumbowyg));
+                },
+                createLink: () => {
+                    
+                    var word = $( "#glossarySelectedTerm" ).html();
+                    var wordId = $( "#glossarySelection" ).val();
+
+                    if ( _.isEmpty(wordId) === false ) {
+
+                        var node = document.createElement("span");
+                        node.appendChild(document.createTextNode(word));            
+                        node.setAttribute("class", "glossary");
+                        node.setAttribute("data-id" , wordId);            
+                        range.deleteContents();
+                        range.insertNode(node);            
+
+                        $ ( "#tbweditor" ).trumbowyg('execCmd', {cmd: 'syncTextarea'});
+
+                    }                    
+
+                }
+            }
+        }
+    });    
+
+    /**
+     * Gets user's selection and opens the modal window
+     */
+    function openGlossaryModal() {
+        
+        var selection = document.getSelection();
+        var value = selection.baseNode.data;
+        var start = selection.anchorOffset;
+        var end = selection.focusOffset;
+        range = selection.getRangeAt(0);
+               
+        // Range must be at least 1 character long
+        if ( range.startOffset < range.endOffset ) {
+
+            $( "#glossarySelectedTerm" ).html( value.substring(start, end) );
+            $( "#modalGlossary" ).modal('show');
+
+        }        
+
+    }
+
+    /**
+     * Removes the link to the glossary
+     */
+    function removeLinkGlossary() {
+        
+        var selection = document.getSelection();
+        range = selection.getRangeAt(0);
+        var node = selection.focusNode;                
+        var parent = node.parentElement;        
+
+        // Checks if the selection is a link to the glossary
+        if ( parent.nodeName.toLowerCase() == "span" && parent.getAttribute('class').toLowerCase() == "glossary") {
+
+            parent.remove();
+            range.deleteContents();        
+            range.insertNode(node);
+
+            $ ( "#tbweditor" ).trumbowyg('execCmd', {cmd: 'syncTextarea'});
+
+        }        
+        
+    }
+
+})(jQuery);
+
+/**
+ * Parasails for places forms
+ */
 parasails.registerPage('view-create', {
 
     data: {
@@ -129,7 +271,7 @@ parasails.registerPage('view-create', {
         level: '',
 
         // Glossary terms
-        terms: []
+        terms: [],
         
     },
 
@@ -164,20 +306,6 @@ parasails.registerPage('view-create', {
     mounted: async function () {
         
         $( "#tbweditor" ).trumbowyg({
-            btnsDef: {
-                glossary: {
-                    fn: openGlossaryModal,
-                    tag: 'a',
-                    title: 'Collega parola al glossario',
-                    text: 'Glossario',
-                    isSupported: function () { return true; },
-                    key: 'G',
-                    param: '',
-                    forceCss: false,
-                    class: '',
-                    hasIcon: false
-                }
-            },
             btns: [
                 ['undo', 'redo'], // Only supported in Blink browsers
                 ['strong', 'em'],
@@ -187,7 +315,10 @@ parasails.registerPage('view-create', {
                 ['removeformat', 'glossary', 'viewHTML'],
                 ['fullscreen']
             ],
-            removeformatPasted: true
+            removeformatPasted: true,
+            plugins: {
+                glossary: {}
+            }
         } );        
 
     },
@@ -323,38 +454,13 @@ parasails.registerPage('view-create', {
 
         },
 
-        saveLinkGlossary() {
-            linkToGlossary();
+        // Inserts link
+        insertGlossaryLink() {
+            
+            $.trumbowyg.plugins.glossary.createLink();
+
         }
 
 
     },    
 });
-
-var range;
-
-function openGlossaryModal() {
-    
-    var selection = this.document.getSelection();
-    var value = selection.baseNode.data;
-    var start = selection.anchorOffset;
-    var end = selection.focusOffset;
-    range = selection.getRangeAt(0);     
-    $( "#glossarySelectedTerm" ).html( value.substring(start, end) );
-    $( "#modalGlossary" ).modal('show');
-
-}
-
-function linkToGlossary() {
-    
-    var word = $( "#glossarySelectedTerm" ).html();
-    var wordId = $( "#glossarySelection" ).val();  
-    var node = document.createElement("a");
-    node.appendChild(document.createTextNode(word));
-    node.setAttribute("href", "#");
-    node.setAttribute("title" , wordId);
-    node.setAttribute("target", "glossary");
-    range.deleteContents();
-    range.insertNode(node);
-
-}

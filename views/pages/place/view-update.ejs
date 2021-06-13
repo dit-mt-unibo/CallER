@@ -1,6 +1,6 @@
 <div id="view-create" class="container" v-cloak>
     
-    <modal-glossary :terms="terms" @click="saveLinkGlossary()"></modal-glossary>
+    <modal-glossary :terms="terms" @click="insertGlossaryLink()"></modal-glossary>
     
     <ajax-form action="savePlace" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
         :form-rules="formRules" :form-errors.sync="formErrors" :category-id="categoryId" :level="level"

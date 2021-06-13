@@ -1,7 +1,7 @@
 /**
  * <modal-glossary>
  * 
- * Shows a modal window for connecting a term to glossary
+ * Modal window for linking a term to the glossary
  * 
  * @type {Component}
  * 
@@ -60,6 +60,7 @@ parasails.registerComponent('modalGlossary', {
 
     computed: {
       
+      // Filters items
       filteredItems() {
         return this.terms.filter(term => {
           
@@ -76,10 +77,21 @@ parasails.registerComponent('modalGlossary', {
 
     methods: {
 
+        // Emits the click event
         save: async function() {
-            this.$emit('click');
+          
+          this.$emit('click');
+          var oldValue = $( "#glossarySelection" ).val();
+
+          if ( _.isEmpty(oldValue) === false) {
+
+            $( "#" + oldValue ).removeClass("glossary-table-tr-selected");
+
+          }
+          
         },
 
+        // Highlights the selected row in the table
         selectTerm: function(value) {            
           
           var oldValue = $( "#glossarySelection" ).val();

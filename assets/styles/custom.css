@@ -155,3 +155,9 @@
 .glossary-table-tr-selected {
     background-color: #ffffb3;
 }
+.glossary{
+    color: #007BFF;
+}
+.glossary:hover {
+    text-decoration: underline;
+}
