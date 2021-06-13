@@ -37,8 +37,7 @@ parasails.registerComponent('modalGlossary', {
                       <th width="50%">Vocabolo</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <!--<tr v-for="term in terms" @click="selectTerm(term.name)" :id="term.name">-->
+                  <tbody>                    
                     <tr v-for="term in filteredItems" @click="selectTerm(term.name)" :id="term.name">
                       <td>{{ term.name }}</td>
                       <td>{{ term.term }}</td>
@@ -66,7 +65,10 @@ parasails.registerComponent('modalGlossary', {
           
           if ( _.isUndefined(this.search) ) return term;
 
-          if ( term.name.indexOf(this.search) > -1 ) return term;
+          let name = term.name.toLowerCase();
+          let search = this.search.toLowerCase();
+
+          if ( name.indexOf(search) > -1 ) return term;
 
           return null;
           
