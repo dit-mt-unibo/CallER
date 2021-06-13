@@ -312,7 +312,7 @@ parasails.registerPage('view-create', {
                 ['link'],
                 ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
                 ['unorderedList', 'orderedList'],
-                ['removeformat', 'glossary', 'viewHTML'],
+                ['removeformat', 'glossary'],
                 ['fullscreen']
             ],
             removeformatPasted: true,
