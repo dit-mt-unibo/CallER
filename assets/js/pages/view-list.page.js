@@ -23,7 +23,32 @@ parasails.registerPage('view-list', {
         syncing: false,
         formMessage: '',
         required: true,
+
+        // Filter
+        search: '',
         
+    },
+
+    computed: {
+
+        // Filters items
+        filteredItems() {
+
+            return this.items.filter(item => {
+
+                if ( _.isUndefined(this.search) ) return item;
+
+                let name = item.name.toLowerCase();
+                let search = this.search.toLowerCase();
+
+                if ( name.indexOf(search) > -1 ) return item;
+
+                return null;
+
+            }
+
+            );
+        }
     },
 
     beforeMount: function () {

@@ -17,8 +17,15 @@
 
     <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
 
-    <div class="container-fluid" style="margin:30px 0">
-        <a class="btn btn-success" href="/place/add">Nuovo contenuto</a>
+    <div class="container-fluid row" style="margin:30px 0">
+
+        <div class="col-3">
+            <a class="btn btn-success" href="/place/add">Nuovo contenuto</a>
+        </div>
+        <div class="col-7">
+            <input type="text" class="form-control" placeholder="filtra risultati" v-model="search">
+        </div>
+
     </div>    
 
 <%  if ( items.length == 0 ) { %>
@@ -40,7 +47,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in items">
+            <tr v-for="item in filteredItems">
                 <td>{{ item.id }}</td>
                 <td>{{ item.name }}</td>
                 <td @click="openModalEditor(item, 'full_text')" class="text-highlight">
