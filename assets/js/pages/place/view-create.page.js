@@ -6,8 +6,10 @@
 
     // Contains the DOM node selected by the user
     var range;
+    // Reference to the active Trumbowyg editor
+    var activeEditor;
 
-    var defaultOptions = { };    
+    var defaultOptions = {};    
 
     /**
      * Defines plugin buttons. Shows the buttons in a dropdown list.
@@ -34,7 +36,7 @@
             text: 'Crea collegamento',         
             isSupported: function () { return true; },
             key: '',
-            param: '',
+            param: trumbowyg,
             forceCss: false,
             class: '',
             hasIcon: false
@@ -47,7 +49,7 @@
             text: 'Rimuovi collegamento'        ,
             isSupported: function () { return true; },
             key: '',
-            param: '',
+            param: trumbowyg,
             forceCss: false,
             class: '',
             hasIcon: false
@@ -67,9 +69,10 @@
      */
     $.extend(true, $.trumbowyg, {
         plugins: {
-            glossary: {
+            glossary: { 
+                               
                 init: function(trumbowyg) {
-                    trumbowyg.o.plugins.glossary = $.extend(true, {}, defaultOptions, trumbowyg.o.plugins.glossary || {});
+                    trumbowyg.o.plugins.glossary = $.extend(true, {}, defaultOptions, trumbowyg.o.plugins.glossary || {});                    
 
                     trumbowyg.addBtnDef('glossary', buildButtonDef(trumbowyg));
                 },
@@ -83,23 +86,26 @@
                         var node = document.createElement("span");
                         node.appendChild(document.createTextNode(word));            
                         node.setAttribute("class", "glossary");
-                        node.setAttribute("data-id" , wordId);            
+                        node.setAttribute("data-id" , wordId);
+                        
                         range.deleteContents();
-                        range.insertNode(node);            
+                        range.insertNode(node);
 
-                        $ ( "#tbweditor" ).trumbowyg('execCmd', {cmd: 'syncTextarea'});
+                        activeEditor.execCmd('syncTextarea');
 
-                    }                    
+                    }                  
 
-                }
+                }     
             }
         }
     });    
 
     /**
      * Gets user's selection and opens the modal window
+     * 
+     * @param editor: trumbowyg editor object
      */
-    function openGlossaryModal() {
+    function openGlossaryModal(editor) {
         
         var selection = document.getSelection();
         var value = selection.baseNode.data;
@@ -112,18 +118,22 @@
 
             $( "#glossarySelectedTerm" ).html( value.substring(start, end) );
             $( "#modalGlossary" ).modal('show');
+            
+            activeEditor = editor;
 
-        }        
+        }
 
     }
 
     /**
      * Removes the link to the glossary
+     * 
+     * @param editor: trumbowyg editor object
      */
-    function removeLinkGlossary() {
+    function removeLinkGlossary(editor) {
         
-        var selection = document.getSelection();
-        range = selection.getRangeAt(0);
+        var selection = document.getSelection();        
+        range = selection.getRangeAt(0);        
         var node = selection.focusNode;                
         var parent = node.parentElement;        
 
@@ -134,8 +144,8 @@
             range.deleteContents();        
             range.insertNode(node);
 
-            $ ( "#tbweditor" ).trumbowyg('execCmd', {cmd: 'syncTextarea'});
-
+            editor.execCmd('syncTextarea');
+            
         }        
         
     }
@@ -251,6 +261,7 @@ parasails.registerPage('view-create', {
 
         // Server error state for the form
         cloudError: '' ,
+        saveFailMessage: '',
 
         // Category ID. Select box
         categoryId: '',
@@ -319,7 +330,23 @@ parasails.registerPage('view-create', {
             plugins: {
                 glossary: {}
             }
-        } );        
+        } );
+
+        $( "#extra_text" ).trumbowyg({
+            btns: [
+                ['undo', 'redo'], // Only supported in Blink browsers
+                ['strong', 'em'],
+                ['link'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['removeformat', 'glossary'],
+                ['fullscreen']
+            ],
+            removeformatPasted: true,
+            plugins: {
+                glossary: {}
+            }
+        } ); 
 
     },
 
@@ -341,7 +368,6 @@ parasails.registerPage('view-create', {
 
         },
         rejectedForm (err) {
-            //
         },
 
         // Sets category ID
