@@ -146,10 +146,17 @@ parasails.registerComponent('ajaxForm', {
 
             }
             
-            // Place form. Adds image key to the formaData object
+            // Place form. Adds image key to the formData object
             if ( _.isUndefined(this.placeImage) === false ) {
 
                 this.$set(this.formData, 'image' , this.placeImage);
+
+            }
+
+            // Place form. Adds extra_text key to the formData object
+            if ( $( "#extra_text" ).length ) {
+
+                this.$set(this.formData, 'extra_text', $( "#extra_text" ).trumbowyg('html'));
 
             }
 
@@ -320,7 +327,7 @@ parasails.registerComponent('ajaxForm', {
             result = await Cloud[this.action].with(argins)                                 
                 .tolerate((err) => {
                     rawErrorFromCloudSDK = err;
-                    failedWithCloudExit = err.exit || 'error';
+                    failedWithCloudExit = err.exit || 'error';                    
                 });
 
 

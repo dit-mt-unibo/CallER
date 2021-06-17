@@ -77,15 +77,15 @@ module.exports = {
             max: 1
         },
         
-        photo_gallery: {
+        extra_text: {
             type: 'string',
-            description: 'folder name. The folder contains images for a photo gallery',
+            description: 'additional text',
             allowNull: true
         },
 
-        photo_gallery_block: {
+        extra_text_block: {
             type: 'number',
-            description: '0=unblocked, user can open the gallery. 1=blocked, user can not open the gallery',
+            description: '0=unblocked, user can view extra text. 1=blocked, user can not view extra text',
             defaultsTo: 0,
             min: 0,
             max: 1

@@ -49,6 +49,13 @@
         </div>
 
         <div class="form-group">
+            <label :class="[formErrors.extra_text ? 'text-danger' : '']">
+                Testo aggiuntivo <span class="small">(opzionale)</span>
+            </label>
+            <textarea name="extra_text" class="form-control" id="extra_text" rows="8">{{ item.extra_text }}</textarea>            
+        </div>
+
+        <div class="form-group">
             <label :class="[formErrors.level ? 'text-danger' : '']">
                 Livello difficoltà
             </label>
@@ -116,7 +123,7 @@
 
         <div class="row justify-content-center">
             <div class="col-4">
-                <cloud-error  v-if="cloudError === 'saveFail'" >Salvataggio non riuscito, controllare i dati</cloud-error>
+                <cloud-error  v-if="cloudError === 'saveFail'" >Errore durante il salvataggio dei dati</cloud-error>
             </div>
         </div>    
         

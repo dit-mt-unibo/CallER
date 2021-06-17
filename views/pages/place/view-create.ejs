@@ -51,6 +51,13 @@
         </div>
 
         <div class="form-group">
+            <label :class="[formErrors.extra_text ? 'text-danger' : '']">
+                Testo aggiuntivo <span class="small">(opzionale)</span>
+            </label>
+            <textarea name="extra_text" class="form-control" id="extra_text" rows="8"></textarea>            
+        </div>
+
+        <div class="form-group">
             <label :class="[formErrors.level ? 'text-danger' : '']">
                 Livello difficoltà
             </label>
@@ -65,7 +72,7 @@
 
         <div class="form-group">
             <label :class="[formErrors.image ? 'text-danger' : '']">
-                Immagine
+                Immagine <span class="small">(Max. 3MB)</span>
             </label>
             <div class="input-group">                            
                 <input type="text" name="fake-image" :value.sync="placeImg.name" class="form-control" :class="[formErrors.image ? 'is-invalid' : '']"
@@ -75,6 +82,7 @@
             <input type="file" style="display:none;" ref="file" name="image" v-on:change="setPlaceImg()">            
             <cloud-error v-if="formErrors.image === 'required'">Campo obbligatorio</cloud-error>
             <cloud-error v-if="formErrors.image === 'custom'">Estensione non valida</cloud-error>
+            <cloud-error v-if="cloudError === 'uploadFail'">La dimensione dell'immagine non può superare i 3MB</cloud-error>
         </div> 
 
         <div class="form-group">
@@ -149,7 +157,7 @@
 
         <div class="row justify-content-center">
             <div class="col-4">
-                <cloud-error  v-if="cloudError === 'saveFail'" >Salvataggio non riuscito, controllare i dati</cloud-error>
+                <cloud-error  v-if="cloudError === 'saveFail'" >Errore durante il salvataggio dei dati</cloud-error>
             </div>
         </div>    
         

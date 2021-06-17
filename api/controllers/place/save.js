@@ -38,11 +38,11 @@ const { exit } = require('process');
             type: 'number',
             allowNull: true
         },        
-        photo_gallery: {
+        extra_text: {
             type: 'string',            
             allowNull: true
         },
-        photo_gallery_block: {
+        extra_text_block: {
             type: 'number',
             allowNull: true
         },        
@@ -118,29 +118,25 @@ const { exit } = require('process');
             
             this.req.file('image').upload({
 
-                maxBytes: 1000000000000,
+                maxBytes: 3245728,
                 dirname: require('path').resolve(sails.config.appPath, 'assets/images/contenuti'),                
             },
             async function whenDone (err, uploadedFiles) {
                     
-              if (err) return exits.uploadFail({ description : 'upload image failed. Server error:' + err });  
+              if (err) return exits.uploadFail({ description : 'upload image failed. Server error:' + err.message });
 
                inputs.image = uploadedFiles[0].filename;
                inputs.imageUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');                            
 
                 try {
                     
-                    var result = await Place.create(inputs)
-                    .intercept( (err) => {                         
-                        
-                        return exits.saveFail();
-
-                    } )                    
-                    .fetch();
+                    var result = await Place.create(inputs).fetch();
 
                 }   
                 catch(err) {
-                    //
+                    
+                    return exits.saveFail({ description: 'Query create error. Error: ' + err.message });
+
                 }                                     
 
                 if (result) {                  
@@ -153,24 +149,25 @@ const { exit } = require('process');
             });             
 
         }
-        else {                        
+        else {            
 
-            var result = await Place.updateOne( {id: inputs.id} ).set(inputs)
-                                    .intercept( (err) => {
-                                        console.log(err);
-                                        return exit.saveFail();
+            try {
 
-                                    } );
-
-            if ( _.isUndefined(result) ) {
-
-                session.flash = {type: 'error' , message: 'Aggiornamento dati non riuscito'};
+                var result = await Place.updateOne( {id: inputs.id} ).set(inputs);
 
             }
+            catch(err) {
 
-            session.flash = {type: 'success' , message: 'Dati salvati correttamente'};
-                
-            return exits.success();  
+                return exits.saveFail({ description: 'Query update error. Error: ' + err.message });
+
+            }            
+
+            if ( result ) {
+
+                session.flash = {type: 'success' , message: 'Dati salvati correttamente'};                
+                return exits.success(); 
+
+            }  
 
         }
 
