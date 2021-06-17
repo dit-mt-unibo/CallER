@@ -44,6 +44,11 @@ module.exports = {
     audio_block: {
       type: 'number',
       required: true
+    },
+
+    extra_text_block: {
+      type: 'number',
+      required: true
     }
   },
 
@@ -67,22 +72,18 @@ module.exports = {
     var result = [];
     var video_block = inputs.video_block;
     var audio_block = inputs.audio_block;
+    var extra_text_block = inputs.extra_text_block;
 
     if ( _.isUndefined(inputs.id) ) {
 
       try {
 
-        result = await Quiz.create(inputs)
-                .intercept( (err) => {
-
-                  return exits.saveFail();
-
-                }).fetch();
+        result = await Quiz.create(inputs).fetch();
 
       }
       catch (err) {
         
-        return exits.saveFail();
+        return exits.saveFail( {description: 'Query create error. Server error: ' + err.message  } );
 
       }   
 
@@ -91,31 +92,34 @@ module.exports = {
 
       try {
 
-        result = await Quiz.updateOne( {id: inputs.id} ).set(inputs)
-            .intercept((err) => {
-              
-              return exits.saveFail();
-
-            }); 
+        result = await Quiz.updateOne( {id: inputs.id} ).set(inputs); 
 
       }
       catch(err) {
 
-        return exits.saveFail();
+        return exits.saveFail({description: 'Query update error. Server error: ' + err.message  } );
 
       }      
 
     }    
 
     // Enable/Disable blocks on place table
-    await Place.updateOne({ id: inputs.place_id }).set({ video_block: video_block , audio_block: audio_block })
-              .intercept((err) => {
-                
-                return exits.blocksFail();
+    try {
+      
+      await Place.updateOne({ id: inputs.place_id }).set({ 
+            video_block: video_block , 
+            audio_block: audio_block , 
+            extra_text_block: extra_text_block 
+          });
 
-              }); 
+    }
+    catch (err) {
+
+      return exits.blocksFail({description: 'Query blocks error. Server error: ' + err.message  } );
+
+    }     
     
-    return exits.success({ quiz: result, video_block: video_block, audio_block: audio_block });
+    return exits.success({ quiz: result, video_block: video_block, audio_block: audio_block, extra_text_block: extra_text_block });
 
   }
 

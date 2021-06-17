@@ -52,9 +52,10 @@
               <div style="display: inline-block; width:80%;">{{ choice | truncate }}</div>
             </li>             
           </ul>
-          <p v-if="item.video_block == 0 && item.audio_block == 0" style="margin-top:15px;">Nessun contenuto è bloccato dal quiz</p>
-          <p v-if="item.video_block == 1" style="margin-top:15px;">- Contenuto video bloccato;</p>
+          <p v-if="item.video_block == 0 && item.audio_block == 0 && item.extra_text_block == 0" style="margin-top:15px;">Nessun contenuto è bloccato dal quiz</p>
+          <p v-if="item.video_block == 1" style="margin-top:10px;">- Contenuto video bloccato;</p>
           <p v-if="item.audio_block == 1" style="margin-top:10px;">- Contenuto audio bloccato;</p>
+          <p v-if="item.extra_text_block == 1" style="margin-top:10px;">- Contenuto testo aggiuntivo bloccato;
         </div>
         <p v-if="formMessage.deleteError" class="text-danger">{{formMessage.deleteError}}</p>        
         <div style="margin:10px 0 20px 0;">
@@ -141,6 +142,13 @@
                 Audio
               </label>
             </div>
+            <div class="form-check form-check-inline">
+              <input v-if="!item.quiz" name="extra-text-block" class="form-check-input" type="checkbox" value="1" id="extra-text-block">
+              <input v-if="item.quiz" name="extra-text-block" class="form-check-input" type="checkbox" value="1" id="extra-text-block" :checked="item.extra_text_block == 1">
+              <label class="form-check-label">
+                Testo aggiuntivo
+              </label>
+            </div>
           </div>
           <input v-if="item.quiz" type="hidden" name="id" :value="item.quiz.id" id="id">
           <p v-if="formMessage.saveError" class="text-danger">{{formMessage.saveError}}</p>
@@ -161,8 +169,6 @@
       this.syncing = false;
       this.formMessage = {};      
       this.mode = 'view';
-
-      console.log(this.item.quiz);
 
     },
   
@@ -247,6 +253,7 @@
             let answer = $( "#answer" ).val();
             let videoBlock = $("#video-block").is(":checked") ? 1 : 0 ;
             let audioBlock = $("#audio-block").is(":checked") ? 1 : 0 ;
+            let textBlock = $("#extra-text-block").is(":checked") ? 1 : 0 ;
 
             var data = { 
               question: $( "#question" ).val(),
@@ -255,6 +262,7 @@
               place_id: this.item.id,
               video_block: videoBlock,
               audio_block: audioBlock,
+              extra_text_block: textBlock,
             };
 
             if ( _.isUndefined( $( "#id" ) ) === false ) {
@@ -276,8 +284,6 @@
               
               this.formMessage['saveError']= "Errore durante la creazione del quiz";
 
-              console.log(failedWithCloudExit);
-
               if (failedWithCloudExit == 'blockFail') {
 
                 this.formMessage['saveError']= "Quiz creato, ma blocchi contenuti non applicati";
@@ -294,6 +300,7 @@
               this.item.quiz = result.quiz;
               this.item.video_block = result.video_block;
               this.item.audio_block = result.audio_block;
+              this.item.extra_text_block = result.extra_text_block;
               this.mode = 'view';          
 
             }
