@@ -21,6 +21,13 @@ function getCookie(cname) {
   return "";
 }
 
+function writeBlockedContentHtml(label) {
+  var content = "<div class='card border-warning mb-2'>";
+  content +=    "    <div class='card-body text-warning'>";
+  content +=    "      <h5 class='card-title'>" + label + "</h5>";
+  content += "      <span class='card-text'>Contenuto bloccato, rispondi al quiz per vederlo!</span></div></div>";
+  return content;
+}
 export default class extends AbstractView {
   constructor(params) {
     super(params);
@@ -92,7 +99,7 @@ export default class extends AbstractView {
       
       if (item.audio) {
         if (item.audio_block > 0 && content_blocked) {
-          html += "<div class='content-blocked'>Contenuto bloccato, supera il quiz per vederlo!</div>";
+          html += writeBlockedContentHtml("Audio");
         }
         else {
           html += "<div class='container-fluid'>";
@@ -104,7 +111,7 @@ export default class extends AbstractView {
 
       if (item.video) {
         if (item.video_block > 0 && content_blocked) {
-          html += "<div class='content-blocked'>Contenuto bloccato, supera il quiz per vederlo!</div>";
+          html += writeBlockedContentHtml("Video");
         }
         else {
           html += "<div class='embed-responsive embed-responsive-16by9 mb-2'>";
@@ -115,7 +122,7 @@ export default class extends AbstractView {
 
       if (item.extra_text) {
         if (item.extra_text_block > 0 && content_blocked) {
-          html += "<div class='content-blocked'>Contenuto bloccato, supera il quiz per vederlo!</div>";
+          html += writeBlockedContentHtml("Testo Bonus");
         }
         else {
           html += "<div class='container mb-2'>";
@@ -124,28 +131,15 @@ export default class extends AbstractView {
         }
       }
 
-      html += "<div class='container mb-2'>";
-      html += "<label>Tags: </label>&nbsp;" + item.tags;
-      html += "</div>";
-
       // se il quiz è già stato superato, non mostrarlo
       if (item.quiz && content_blocked) {
 
         var quizId = "quiz" + item.quiz.id;
         
         //html += "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#quiz' aria-expanded='false' aria-controls='quiz'>Sblocca altri contenuti!</button>";
-        html += "Sblocca altri contenuti!<br>";
-        /*
-         * "question": "In quale regione si trova Forlì?",
-      "choices": [
-        "Piemonte",
-        "Sicilia",
-        "Emilia-Romagna",
-        "Non lo so"
-      ],
-      "answer": "Emilia-Romagna",
-         * */
-        html += "<div class='card quiz' id='quiz"+ item.quiz.id +"'>";
+        
+        html += "<div class='card quiz' id='quiz" + item.quiz.id + "'>";
+        html += "<div class='card-header'>Quiz per sbloccare altri contenuti</div>";
         html += "  <div class='card card-body'>";
         html += "    <p>"+ item.quiz.question + "</p>";
         for (let i in item.quiz.choices) {
@@ -166,8 +160,9 @@ export default class extends AbstractView {
         html += "</script>";
       }
 
-      // close main container
-      // html += "</div>";
+      html += "<div class='container mb-2'>";
+      html += "<label>Tags: </label>&nbsp;" + item.tags;
+      html += "</div>";
       
     } else {
       html += "<marquee>" + "It's not working!" + "</marquee>";
