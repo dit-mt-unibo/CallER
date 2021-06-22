@@ -41,8 +41,11 @@
         id = document.querySelector(".quiz").id; // id è quiz1, quiz2, ecc.
         document.cookie = id + "=true";
         return true;
+      } else {
+        alert("Risposta sbagliata, riprova!");
+        return false;
       }
-       
+      
       return false;
     }
   </script>
