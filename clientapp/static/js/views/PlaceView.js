@@ -125,9 +125,9 @@ export default class extends AbstractView {
           html += writeBlockedContentHtml("Testo Bonus");
         }
         else {
-          html += "<div class='container mb-2'>";
+          html += "<div class='card border-success mb-2'><div class='card-body'>";
           html += item.extra_text;
-          html += "</div>";
+          html += "</div></div>";
         }
       }
 
@@ -151,7 +151,7 @@ export default class extends AbstractView {
         // ma qui non si vincono premi e non c'è niente di segreto.
         // Se uno volesse farlo bene, bisognerebbe mandare la risposta dell'utente al server,
         // e avere una API tipo /quiz/id?answer=useranswer che ritorna pass o fail nel body.
-        html += "<button type='button' class='btn btn-info' onclick=verifyAnswer('" + item.quiz.answer + "')>Rispondi</button>";
+        html += "<a href='"+ window.location + "' class='btn btn-info' data-link onclick=verifyAnswer('" + item.quiz.answer + "')>Rispondi</button>";
         html += "  </div>";
         html += "</div>";
 
