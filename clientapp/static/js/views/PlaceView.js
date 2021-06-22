@@ -5,6 +5,22 @@ function getImageUrl(imageName) {
   return apiUrl() + "/images/contenuti/" + imageName;
 }
 
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 export default class extends AbstractView {
   constructor(params) {
     super(params);
@@ -30,6 +46,15 @@ export default class extends AbstractView {
 
       var item = data.item;
       var parent = u('/categorie/' + item.category_id);
+
+      var content_blocked = true;
+      if (item.quiz) {
+        var quizId = "quiz" + item.quiz.id;
+        var unblocked = getCookie(quizId);
+        if (unblocked > "") {
+          content_blocked = false;
+        }
+      }
 
       html += "<div class='modal fade' id='defModal' role='dialog'>";
       html += "    <div class='modal-dialog'>";
@@ -64,24 +89,83 @@ export default class extends AbstractView {
       html += "<div class='container mb-2'>";
       html += item.full_text;
       html += "</div>";
-
+      
       if (item.audio) {
-        html += "<div class='container-fluid'>";
-        html += "<label>Ascolta questo audio: </label>" + "<br/>";
-        html += " <iframe width='100%' height='60' src='" + item.audio +"'></iframe>";
-        html += "</div>";
+        if (item.audio_block > 0 && content_blocked) {
+          html += "<div class='content-blocked'>Contenuto bloccato, supera il quiz per vederlo!</div>";
+        }
+        else {
+          html += "<div class='container-fluid'>";
+          html += "<label>Ascolta questo audio: </label>" + "<br/>";
+          html += " <iframe width='100%' height='60' src='" + item.audio + "'></iframe>";
+          html += "</div>";
+        }
       }
 
       if (item.video) {
-        html += "<div class='embed-responsive embed-responsive-16by9 mb-2'>";
-        html += "<iframe class='embed-responsive-item' src='" + item.video + "'></iframe>";
-        html += "</div>";
+        if (item.video_block > 0 && content_blocked) {
+          html += "<div class='content-blocked'>Contenuto bloccato, supera il quiz per vederlo!</div>";
+        }
+        else {
+          html += "<div class='embed-responsive embed-responsive-16by9 mb-2'>";
+          html += "<iframe class='embed-responsive-item' src='" + item.video + "'></iframe>";
+          html += "</div>";
+        }
+      }
+
+      if (item.extra_text) {
+        if (item.extra_text_block > 0 && content_blocked) {
+          html += "<div class='content-blocked'>Contenuto bloccato, supera il quiz per vederlo!</div>";
+        }
+        else {
+          html += "<div class='container mb-2'>";
+          html += item.extra_text;
+          html += "</div>";
+        }
       }
 
       html += "<div class='container mb-2'>";
       html += "<label>Tags: </label>&nbsp;" + item.tags;
       html += "</div>";
-      
+
+      // se il quiz è già stato superato, non mostrarlo
+      if (item.quiz && content_blocked) {
+
+        var quizId = "quiz" + item.quiz.id;
+        
+        //html += "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#quiz' aria-expanded='false' aria-controls='quiz'>Sblocca altri contenuti!</button>";
+        html += "Sblocca altri contenuti!<br>";
+        /*
+         * "question": "In quale regione si trova Forlì?",
+      "choices": [
+        "Piemonte",
+        "Sicilia",
+        "Emilia-Romagna",
+        "Non lo so"
+      ],
+      "answer": "Emilia-Romagna",
+         * */
+        html += "<div class='card quiz' id='quiz"+ item.quiz.id +"'>";
+        html += "  <div class='card card-body'>";
+        html += "    <p>"+ item.quiz.question + "</p>";
+        for (let i in item.quiz.choices) {
+          // ...add an html radio button
+          html += "<label><input type='radio' name='quiz1' value='" + item.quiz.choices[i] + "'> " + item.quiz.choices[i] +"</label>";
+        }
+        // il bottone submit / rispondi chiama una funzione predefinita, passando la risposta giusta.
+        // ovviamente non è una cosa 'bella' da fare perché lato client è tutto visibile,
+        // ma qui non si vincono premi e non c'è niente di segreto.
+        // Se uno volesse farlo bene, bisognerebbe mandare la risposta dell'utente al server,
+        // e avere una API tipo /quiz/id?answer=useranswer che ritorna pass o fail nel body.
+        html += "<button type='button' class='btn btn-info' onclick=verifyAnswer('" + item.quiz.answer + "')>Rispondi</button>";
+        html += "  </div>";
+        html += "</div>";
+
+        html += "<script>";
+
+        html += "</script>";
+      }
+
       // close main container
       // html += "</div>";
       

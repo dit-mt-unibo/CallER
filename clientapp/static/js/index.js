@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       navigateTo(e.target.href);
     }
-    else if (e.target.matches('[glossary-link]')) {
+    else if (e.target.className === 'glossary') {
       e.preventDefault();
-      var glossaryUrl = apiUrl() + '/glossary?name=' + e.target.target;
+      var glossaryUrl = apiUrl() + '/glossary?name=' + e.target.dataset.id;
 
       // AJAX request
       $.ajax({
@@ -86,35 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
           $('#defModal').modal('show');
         }
       });
-
     }
     else if (e.target.parentNode.matches('a')) {
       e.preventDefault();
       navigateTo(e.target.parentNode.href);
     }
-    else if (e.target.matches('a')) {
-      e.preventDefault();
-      if (e.target.target == 'glossary') {
-        var glossaryUrl = apiUrl() + '/glossary?name=' + e.target.title;
-
-        // AJAX request
-        $.ajax({
-          url: glossaryUrl,
-          type: 'get',
-          success: function (response) {
-            var definition = response[0];
-            $('.modal-title').text(definition['term']);
-            // Add response in Modal body
-            $('.modal-body').html(definition['definition']);
-            // Display Modal
-            $('#defModal').modal('show');
-          }
-        });
-      }
-    }
-    else {
+    /*else {
         navigateTo(e.target.parentNode.href);
-    }
+    }*/
       
   });
 

@@ -46,6 +46,11 @@
   background-color: lightgrey;
 }
 
+.glossary {
+  color: blue;
+  font-weight: bold;
+}
+
 body {
   margin-bottom: 50px;
   margin-top: 10px;

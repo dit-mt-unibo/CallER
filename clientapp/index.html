@@ -33,6 +33,19 @@
       </div>
     </div>
   </nav>
+  <script>
+    function verifyAnswer(answer) {
+      userAnswer = document.querySelector('input[name="quiz1"]:checked').value;
+      if (userAnswer === answer) {
+        // leggi quiz id:
+        id = document.querySelector(".quiz").id; // id è quiz1, quiz2, ecc.
+        document.cookie = id + "=true";
+        alert("Bravo!!");
+      }
+        
+      return;
+    }
+  </script>
 </body>
 
 </html>
