@@ -15,7 +15,7 @@
 }
 
 .home {
-	color:white;
+  color:white;
 }
 
 .menu {
@@ -34,7 +34,8 @@
   margin: 5px;
   text-align: center;
   font-size: 1.2em;
-  color: darkred;
+  color: red;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .fondo {

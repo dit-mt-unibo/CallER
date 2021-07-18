@@ -9,7 +9,7 @@ export default class extends AbstractView {
 
   async getHtml() {
 
-    var html = "<div class='titolo'><i class='fab fa-fort-awesome' ></i>CallER</div>";
+    var html = "<div class='titolo'>ForliviAMO</div>";  // <i class='fab fa-fort-awesome' ></i>
     html +="<div class='container'>";
 
     var request = new XMLHttpRequest();

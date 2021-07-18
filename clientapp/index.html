@@ -13,6 +13,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/0f23103c70.js" crossorigin="anonymous"></script>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+</style>
+
   <!-- Because of running on GH Pages and the way this SPA works, the main CSS and JS files have to be relative. Putting a prefix here breaks local usage. -->
   <link rel="stylesheet" href="static/css/index.css">
 </head>
@@ -36,7 +40,8 @@
   <script>
     function verifyAnswer(answer) {
       userAnswer = document.querySelector('input[name="quiz1"]:checked').value;
-      if (userAnswer === answer) {
+      answerDec = decodeURI(answer);
+      if (userAnswer === answerDec) {
         // leggi quiz id:
         id = document.querySelector(".quiz").id; // id è quiz1, quiz2, ecc.
         document.cookie = id + "=true";

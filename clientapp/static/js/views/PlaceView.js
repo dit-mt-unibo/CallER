@@ -151,7 +151,8 @@ export default class extends AbstractView {
         // ma qui non si vincono premi e non c'è niente di segreto.
         // Se uno volesse farlo bene, bisognerebbe mandare la risposta dell'utente al server,
         // e avere una API tipo /quiz/id?answer=useranswer che ritorna pass o fail nel body.
-        html += "<a href='"+ window.location + "' class='btn btn-info' data-link onclick=verifyAnswer('" + item.quiz.answer + "')>Rispondi</button>";
+        var answer = encodeURI(item.quiz.answer);
+        html += "<a href='"+ window.location + "' class='btn btn-info' data-link onclick=verifyAnswer('" + answer + "')>Rispondi</button>";
         html += "  </div>";
         html += "</div>";
 
