@@ -144,14 +144,15 @@ export default class extends AbstractView {
         html += "    <p>"+ item.quiz.question + "</p>";
         for (let i in item.quiz.choices) {
           // ...add an html radio button
-          html += "<label><input type='radio' name='quiz1' value='" + item.quiz.choices[i] + "'> " + item.quiz.choices[i] +"</label>";
+          var choice = encodeURI(item.quiz.choices[i]).replace(/'/g, "%27");
+          html += "<label><input type='radio' name='quiz1' value='" + choice + "'> " + item.quiz.choices[i] +"</label>";
         }
         // il bottone submit / rispondi chiama una funzione predefinita, passando la risposta giusta.
         // ovviamente non è una cosa 'bella' da fare perché lato client è tutto visibile,
         // ma qui non si vincono premi e non c'è niente di segreto.
         // Se uno volesse farlo bene, bisognerebbe mandare la risposta dell'utente al server,
         // e avere una API tipo /quiz/id?answer=useranswer che ritorna pass o fail nel body.
-        var answer = encodeURI(item.quiz.answer);
+        var answer = encodeURI(item.quiz.answer).replace(/'/g, "%27");
         html += "<a href='"+ window.location + "' class='btn btn-info' data-link onclick=verifyAnswer('" + answer + "')>Rispondi</button>";
         html += "  </div>";
         html += "</div>";

@@ -39,7 +39,7 @@
   </nav>
   <script>
     function verifyAnswer(answer) {
-      userAnswer = document.querySelector('input[name="quiz1"]:checked').value;
+      userAnswer = decodeURI(document.querySelector('input[name="quiz1"]:checked').value);
       answerDec = decodeURI(answer);
       if (userAnswer === answerDec) {
         // leggi quiz id:
