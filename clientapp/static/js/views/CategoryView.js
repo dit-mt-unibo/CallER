@@ -41,7 +41,7 @@ export default class extends AbstractView {
       // child categories
       html += "<div class='container'>";
       data.childrenCategories.forEach((childCat) => {
-        html += "<div class='card p-1 text-center' style='background-color:darkred'>";
+        html += "<div class='card text-center' style='background-color:#9F3505; margin-bottom: 4px;'>";
         html += "<div class='card-block'>";
         html += "<a class='text-white font-weight-bold' href='" + u('/categorie/' + childCat.id)  + "' data-link>" + childCat.name + "</a>";
         html += "</div></div>";
