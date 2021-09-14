@@ -8,6 +8,7 @@
 .coords {
   font-style: italic;
   text-align: center;
+  font-size: 0.8rem;
 }
 
 .card-link {
@@ -15,18 +16,34 @@
 }
 
 .home {
-  color:white;
+  color:red;
 }
 
+.logo {
+    display: block;
+    margin: 0 auto;
+	padding-bottom:15%;
+}
+
+/*
 .menu {
   padding: 20px;
   margin: 0px;
   border: 1px solid;
-  /* border-radius: 15px; */
   text-align: center;
   font-size: 1em;
   color: white;
   background-color: #6ab187;
+}
+*/
+.menu {
+  padding: 20px;
+  margin: 0px;
+  border: 1px solid;
+  text-align: center;
+  font-size: 1em;
+  color: red;
+  background-color: white;
 }
 
 .titolo {
@@ -36,6 +53,10 @@
   font-size: 1.2em;
   color: red;
   font-family: 'Montserrat', sans-serif;
+}
+
+.parentlink {
+	color: red;
 }
 
 .fondo {

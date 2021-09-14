@@ -30,8 +30,9 @@ export default class extends AbstractView {
         parent = u('/categorie/' + data.item.parent_id);
       }
 
+	  html += "<div><a href='/' data-link><img src='/static/images/skylines.png' width='100%'></div>";
       html += "<div class='container'><div class='row bg-light'>";
-      html += "<div class='col titolo'><a href='" + parent + "' data-link >&lt;</a></div>"
+      html += "<div class='col titolo'><a class='parentlink' href='" + parent + "' data-link >&lt;</a></div>"
       html += "<div class='col-8 titolo'>" + data.item.name + "</div><div class='col'>&nbsp;</div>";
       html += "</div>";
       // html += "<div class='titolo'>" + data.item.name + "</div>";
@@ -40,9 +41,9 @@ export default class extends AbstractView {
       // child categories
       html += "<div class='container'>";
       data.childrenCategories.forEach((childCat) => {
-        html += "<div class='card p-1 text-center bg-primary'>";
+        html += "<div class='card p-1 text-center' style='background-color:darkred'>";
         html += "<div class='card-block'>";
-        html += "<a class='bg-primary text-white font-weight-bold' href='" + u('/categorie/' + childCat.id)  + "' data-link>" + childCat.name + "</a>";
+        html += "<a class='text-white font-weight-bold' href='" + u('/categorie/' + childCat.id)  + "' data-link>" + childCat.name + "</a>";
         html += "</div></div>";
       })
       html += "</div>";
@@ -50,7 +51,7 @@ export default class extends AbstractView {
       // child places
       html += "<div class='container'>";
       data.childrenPlaces.forEach((childPlace) => {
-        html += "<div class='card p-1 text-center text-success' >";
+        html += "<div class='card p-1 text-success' >";
         html += "<div class='card-block'>";
         html += "<span class='" + stylesByLevel[childPlace.level] + "'>&nbsp;</span>&nbsp;";
         html += "<a class='text-success font-weight-bold' href='" + u('/contenuti/' + childPlace.id) + "' data-link>" + childPlace.name + "</a>";

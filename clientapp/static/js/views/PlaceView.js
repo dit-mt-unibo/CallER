@@ -44,7 +44,8 @@ export default class extends AbstractView {
     ];
 
     var html = ""; //"<div class='container'>";
-    
+    html += "<div><a href='/' data-link><img src='/static/images/skylines.png' width='100%'></a></div>";
+      
     var url = apiUrl() + '/place/' + this.placeID;
     var response = await fetch(url);
     // Begin accessing JSON data here
@@ -76,7 +77,7 @@ export default class extends AbstractView {
       html += "</div>";
 
       html += "<div class='container'><div class='row bg-light'>";
-      html += "<div class='col titolo'><a href='" + parent + "' data-link >&lt;</a></div>"
+      html += "<div class='col titolo'><a class='parentlink' href='" + parent + "' data-link >&lt;</a></div>"
       html += "<div class='col-8 titolo'>" + item.name + "</div>";
       html += "<div class='col titolo'><span class='" + stylesByLevel[item.level] + "'><i class='fas fa-certificate'></i></span></div>";
       html += "</div>";
