@@ -10,7 +10,7 @@ export default class extends AbstractView {
   async getHtml() {
 
     var html = ""; //<div class='titolo'>ForliviAMO</div>";  // <i class='fab fa-fort-awesome' ></i>
-	html+= "<div id='logo'><img class='logo' src='/static/images/logos.png' alt='logo' width='30%' /></div>";
+	html+= "<div id='logo'><img class='logo' src='/static/images/logos.png' alt='logo' /></div>";
 	html+= "<div id='spacing'><span /></div>";
     html +="<div class='container' style='vertical-align: middle'>";
 
@@ -33,7 +33,7 @@ export default class extends AbstractView {
           html += " <a class='btn' href='" + u('/categorie/' + category.id) + "' data-link>";
           if (category.icon == null || category.icon == "")
             category.icon = "info";
-          html += "   <i class='fas fa-" + category.icon + " fa-3x home' ></i>";
+          html += "   <i class='fas fa-" + category.icon + " fa-2x home' ></i>";
           html += "   <p class='home'>" + category.name + "</p>";
           html += " </a>";
           html += "</div>"; // end card

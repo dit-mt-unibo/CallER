@@ -15,7 +15,7 @@ export default class extends AbstractView {
       "badge badge-warning",
       "badge badge-danger"
     ];
-    var html = "<div class='container'>";
+    var html = ""; //<div class='container'>";
 
     var url = apiUrl() + '/category/' + this.categoryID;
     var response = await fetch(url);
@@ -30,18 +30,18 @@ export default class extends AbstractView {
         parent = u('/categorie/' + data.item.parent_id);
       }
 
-	  html += "<div><a href='/' data-link><img src='/static/images/skylines.png' width='100%'></div>";
+	  html += "<div><a href='/' data-link><img src='/static/images/skyline.png' width='100%'></div>";
       html += "<div class='container'><div class='row bg-light'>";
       html += "<div class='col titolo'><a class='parentlink' href='" + parent + "' data-link >&lt;</a></div>"
       html += "<div class='col-8 titolo'>" + data.item.name + "</div><div class='col'>&nbsp;</div>";
       html += "</div>";
       // html += "<div class='titolo'>" + data.item.name + "</div>";
-      html += "<div class='container'>" + data.item.description + "</div><span>&nbsp;</span>";
+      html += "<div class='container'><span>&nbsp;</span>" + data.item.description + "</div><span>&nbsp;</span>";
 
       // child categories
       html += "<div class='container'>";
       data.childrenCategories.forEach((childCat) => {
-        html += "<div class='card text-center' style='background-color:#9F3505; margin-bottom: 4px;'>";
+        html += "<div class='card text-center bg-success' style='margin-bottom: 4px;'>";
         html += "<div class='card-block'>";
         html += "<a class='text-white font-weight-bold' href='" + u('/categorie/' + childCat.id)  + "' data-link>" + childCat.name + "</a>";
         html += "</div></div>";
@@ -60,7 +60,7 @@ export default class extends AbstractView {
       html += "</div>";
       
       // close main container
-      html += "</div>";
+      //html += "</div>";
 
     } else {
       html += "<marquee>" + "It's not working!" + "</marquee>";

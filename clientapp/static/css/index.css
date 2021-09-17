@@ -23,6 +23,25 @@
     display: block;
     margin: 0 auto;
 	padding-bottom:10px;
+	max-width:35%;
+}
+
+@media screen and (max-width:767px) {
+    .logo img {
+        max-width: 30%;
+    }
+}
+
+@media screen and (min-width:768px) {
+    .logo img {
+        max-width: 240px;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .logo img {
+        max-width: 303px;
+    }
 }
 
 /*
@@ -37,14 +56,15 @@
 }
 */
 .menu {
-  padding: 15px;
-  margin: 1px;
+  padding: 4px;
+  margin: 0.25rem;
   border: 1px solid;
   border-radius: 5%;
   text-align: center;
   font-size: 1em;
   color: red;
   background-color: white;
+  gap: 1rem;
 }
 
 .titolo {

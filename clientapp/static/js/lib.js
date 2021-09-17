@@ -9,7 +9,7 @@ export function u(url) {
 
 export function apiUrl() {
   var host = window.location.host
-  //return 'http://' + host + ':1337';
-   return 'http://amelia.sslmit.unibo.it:1337';
+  return 'http://' + host + ':1337';
+  //return 'http://amelia.sslmit.unibo.it:1337';
 }
 

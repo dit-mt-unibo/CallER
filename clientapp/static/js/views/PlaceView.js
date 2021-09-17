@@ -44,7 +44,7 @@ export default class extends AbstractView {
     ];
 
     var html = ""; //"<div class='container'>";
-    html += "<div><a href='/' data-link><img src='/static/images/skylines.png' width='100%'></a></div>";
+    html += "<div><a href='/' data-link><img src='/static/images/skyline.png' width='100%'></a></div>";
       
     var url = apiUrl() + '/place/' + this.placeID;
     var response = await fetch(url);
