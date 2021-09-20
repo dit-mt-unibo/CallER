@@ -30,7 +30,7 @@ export default class extends AbstractView {
         parent = u('/categorie/' + data.item.parent_id);
       }
 
-	  html += "<div><a href='/' data-link><img src='/static/images/skyline.png' width='100%'></div>";
+	  html += "<div><a href='/' data-link><img src='/callerapp/static/images/skyline.png' width='100%'></div>";
       html += "<div class='container'><div class='row bg-light'>";
       html += "<div class='col titolo'><a class='parentlink' href='" + parent + "' data-link >&lt;</a></div>"
       html += "<div class='col-8 titolo'>" + data.item.name + "</div><div class='col'>&nbsp;</div>";

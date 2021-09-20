@@ -10,7 +10,7 @@ export default class extends AbstractView {
   async getHtml() {
 
     var html = ""; //<div class='titolo'>ForliviAMO</div>";  // <i class='fab fa-fort-awesome' ></i>
-	html+= "<div id='logo'><img class='logo' src='/static/images/logos.png' alt='logo' /></div>";
+	html+= "<div id='logo'><img class='logo' src='/callerapp/static/images/logos.png' alt='logo' /></div>";
 	html+= "<div id='spacing'><span /></div>";
     html +="<div class='container' style='vertical-align: middle'>";
 
