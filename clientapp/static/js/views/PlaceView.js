@@ -83,9 +83,16 @@ export default class extends AbstractView {
       html += "</div>";
 
       html += "<div class='container coords'>";
-      html += "<p>lat: " + item.lat + " , long : " + item.long + "&nbsp;<i class='fas fa-map-marker-alt'></i></p>";
-      html += "</div>";
-
+	  if(item.lat != null && item.lat != 0)
+	  {
+		  var lat = parseFloat(item.lat).toFixed(5);
+		  var lon = 0;
+		  if (item.long != null)
+			lon = parseFloat(item.long).toFixed(5);
+		html += "<p>lat: " + lat + " , long : " + lon + "&nbsp;<i class='fas fa-map-marker-alt'></i></p>";
+	  }
+	  html += "</div>";
+	  
       html += "<div class='container mb-2'>";
       html += item.intro_text;
       html += "</div>";
@@ -93,7 +100,14 @@ export default class extends AbstractView {
       html += "<div class='container mb-2'>";
       html += " <img class='img-fluid w-90' src='" + getImageUrl(item.imageUID) + "'></img>";
       html += "</div>";
-
+	  
+	  if(item.image_caption != null)
+	  {
+		  html += "<div class='container coords'>";
+		  html += "<p>" + item.image_caption + "</p>";
+		  html += "</div>";
+	  }
+	  
       html += "<div class='container mb-2'>";
       html += item.full_text;
       html += "</div>";
