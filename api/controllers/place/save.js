@@ -22,6 +22,10 @@ const { exit } = require('process');
             type: 'string',
             required: true            
         },
+        image_caption: {
+            type: 'string',
+            allowNull: true
+        },
         video: {
             type: 'string',
             allowNull: true

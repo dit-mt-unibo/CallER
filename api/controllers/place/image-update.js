@@ -4,6 +4,8 @@
  * @description updates the image of a place
  */
 
+const { type } = require('os')
+
  module.exports = {
 
     inputs: {
@@ -12,8 +14,12 @@
             type: 'number',
         },
         oldImage: {
-            type: 'string'
-        }
+            type: 'string',
+        },
+        image_caption: {
+            type: 'string',
+            allowNull: true
+        }        
     },
 
     exits: {
@@ -34,41 +40,68 @@
 
     fn: async function(inputs, exits) {                
 
-        this.req.file('image').upload({
-
-            maxBytes: 1000000000000,
-            dirname: require('path').resolve(sails.config.appPath, 'assets/images/contenuti'),                
-        },
-        async function whenDone (err, uploadedFiles) {
-                
-           if(err) return exits.uploadFail();  
-
-           var imgSrc = uploadedFiles[0].filename;
-           var imgUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');                            
+        if ( _.isEmpty(inputs.oldImage) ) {
 
             try {
                 
-                var result = await Place.updateOne( { id: inputs.id } ).set( { image: imgSrc , imageUID: imgUID} )
+                await Place.updateOne( { id: inputs.id } ).set( { image_caption : inputs.image_caption } )
                 .intercept( (err) => {                         
                     
-                    return exits.saveFail();
+                    return exits.saveFail({ description: 'Query update error. Error: ' + err.message });
 
                 } );
 
             }   
             catch(err) {
-                //
-            }                                     
+                
+                return exits.saveFail({ description: 'Query update error. Error: ' + err.message });
 
-            if (result) {
+            }
 
-                deleteOldImage(inputs.oldImage);
+            return exits.success();
 
-                return exits.success( { image: imgSrc, imageUID: imgUID }); 
+        }
+        else {
 
-            }                              
+            this.req.file('image').upload({
+
+                maxBytes: 1000000000000,
+                dirname: require('path').resolve(sails.config.appPath, 'assets/images/contenuti'),                
+            },
+            async function whenDone (err, uploadedFiles) {
+                    
+               if(err) return exits.uploadFail();  
     
-        });   
+               var imgSrc = uploadedFiles[0].filename;
+               var imgUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');                            
+    
+                try {
+                    
+                    var result = await Place.updateOne( { id: inputs.id } ).set( { image: imgSrc , imageUID: imgUID , image_caption : inputs.image_caption} )
+                    .intercept( (err) => {                         
+                        
+                        return exits.saveFail({ description: 'Query update error. Error: ' + err.message });
+    
+                    } );
+    
+                }   
+                catch(err) {
+                    
+                    return exits.saveFail({ description: 'Query update error. Error: ' + err.message });
+
+                }                                     
+    
+                if (result) {
+    
+                    deleteOldImage(inputs.oldImage);
+    
+                    return exits.success( { image: imgSrc, imageUID: imgUID }); 
+    
+                }                              
+        
+            });
+
+        }        
 
     }    
 

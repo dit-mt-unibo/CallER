@@ -83,7 +83,17 @@
             <cloud-error v-if="formErrors.image === 'required'">Campo obbligatorio</cloud-error>
             <cloud-error v-if="formErrors.image === 'custom'">Estensione non valida</cloud-error>
             <cloud-error v-if="cloudError === 'uploadFail'">La dimensione dell'immagine non può superare i 3MB</cloud-error>
-        </div> 
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.image_caption ? 'text-danger' : '']">
+                Didascalia immagine <span class="small">(opzionale)</span>
+            </label>
+            <div class="input-group">                            
+                <textarea name="image_caption" class="form-control" :class="[formErrors.image_caption ? 'is-invalid' : '']"
+                v-model="formData.image_caption" rows="3"></textarea>
+            </div>
+        </div>
 
         <div class="form-group">
             <label :class="[formErrors.tags ? 'text-danger' : '']">
