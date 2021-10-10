@@ -54,6 +54,8 @@ export default class extends AbstractView {
 
       var item = data.item;
       var parent = u('/categorie/' + item.category_id);
+	  if(item.category_id == 1) // escludi la cat home!
+		parent = '/';
 
       var content_blocked = true;
       if (item.quiz) {
@@ -93,9 +95,13 @@ export default class extends AbstractView {
 	  }
 	  html += "</div>";
 	  
-      html += "<div class='container mb-2'>";
-      html += item.intro_text;
-      html += "</div>";
+      
+	  if(item.intro_text != null)
+	  {
+		  html += "<div class='container mb-2'>";
+		  html += item.intro_text;
+		  html += "</div>";
+	  }
 
       html += "<div class='container mb-2'>";
       html += " <img class='img-fluid w-90' src='" + getImageUrl(item.imageUID) + "'></img>";

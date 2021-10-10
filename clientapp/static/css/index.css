@@ -67,6 +67,15 @@
   gap: 1rem;
 }
 
+.credits {
+  padding: 20px;
+  margin: 0.25rem;
+  text-align: center;
+  font-size: 1em;
+  color: red;
+  gap: 1rem;
+}
+
 .titolo {
   padding: 5px;
   margin: 5px;

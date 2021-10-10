@@ -24,7 +24,7 @@
         try {
 
             categories = await Category.find({                
-              where: { id: { '>': 1 } }, // parent_id: { '!=' : null }, 
+              // where: { id: { '>': 1 } }, // parent_id: { '!=' : null }, 
                 sort: 'name ASC'
             });
 
