@@ -46,7 +46,7 @@ export default class extends AbstractView {
       html += "</div>"; // close container
 	  
 	  // find and use the place Id for credits:
-	  //html += "<div class='credits'><a class='parentlink' href='" + u('/contenuti/9') + "' data-link>Credits</a></div>";
+	  html += "<div class='credits'><a class='parentlink' href='" + u('/contenuti/81') + "' data-link>Credits</a></div>";
 
     } else {
       html += "<marquee>" + "It's not working!" + "</marquee>";
