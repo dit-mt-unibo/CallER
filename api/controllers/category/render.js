@@ -45,13 +45,41 @@ module.exports = {
     let childrenCategories = {};
     childrenCategories = await Category.find({
       where: { parent_id: inputs.id },
-      sort: 'id ASC'
+      sort: 'name ASC'
+    });
+
+    /**
+     * Imposta un'immagine per ogni categoria.
+     * L'immagine viene presa dal primo luogo associato alla categoria
+     */
+    childrenCategories.forEach(async (elm, index) => {
+        
+        childrenCategories[index].imageUID = "";
+
+        const response = await Place.find({
+                            where: { category_id: elm.id },
+                            sort: 'id ASC'
+                        });
+        
+        if ( typeof response === 'undefined' ) return;
+
+        try {
+
+            childrenCategories[index].imageUID = response[0].imageUID;
+
+        }
+        catch (err) {
+
+            childrenCategories[index].imageUID = "";
+            
+        }        
+
     });
 
     let childrenPlaces = {};
     childrenPlaces = await Place.find({
       where: { category_id: inputs.id },
-      sort: 'id ASC'
+      sort: 'name ASC'
     });
 
     return { item, childrenCategories, childrenPlaces };
