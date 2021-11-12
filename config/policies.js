@@ -21,6 +21,7 @@ module.exports.policies = {
   'place/find': true,
   'place/findOne': true,
   'place/render': true,
+  'place/related': true,
   'category/find': true,
   'category/render': true, // category has a custom action for findOne, aka GET /category/:id
   'quiz/find': true,

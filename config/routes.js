@@ -190,6 +190,9 @@ module.exports.routes = {
   'GET /place/:id': {
     action: 'place/render'
   },
+  'GET /place-related/:id/:cat_id': {
+    action: 'place/related'
+  },
   /*
    * 'GET /home': {
     action: 'category/sublist',
