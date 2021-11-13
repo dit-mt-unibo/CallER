@@ -1,0 +1,437 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Montserrat:wght@700&display=swap');
+html, body{
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+#app {
+  font-family: 'Arvo', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+.header{
+  background-color: #e4252a;
+  border-bottom: 3px solid #FFF;
+}
+
+.header:hover{
+    cursor: pointer;
+}
+
+.logo{
+  margin: 0 auto;
+  height: 150px;
+  width: auto;
+}
+
+#wrapper {
+    min-height: calc(100% - 80px);
+    height: auto !important;
+}
+
+.container {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}
+
+.footer {    
+    clear: both;
+    position: relative;
+    height: 80px;
+    background-color: #f44336;    
+}
+
+.footer .info {
+    color: #FFFFFF;
+    margin: 6px 0 4px 0;
+    font-size: 0.9em;
+}
+
+.footer a , .footer span {
+    font-size: 1em;
+    color: #FFFFFF;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.caption {
+  font-style: italic;  
+  font-size: 0.8rem;
+  display: inline-block;
+  margin: 5px 0 15px 0;
+  overflow-wrap: break-word;
+}
+
+.home-icon-box {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #f44336;
+  background-color: #FFFFFF;
+  width: 70%;
+  margin-bottom: 2em;
+  height: 160px;
+}
+
+.home-icon-box i {
+  color: #f44336;
+}
+
+.home-icon-box p {
+  color: #f44336;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.titolo {
+  padding: 5px;
+  margin: 5px;
+  font-size: 1.7em;
+  color: #d32f2f;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.category-name{
+    font-size: 1.1em;
+    padding: 0 15px;
+    text-decoration: underline;
+    color: #1565c0;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.livello {
+    font-size: 1.1em;
+}
+  
+.livello-facile {
+    color: #43a047;
+}
+
+.livello-intermedio {
+    color: #ff6f00;
+}
+
+.livello-difficile {
+    color: #e53935;
+}
+
+.intro-text{
+  font-size: 1.2em;
+  padding: 0 15px;
+  font-style: italic;
+  color: #78909c;
+}
+
+.glossary {
+  color: #1565c0;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.card {
+  background-color: rgba(255, 0, 0, 0.1);
+  padding: 5px;
+  cursor: pointer;
+}
+
+.card-img-top{  
+  height: auto;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.card-img-mini {
+    height: auto;
+    max-width: 120px;
+    object-fit: cover;
+}
+
+.card-img-top-none{
+  height: 100px;
+  width: 100%;
+  background-color: #EDEDED;
+}
+
+.card-body{
+  padding: 0;
+}
+
+.card-title {
+  color: #FFFFFF;
+  font-family: Montserrat;
+  background-color: #f44336;
+  padding: 12px 8px;
+  font-size: 1.15rem;
+}
+
+.card-text-truncate , .card-text-truncate p , .card-text-truncate div{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-link {
+  font-size: 1.5em;
+}
+
+.box-place-img {
+  position: relative;
+}
+
+.map-icon {
+  position:absolute; 
+  bottom:5px; 
+  right: 5px;
+}
+
+.map-icon i {
+  color:#b71c1c; 
+  background-color:#DDDDDD99; 
+  padding:10px 15px; 
+  border-radius:50%;
+  font-size: 2.5em;
+}
+
+.place-img {
+  height: auto;
+  max-height: 350px;
+  object-fit: cover;
+  padding: 0;  
+}
+
+.place-content {
+  background-color: #FFF;
+}
+
+.box-related {
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.box-related ul{
+    width: 100%;
+}
+
+.box-related ul li:first-child{
+    padding-bottom: 0px;
+}
+
+.box-related-img {
+    float:left; 
+    width:120px;
+}
+
+.box-related-entry{
+    float:left; 
+    width:calc(100% - 120px);
+    box-sizing: border-box;
+    padding-left: 5px;
+}
+
+.box-related-entry-level {
+    font-size: 0.9rem;
+}
+
+.box-tags {
+  border: 1px solid #42a5f5;
+  background-color: #bbdefb;
+  padding: 15px 20px;
+}
+
+.box-tags h5 {
+  font-size: 1.2em;
+  color: #0d47a1;
+}
+
+.box-tags ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  box-sizing:content-box;
+}
+
+.box-tags ul li{
+  display: inline-block;
+  padding-left: 7px;
+  color:#1565c0;
+  cursor: pointer;
+}
+
+.youvideo{
+  width: 540px;
+  height: 350px;
+}
+
+.vocaroo {
+  width: 540px;
+  height: 70px;
+}
+
+.box-block{
+  border: 1px solid #ffb300;
+  border-radius: 5px;
+  position: relative;
+  padding-bottom: 25px;
+  width: 100%;
+}
+
+.box-block h5 {
+  font-size: 1.4rem;
+  color: #ff6f00;
+  background-color: #ffe082;
+  padding: 15px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.box-block-body {
+  padding: 15px 20px;
+}
+
+.box-block-body ul {
+  list-style: none;
+  padding: 0 10px;
+}
+
+.quiz-question {
+  font-size: 1.3rem;
+  color: #ad1457;
+}
+
+.quiz-answer {
+  font-size: 1.2rem;
+  color: #c2185b;
+  position:relative;
+}
+
+.quiz-answer:hover {
+  cursor: pointer;
+}
+
+.quiz-response-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center;
+  opacity: 0;
+}
+
+.quiz-response-animation {  
+  animation: showresponse 2s;
+  animation-direction: alternate-reverse;
+}
+
+.quiz-response span {
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.quiz-response-error {
+  color: #b71c1c;
+}
+
+.quiz-response-error-bg {
+  background-color: #b71c1c66;
+}
+
+.quiz-response-success {
+  color: #43a047;
+}
+
+.quiz-response-success-bg {
+  background-color: #43a04766;
+}
+
+@keyframes showresponse {
+  from { opacity: 0;}
+  to { opacity: 1;}
+}
+
+/** Cookie GDPR **/
+#cookie-gdpr {    
+    background: #222222DD; 
+    width: 100%;
+    height: auto; 
+    line-height: 24px;  	
+    padding: 8px;
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    z-index: 1000;
+    font-size: 1rem;
+}
+
+#cookie-gdpr p {
+    color: #FFF;
+    padding: 0 8px;    
+}
+
+#cookie-gdpr a {
+    color: #FFFFFFDD;
+    text-decoration: underline;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+@media screen and (max-width:992px) {
+  
+  .home-icon-box {
+    padding: 7px;
+    width: 100%;
+  }
+
+  .youvideo{
+    width: 100%;
+    height: 250px;
+    max-width: 360px;
+  }
+
+  .vocaroo {
+    width: 100%;
+    height: 50px;
+    max-width: 360px;
+  }
+
+  .titolo {
+    font-size: 1.6em;
+  }
+
+}
+
+@media screen and (max-width:640px){
+  
+  .titolo {
+    font-size: 1.5em;
+  }
+
+}
+
+@media screen and (max-width:576px){
+  
+  .home-icon-box p {
+    font-size: 1em;
+  }  
+
+  .logo{
+    height: 100px;
+    width: auto;
+  }
+
+}
