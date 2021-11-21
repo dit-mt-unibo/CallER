@@ -35,10 +35,15 @@
             <div class="col-12 mt-3 mb-3" v-if="item.extra_text && !isBlocked">
                 <div v-html="item.extra_text"></div>                
             </div>
+            <div class="col-12 mt-3 mb-3">
+                <i>
+                    Contenuti in revisione. Per segnalazioni, scrivere a <a href="mailto:progetto.caller@gmail.com">progetto.caller@gmail.com</a>
+                </i>
+            </div>
         </div>
         <div class="row mb-3">
             <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock"/>
-        </div>
+        </div>        
         <div class="row box-related mb-3" >            
             <ul class="list-group">
                 <li class="list-group-item">
@@ -279,7 +284,7 @@ export default {
          */
         goTo(id , type) {
                         
-            let url = (type == "place") ? '/contenuto/' + id : '/contenuti/' + id;
+            let url = "/"; console.log(id + " " + type);// (type == "place") ? '/contenuto/' + id : '/contenuti/' + id;
             this.$router.push(url);
 
         }

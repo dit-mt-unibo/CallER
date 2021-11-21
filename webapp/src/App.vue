@@ -38,11 +38,13 @@ Template principale della WebApp all'interno del quale vengono visualizzate le p
         </div>
     </div>
     <cookie-gdpr/>
+    <proto-disclaimer/>
 </template>
 
 <script>
 
 import CookieGdpr from './components/cookie-gdpr.component.vue';
+import ProtoDisclaimer from './components/prototype-disclaimer.component.vue';
 
 export default {
 
@@ -53,7 +55,10 @@ export default {
     },
 
     components: {
-        CookieGdpr
+        
+        CookieGdpr,
+        ProtoDisclaimer
+        
     },
 
 }
