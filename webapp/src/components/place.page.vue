@@ -44,7 +44,7 @@
         <div class="row mb-3">
             <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock"/>
         </div>        
-        <div class="row box-related mb-3" >            
+        <div class="row box-related mb-3" v-if="item.cat_id > 1">            
             <ul class="list-group">
                 <li class="list-group-item">
                     <h5>Continua a leggere</h5>
@@ -65,7 +65,7 @@
                 </li>
             </ul>
         </div>
-        <div class="row rounded-top box-tags mb-3" v-if="item.tags">
+        <div class="row rounded-top box-tags mb-3" v-if="item.tags && item.cat_id > 1">
             <h5>Tags</h5>
             <ul>
                 <li v-for="tag in item.tags" v-bind:key="tag" @click="search(tag)">#{{tag}}</li>
