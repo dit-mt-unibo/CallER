@@ -85,6 +85,13 @@ export default {
         this.term = this.$route.params.term.toLowerCase();
     
     },
+
+    created: function() {
+
+        document.body.scrollTo({ top:0 , left:0 , behavior: 'smooth' });
+        document.documentElement.scrollTo({ top:0 , left:0 , behavior: 'smooth' });
+
+    },
     
     methods : {
         
@@ -93,22 +100,10 @@ export default {
          */
         async getPlaces() {
             
-            const response = await axios.get(this.apiUrl + "/place");
+            const response = await axios.get(this.apiUrl + "/place?limit=200&sort=name%20ASC");
             
             return response.data;      
             
-        },
-
-        /**
-         * Listener evento click su elemento della lista.
-         * 
-         * @param {int} item_id: ID elemento cliccato
-         */
-        goTo(item_id) {
-
-            let url = '/contenuto/' + item_id
-            this.$router.push(url);
-
         }
         
     },
