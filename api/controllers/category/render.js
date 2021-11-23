@@ -45,7 +45,7 @@ module.exports = {
     let childrenCategories = {};
     childrenCategories = await Category.find({
       where: { parent_id: inputs.id },
-      sort: 'name ASC'
+      sort: 'id ASC'
     });
 
     /**
@@ -79,7 +79,7 @@ module.exports = {
     let childrenPlaces = {};
     childrenPlaces = await Place.find({
       where: { category_id: inputs.id },
-      sort: 'name ASC'
+      sort: 'id ASC'
     });
 
     return { item, childrenCategories, childrenPlaces };
