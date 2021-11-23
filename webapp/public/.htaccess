@@ -1,8 +1,10 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine on
+<IfModule mod_rewrite.c>    
+    RewriteEngine on    
+    RewriteCond %{SERVER_NAME} =amelia.sslmit.unibo.it
+    RewriteRule ^ http://www.forliviamo.it [END,NE,R=permanent]
     RewriteBase /
     RewriteRule ^index\.html$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . /callerapp/index.html [L]
+    RewriteRule . /index.html [L]
 </IfModule>
