@@ -27,6 +27,6 @@ module.exports.policies = {
   'quiz/find': true,
   'quiz/findOne': true,
   'glossary/find': true,
-
+  'feedback/create': true,
 
 };
