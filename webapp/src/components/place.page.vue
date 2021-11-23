@@ -41,10 +41,11 @@
                 </i>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row">
             <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock"/>
-        </div>        
-        <div class="row box-related mb-3" v-if="item.cat_id > 1">            
+        </div>
+        <feedback :place_id="item.id" />
+        <div class="row box-related mb-3" v-if="item.category_id != 1">
             <ul class="list-group">
                 <li class="list-group-item">
                     <h5>Continua a leggere</h5>
@@ -65,20 +66,21 @@
                 </li>
             </ul>
         </div>
-        <div class="row rounded-top box-tags mb-3" v-if="item.tags && item.cat_id > 1">
+        <div class="row rounded-top box-tags mb-3" v-if="item.tags && item.category_id != 1">
             <h5>Tags</h5>
             <ul>
-                <li v-for="tag in item.tags" v-bind:key="tag" @click="search(tag)">#{{tag}}</li>
+                <li v-for="tag in item.tags" :key="tag" @click="search(tag)">#{{tag}}</li>
             </ul>
         </div>               
     </div>
-    <modalGlossary v-bind:title="glossary.term" v-bind:text="glossary.definition"  />    
+    <modalGlossary :title="glossary.term" :text="glossary.definition"  />    
 </template>
 
 <script>
 
 import modalGlossary from './modal-glossary.component.vue';
 import quiz from './quiz.component.vue';
+import feedback from './feedback.component.vue';
 import Cookie from '../modules/cookie.module.js';
 
 const axios = require('axios');
@@ -284,17 +286,18 @@ export default {
          */
         goTo(id , type) {
                         
-            let url = "/"; console.log(id + " " + type);// (type == "place") ? '/contenuto/' + id : '/contenuti/' + id;
+            let url = (type == "place") ? '/contenuto/' + id : '/contenuti/' + id;
             this.$router.push(url);
 
-        }
+        },
         
     },
 
     components: {
 
         modalGlossary ,
-        quiz
+        quiz,
+        feedback
 
     }
     

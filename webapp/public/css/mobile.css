@@ -286,6 +286,7 @@ body {
   position: relative;
   padding-bottom: 25px;
   width: 100%;
+  margin-bottom: 25px;
 }
 
 .box-block h5 {
@@ -364,6 +365,76 @@ body {
   to { opacity: 1;}
 }
 
+.box-rating {
+    margin: 20px 0;
+}
+
+.box-rating div.col-12 {
+    padding: 0;
+}
+
+.box-rating i {
+    color: #ffe082;    
+    font-size: 2rem;
+}
+
+.box-rating i:hover {
+    cursor: pointer;
+}
+
+.box-rating h5 {
+    display: inline-block;
+    font-size: 1.4rem;
+}
+
+.box-rating #stars {
+    display: inline-block;
+    margin-left: 10px;  
+}
+
+.box-rating #box-textarea {
+    display: none;
+    margin-top: 15px;
+}
+
+.box-btn-rate {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.btn-rate {
+    background-color: #4caf50;
+    width: 100px;    
+    color: #FFF;
+    margin: 0 auto;  
+}
+
+.box-info-rate {
+    font-size: 0.9rem;
+    margin: 5px 0;    
+}
+
+.box-sentform-rate{
+    margin: 15px auto 0 auto;
+    display: none;
+}
+
+.box-rating .box-sentform-rate p {
+    padding:0;
+    margin:0;
+}
+
+.box-rating .box-sentform-rate i{
+    cursor: default;
+    color: #43a047;
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.box-rating .box-sentform-rate p{
+    font-size: 1.1em;
+}
+
 /** Cookie GDPR **/
 #cookie-gdpr {    
     background: #222222DD; 
@@ -392,46 +463,73 @@ body {
 
 @media screen and (max-width:992px) {
   
-  .home-icon-box {
-    padding: 7px;
-    width: 100%;
-  }
+    .home-icon-box {
+        padding: 7px;
+        width: 100%;
+    }
 
-  .youvideo{
-    width: 100%;
-    height: 250px;
-    max-width: 360px;
-  }
+    .youvideo{
+        width: 100%;
+        height: 250px;
+        max-width: 360px;
+    }
 
-  .vocaroo {
-    width: 100%;
-    height: 50px;
-    max-width: 360px;
-  }
+    .vocaroo {
+        width: 100%;
+        height: 50px;
+        max-width: 360px;
+    }
 
-  .titolo {
-    font-size: 1.6em;
-  }
+    .titolo {
+        font-size: 1.6em;
+    }
+
+    .box-rating h5 {
+        display: block;
+    }
+
+    .box-rating #stars {
+        display: block;
+        margin: 15px auto;
+        text-align: center;
+    }
+
+    .box-btn-rate {
+        text-align: center;
+    }
+
+    .btn-rate{
+        width: 100%;
+        max-width: 250px;
+    }
 
 }
 
 @media screen and (max-width:640px){
   
-  .titolo {
-    font-size: 1.5em;
-  }
+    .titolo {
+        font-size: 1.5em;
+    }
 
 }
 
 @media screen and (max-width:576px){
   
-  .home-icon-box p {
-    font-size: 1em;
-  }  
+    .home-icon-box p {
+        font-size: 1em;
+    }  
 
-  .logo{
-    height: 100px;
-    width: auto;
-  }
+    .logo{
+        height: 100px;
+        width: auto;
+    }
+
+}
+
+@media screen and (max-width:440px) {
+
+    .box-rating h5 {
+        font-size: 1.3rem;
+    }
 
 }
