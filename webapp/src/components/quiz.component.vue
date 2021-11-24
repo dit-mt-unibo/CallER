@@ -1,18 +1,20 @@
 <!-- Componente quiz -->
 
 <template>
-    <div class="box-block">
-        <h5><i class="fas fa-star mr-2"></i>Contenuto extra</h5>        
-        <div class="box-block-body">
-            <p>Rispondi correttamente alla domanda per sbloccare il contenuto extra</p>
-            <p class="quiz-question">{{quiz.question}}</p>            
-            <ul class="list-group">
-                <li class="list-group-item quiz-answer" v-for="(choice , id) in quiz.choices" v-bind:key="choice" :id="'list_' + id"
-                    @click="checkAnswer(choice, id)">   
-                    <div :id="'text_' + id">{{choice}}</div>
-                    <i :id="'icon_' + id" class="far fa-2x quiz-response-icon" @animationend="endAnimation($event , id)"></i>                    
-                </li>
-            </ul>
+    <div class="mt-3 row">
+        <div class="box-block">
+            <h5><i class="fas fa-star mr-2"></i>Contenuto extra</h5>        
+            <div class="box-block-body">
+                <p>Rispondi correttamente alla domanda per sbloccare il contenuto extra</p>
+                <p class="quiz-question">{{quiz.question}}</p>            
+                <ul class="list-group">
+                    <li class="list-group-item quiz-answer" v-for="(choice , id) in quiz.choices" v-bind:key="choice" :id="'list_' + id"
+                        @click="checkAnswer(choice, id)">   
+                        <div :id="'text_' + id">{{choice}}</div>
+                        <i :id="'icon_' + id" class="far fa-2x quiz-response-icon" @animationend="endAnimation($event , id)"></i>                    
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>

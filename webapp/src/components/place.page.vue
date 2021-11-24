@@ -41,9 +41,7 @@
                 </i>
             </div>
         </div>
-        <div class="row">
-            <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock"/>
-        </div>
+        <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock"/>
         <feedback :place_id="item.id" />
         <div class="row box-related mb-3" v-if="item.category_id != 1">
             <ul class="list-group">

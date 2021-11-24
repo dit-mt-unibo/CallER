@@ -286,7 +286,7 @@ body {
   position: relative;
   padding-bottom: 25px;
   width: 100%;
-  margin-bottom: 25px;
+  background-color: #FFF;
 }
 
 .box-block h5 {
@@ -365,34 +365,37 @@ body {
   to { opacity: 1;}
 }
 
-.box-rating {
-    margin: 20px 0;
+.box-feedback {
+    background-color: #FFF;
+    border-radius: 0.25rem;
+    padding: 0 20px;
+    border:1px solid rgba(0, 0, 0, 0.125);
 }
 
-.box-rating div.col-12 {
+.box-feedback div.col-12 {
     padding: 0;
 }
 
-.box-rating i {
+.box-feedback i {
     color: #ffe082;    
     font-size: 2rem;
 }
 
-.box-rating i:hover {
+.box-feedback i:hover {
     cursor: pointer;
 }
 
-.box-rating h5 {
+.box-feedback h5 {
     display: inline-block;
     font-size: 1.4rem;
 }
 
-.box-rating #stars {
+.box-feedback #stars {
     display: inline-block;
     margin-left: 10px;  
 }
 
-.box-rating #box-textarea {
+.box-feedback #box-textarea {
     display: none;
     margin-top: 15px;
 }
@@ -419,19 +422,19 @@ body {
     display: none;
 }
 
-.box-rating .box-sentform-rate p {
+.box-feedback .box-sentform-rate p {
     padding:0;
     margin:0;
 }
 
-.box-rating .box-sentform-rate i{
+.box-feedback .box-sentform-rate i{
     cursor: default;
     color: #43a047;
     font-size: 3em;
     margin-bottom: 10px;
 }
 
-.box-rating .box-sentform-rate p{
+.box-feedback .box-sentform-rate p{
     font-size: 1.1em;
 }
 
@@ -484,11 +487,11 @@ body {
         font-size: 1.6em;
     }
 
-    .box-rating h5 {
+    .box-feedback h5 {
         display: block;
     }
 
-    .box-rating #stars {
+    .box-feedback #stars {
         display: block;
         margin: 15px auto;
         text-align: center;
@@ -528,7 +531,7 @@ body {
 
 @media screen and (max-width:440px) {
 
-    .box-rating h5 {
+    .box-feedback h5 {
         font-size: 1.3rem;
     }
 

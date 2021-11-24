@@ -2,8 +2,8 @@
 
 <template>
 
-    <div class="box-rating row">
-        <div class="col-12">
+    <div class="box-feedback mt-3 mb-3 row">
+        <div id="box-header" class="col-12 pt-3">
             <slot name="header">
                 <h5>È stato utile il contenuto?</h5>
             </slot>
@@ -25,7 +25,7 @@
             </div>
             <div class="box-info-rate">
                 <p>
-                    La raccolta e l'utilizzo dei dati viene effettuato in forma completamente anonima.
+                    La raccolta e l'analisi dei dati avviene in forma anonima.
                 </p>
             </div>                
             <div class="box-btn-rate">
@@ -105,20 +105,24 @@ export default {
          */
         async send() {
 
-            let url = "http://localhost:41337/feedback";
+            let url = this.apiUrl + "/feedback";
             let rate = document.getElementById("rate").value;
-            let comment = document.getElementById("comment").value;            
+            let comment = document.getElementById("comment").value;
 
             var formData = new FormData();
             formData.append("rate" , rate);
             formData.append("comment" , comment);
-            formData.append("place_id" , this.place_id);
+            formData.append("place_id" , this.place_id);            
 
-            await axios.post(url , formData);
+            await axios.post(url , formData).catch( function(error) {
+                console.log(error);
+            });
 
-            window.$( "#box-textarea" ).fadeOut(500 , function() {
-                
-                window.$( "#box-sentform-rate" ).fadeIn(500).delay(2000).fadeOut(500);
+            window.$( "#box-header" ).fadeOut(500);
+
+            window.$( "#box-textarea" ).fadeOut(500 , function() {                                
+
+                window.$( "#box-sentform-rate" ).fadeIn(800);
 
             });
 
