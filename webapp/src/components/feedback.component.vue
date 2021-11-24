@@ -57,6 +57,30 @@ export default {
     methods : {
 
         /**
+         * Reimposta lo stato iniziale del form.
+         * Metodo chiamato nella pagina contenuto, quando si naviga da un contenuto all'altro.         
+         */
+        refresh() {
+
+            window.$( "#box-header" ).show();
+            window.$( "#box-textarea" ).hide();
+            window.$( "#box-sentform-rate" ).hide();
+
+            var stars = document.querySelectorAll(".fa-star");
+
+            stars.forEach(item => {
+                
+                item.classList.replace("fas" , "far");
+                item.setAttribute("data-selected" , "");
+
+            });
+
+            document.getElementById("comment").value = "";
+            document.getElementById("rate").value = "";
+
+        },
+
+        /**
          * Listener click oggetti "Stelle".
          * Mostra o nasconde la textarea per il commento e il pulsante "Invia".
          * 

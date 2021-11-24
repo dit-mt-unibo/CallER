@@ -42,7 +42,7 @@
             </div>
         </div>
         <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock"/>
-        <feedback :place_id="item.id" />
+        <feedback :place_id="item.id" ref="feedback" />
         <div class="row box-related mb-3" v-if="item.category_id != 1">
             <ul class="list-group">
                 <li class="list-group-item">
@@ -138,11 +138,13 @@ export default {
         
         /**
          * Osserva il cambiamento del parametro id nella url.
-         * Chiama il metodo initUI per aggiornare i contenuti della pagina
+         * Chiama il metodo initUI per aggiornare i contenuti della pagina.
+         * Reimposta lo stato iniziale del form feedback
          */
         "$route.params.id"() {
 
             this.initUI();
+            this.$refs.feedback.refresh();
 
         },
 
