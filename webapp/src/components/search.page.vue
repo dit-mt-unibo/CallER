@@ -53,7 +53,9 @@ export default {
 
                 if ( this.term == '' ) return item;
 
-                if ( item.tags.length == 0 ) return item;
+                if ( item.tags.length == 0 ) return null;
+
+                if ( item.category_id == 1 ) return null; 
 
                 var found = false;
 
