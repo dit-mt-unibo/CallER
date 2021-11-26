@@ -198,6 +198,10 @@ module.exports.routes = {
   'GET /place-related/:id/:cat_id': {
     action: 'place/related'
   },
+  'POST /feedback': {
+    action: 'feedback/create',
+    csrf: false
+  },
   /*
    * 'GET /home': {
     action: 'category/sublist',
