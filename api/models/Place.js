@@ -131,6 +131,12 @@ module.exports = {
         category_id: {
             type: 'number',
             required: true
+        },
+
+        // reference to the feedback model
+        feedbacks: {
+            collection: 'feedback',
+            via: 'place_id'
         }
         
     }

@@ -161,3 +161,49 @@
 .glossary:hover {
     text-decoration: underline;
 }
+
+/* Feedback */
+.feedback-list-stars{
+    width: 100%;
+    max-width: 250px;
+}
+
+.feedback-inline-stars {
+    margin-left: 5px;
+    font-size: 1.3rem;
+}
+
+.feedback-list-stars li:not(:first-child):hover {
+    cursor: pointer;
+}
+
+.feedback-list-stars .bi-star{
+    color: #DEDEDE;
+}
+
+.feedback-list-stars-selected {
+    background-color: #ff6f00;
+}
+
+.feedback-list-stars .bi-star-fill , .feedback-inline-stars .bi-star-fill {
+    color: #fdd835;
+}
+
+.feedback-date{
+    margin: 10px 0 0 0 ;
+    padding:0;
+}
+
+.feedback-date span:first-child{
+    font-size: 1em;    
+}
+
+.feedback-title{
+    font-size: 1.2em;
+    color: #007BFF;
+    text-decoration: underline;
+}
+
+.feedback-title:hover{
+    cursor: pointer;
+}

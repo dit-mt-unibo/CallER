@@ -1,0 +1,58 @@
+<div id="view-list" v-cloak>
+
+    <div class="container-fluid row" style="margin:30px 0">
+
+        <div class="col-3"></div>
+        <div class="col-7">
+            <input type="text" class="form-control" placeholder="filtra risultati per titolo contenuto" v-model="filter_place">
+        </div>
+
+    </div>    
+
+<%  if ( items.length == 0 ) { %>
+    
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono stati ancora inviati dei commenti."}) %>
+    
+<% } else { %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <ul class="list-group feedback-list-stars">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="font-weight-bold" style="font-size:1.2rem">Totale valutazioni</span>
+                        <span class="badge badge-primary badge-pill">{{ count_feedbacks }}</span>
+                    </li>
+                    <list-rating-stars :id="'star-5'" :rate="5" :count="rates_count[4]" @click="filterByStars(5)"></list-rating-stars>
+                    <list-rating-stars :id="'star-4'" :rate="4" :count="rates_count[3]" @click="filterByStars(4)"></list-rating-stars>
+                    <list-rating-stars :id="'star-3'" :rate="3" :count="rates_count[2]" @click="filterByStars(3)"></list-rating-stars>
+                    <list-rating-stars :id="'star-2'" :rate="2" :count="rates_count[1]" @click="filterByStars(2)"></list-rating-stars>
+                    <list-rating-stars :id="'star-1'" :rate="1" :count="rates_count[0]" @click="filterByStars(1)"></list-rating-stars>
+                </ul>                
+            </div>
+            <div class="col-7">
+                <div v-for="item in filteredItems">
+                    <div class="row mb-4">
+                        <div class="col-12 border rounded">
+                            <p class="feedback-date">
+                                <span>{{ new Date(item.createdAt).toLocaleString("it-IT") }}</span>
+                                <rating-stars :rate="item.rate"></rating-stars>
+                            </p>
+                            <p class="feedback-title" @click="filter_place = item.place_id.name">{{item.place_id.name}}</p>
+                            <p class="feedback-comment">{{ item.comment }}</p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>           
+        </div>
+    </div>
+
+<% } %>
+
+    </div>    
+
+</div>
+
+<script src="/js/components/list-rating-stars.component.js"></script>
+<script src="/js/components/rating-stars.component.js"></script>
+<script src="/js/pages/feedback/view-list.page.js"></script>

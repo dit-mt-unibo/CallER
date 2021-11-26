@@ -165,6 +165,11 @@ module.exports.routes = {
     action: 'glossary/definition-update'
   },
 
+  // Routes for feedback
+  'GET /feedback/list' : {
+    action: 'feedback/view-list'
+  },
+
 
 
   /***************************************************************************

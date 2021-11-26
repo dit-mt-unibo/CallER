@@ -25,12 +25,13 @@ module.exports = {
 
         ip:{
             type: 'string',
-            allowNull: true
+            required: true
         },
 
-        place_id:{
-            type: 'number',
-            required: true
+        // reference to the place model
+        place_id: {
+            model: 'place'
         }
+
     }
 }

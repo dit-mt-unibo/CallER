@@ -38,7 +38,7 @@
 
         try {
 
-            item = await Place.findOne({ id: id });            
+            item = await Place.findOne({ id: id }).populate('feedbacks');            
 
         }
         catch (err) {
