@@ -8,6 +8,8 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
+const rateLimit = require("express-rate-limit");
+
 module.exports.policies = {
 
   '*': 'is-logged-in',
@@ -27,6 +29,6 @@ module.exports.policies = {
   'quiz/find': true,
   'quiz/findOne': true,
   'glossary/find': true,
-  'feedback/create': true,
+  'feedback/create': [rateLimit()], // default setup 1 minute max 5 requests
 
 };
