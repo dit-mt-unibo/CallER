@@ -15,16 +15,22 @@
         </div>
         <div class="row mt-4 mb-3">
             <div class="col-12 intro-text" v-html="item.intro_text"></div>
-        </div>                
-        <div class="row box-place-img">
-            <img class="col-12 place-img" :src="imagePath">
-            <a v-if="item.lat && item.long" class="map-icon" :href="'https://www.google.com/maps/search/?api=1&query=' + item.lat + '%2C' + item.long" target="_blank">
-                <i class="fas fa-map-marker-alt"></i>
-            </a>
-        </div>
-        <div class="row rounded-top place-content">
-            <div class="col-12 caption" v-html="item.image_caption"></div>
-            <div class="col-12" v-html="item.full_text" ></div>
+        </div>       
+        <div class="row rounded-top place-content pt-3">                       
+            <div class="col-12">
+                <div class="box-place-img">
+                    <div class="place-container-img">
+                        <img class="place-img" :src="imagePath">
+                        <a v-if="item.lat && item.long" class="map-icon" :href="'https://www.google.com/maps/search/?api=1&query=' + item.lat + '%2C' + item.long" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </a>           
+                    </div>                    
+                    <p id="caption" class="caption card-text-truncate" @click="expand">                        
+                        {{item.image_caption}}
+                    </p>                                     
+                </div>
+                <span v-html="item.full_text"></span>
+            </div>
             <div align="center" class="col-12 mt-3 mb-3" v-if="item.video">
                 <iframe v-if="!isBlocked" class="youvideo" :src="item.video" title="YouTube video player" frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>                
@@ -58,7 +64,7 @@
                             <span v-if="rItem.level == 1" class="livello-intermedio">Livello: intermedio</span>
                             <span v-if="rItem.level == 2" class="livello-difficile">Livello: difficile</span>                        
                         </div>
-                        <div>{{rItem.name}}</div>                        
+                        <div>{{rItem.name}}</div>
                     </div>
                     <div style="clear:both;"></div>
                 </li>
@@ -143,8 +149,12 @@ export default {
          */
         "$route.params.id"() {
 
-            this.initUI();
-            this.$refs.feedback.refresh();
+            if ( this.$route.name == "place" ) {
+
+                this.initUI();
+                this.$refs.feedback.refresh();
+
+            }
 
         },
 
@@ -252,7 +262,7 @@ export default {
                     window.$( '#modalGlossary' ).modal('show');
 
                 }                
-            }
+            }            
 
         },
 
@@ -288,6 +298,29 @@ export default {
                         
             let url = (type == "place") ? '/contenuto/' + id : '/contenuti/' + id;
             this.$router.push(url);
+
+        },
+
+        /**
+         * Listener evento click sulla didascalia della foto.
+         * Espande/riduce testo didascalia
+         * 
+         * @param {Event} e: oggetto Event
+         */
+        expand(e) {
+            
+            const obj = e.target;
+            
+            if ( obj.classList.contains("card-text-truncate") ){
+
+                obj.classList.remove("card-text-truncate");
+
+            }
+            else{
+
+                obj.classList.add("card-text-truncate");
+
+            }
 
         },
         
