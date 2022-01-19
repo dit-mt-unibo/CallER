@@ -202,6 +202,12 @@ module.exports.routes = {
     action: 'feedback/create',
     csrf: false
   },
+  'GET /api/search': {
+    action: 'place/search'
+  },
+  'GET /api/search-tag': {
+    action: 'place/search-tag'
+  },
   /*
    * 'GET /home': {
     action: 'category/sublist',

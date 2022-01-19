@@ -24,11 +24,13 @@ module.exports.policies = {
   'place/findOne': true,
   'place/render': true,
   'place/related': true,
+  'place/search': true,
+  'place/search-tag': true,
   'category/find': true,
   'category/render': true, // category has a custom action for findOne, aka GET /category/:id
   'quiz/find': true,
   'quiz/findOne': true,
   'glossary/find': true,
-  'feedback/create': [rateLimit()], // default setup 1 minute max 5 requests
+  'feedback/create': [rateLimit()], // default setup 1 minute max 5 requests  
 
 };
