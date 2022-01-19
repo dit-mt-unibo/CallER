@@ -25,7 +25,7 @@ module.exports = {
 
             const nameResults = await Place.find( { 
                 where: { name:  { contains: term } } ,
-                select: ['id' , 'name' , 'intro_text' , 'full_text'],
+                select: ['id' , 'name' , 'intro_text' , 'imageUID'],
                 sort: 'name ASC'
             } );
 
@@ -47,7 +47,7 @@ module.exports = {
                     intro_text: { contains: term },
                     id: { '!=': ids }
                 },
-                select: ['id' , 'name' , 'intro_text' , 'full_text'],
+                select: ['id' , 'name' , 'intro_text' , 'imageUID'],
                 sort: 'name ASC'
             } );                        
 

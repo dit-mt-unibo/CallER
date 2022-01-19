@@ -25,7 +25,7 @@ module.exports = {
         try{
 
             var query = `
-            SELECT id, name, intro_text, full_text FROM place
+            SELECT id, name, intro_text, imageUID FROM place
             WHERE JSON_CONTAINS(tags , '"` + _.escape(tag) + `"')
             ORDER BY name ASC
             `;
