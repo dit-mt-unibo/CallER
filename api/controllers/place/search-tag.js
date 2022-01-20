@@ -1,19 +1,30 @@
 /**
  * API per WebApp
  * 
- * @description restituisce un json con i risultati dei places filtrati in base al tag inviato dall'utente
+ * @description restituisce un json con i risultati dei places filtrati per tag
  */
 
 module.exports = {
 
     fn: async function() {
 
+        /**
+         * oggetto risposta json
+         * success: 0|1 
+         * counter: totale risultati trovati
+         * items: risultati query
+         */
         var result = { success: 0 , counter: 0 , items: [] };
+        
+        // Risultati query sendNativeQuery
         var items = [];
+
+        // oggetto datastore di sails per eseguire codice sql
         const datastore = sails.getDatastore();
         
         if ( _.isUndefined(this.req.param('tag')) ) return result;
 
+        // Pulizia input
         const sanitizeHtml = require('sanitize-html');
         let tag = sanitizeHtml(this.req.param('tag') , {
             allowedTags: [],
