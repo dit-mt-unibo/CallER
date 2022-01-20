@@ -4,39 +4,45 @@ Template principale della WebApp all'interno del quale vengono visualizzate le p
 
 <template>
     <div id="wrapper">
-        <div class="row header" @click="this.$router.push('/');">
-            <div class="col-12 d-none d-lg-block d-xl-block">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <img class="logo" alt="Vue logo" src="./assets/images/logo.png">
+        <div class="container-fluid">
+            <div class="row header" @click="this.$router.push('/');">
+                <div class="col-12 d-none d-lg-block d-xl-block">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <img class="logo" alt="Vue logo" src="./assets/images/logo.png">
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-12 d-block d-lg-none d-xl-none">
+                    <img class="logo" alt="Vue logo" src="./assets/images/logo.png">
+                </div>
             </div>
-            <div class="col-12 d-block d-lg-none d-xl-none">
-                <img class="logo" alt="Vue logo" src="./assets/images/logo.png">
+        </div>        
+        <div class="container main-container">            
+            <router-view/>
+        </div>        
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div align="center" class="col-12 footer">
+                <p class="info d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                    Dipartimento di Interpretazione e Traduzione - DIT - Forlì
+                </p>
+                <p class="info d-block d-sm-none d-md-none d-lg-none d-xl-none">
+                    Dipartimento di Interpretazione e
+                </p>
+                <p class="info d-block d-sm-none d-md-none d-lg-none d-xl-none">
+                    Traduzione - DIT - Forlì
+                </p>
+                <p>
+                    <span @click="this.$router.push('/contenuto/81');">Credits</span>
+                    <a href="https://www.unibo.it/it/ateneo/privacy-e-note-legali/privacy/privacy-sistema-portale-ateneo" target="_blank" class="ml-3">Cookie</a>
+                </p>
             </div>
         </div>
-        <router-view/>
-    </div>
-    <div class="row">
-        <div align="center" class="col-12 footer">
-            <p class="info d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                Dipartimento di Interpretazione e Traduzione - DIT - Forlì
-            </p>
-            <p class="info d-block d-sm-none d-md-none d-lg-none d-xl-none">
-                Dipartimento di Interpretazione e
-            </p>
-            <p class="info d-block d-sm-none d-md-none d-lg-none d-xl-none">
-                Traduzione - DIT - Forlì
-            </p>
-            <p>
-                <span @click="this.$router.push('/contenuto/81');">Credits</span>
-                <a href="https://www.unibo.it/it/ateneo/privacy-e-note-legali/privacy/privacy-sistema-portale-ateneo" target="_blank" class="ml-3">Cookie</a>
-            </p>
-        </div>
-    </div>
+    </div>    
     <cookie-gdpr/>
     <proto-disclaimer/>
 </template>
@@ -51,13 +57,13 @@ export default {
     // Definisce variabili globali
     provide: {
         // server nodejs
-        apiUrl : 'http://137.204.200.9:1337'
-    },
+        apiUrl : 'http://137.204.200.9:1337', 
+    },    
 
     components: {
         
         CookieGdpr,
-        ProtoDisclaimer
+        ProtoDisclaimer,
         
     },
 

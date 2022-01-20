@@ -1,16 +1,14 @@
 <!-- Lista contenuti di una categoria -->
 
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 titolo">{{name}}</div>
-        </div> 
+    <toolbar :title="name" :category_id="id"/>
+    <div class="container-fluid mt-3 mb-3">
         <div class="row">
             <div class="col-12" v-html="description" ></div>
         </div>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-start">
             <listitems v-for="child in children" v-bind:key="child.id" v-bind:item="child" v-bind:href="/contenuto/" v-bind:intro_text="child.intro_text"/>
         </div>
     </div>
@@ -19,6 +17,7 @@
 <script>
 
 import listitems from './listitems.component.vue';
+import toolbar from './toolbar.component.vue';
 const axios = require('axios');
 
 export default {
@@ -32,6 +31,7 @@ export default {
         
         return {
 
+            id: "",
             // nome della categoria
             name: "",
             // descrizione della categoria
@@ -56,8 +56,8 @@ export default {
          */
         async getPlaces() {
             
-            let id = this.$route.params.cat_id;
-            const response = await axios.get(this.apiUrl + "/category/" + id);            
+            this.id = this.$route.params.cat_id;
+            const response = await axios.get(this.apiUrl + "/category/" + this.id);            
 
             this.name = response.data.item.name;
             this.description = response.data.item.description;
@@ -69,7 +69,8 @@ export default {
 
     components: {
 
-        listitems
+        listitems,
+        toolbar
 
     }
     

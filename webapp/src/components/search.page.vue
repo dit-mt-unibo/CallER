@@ -1,14 +1,15 @@
 <!-- Pagina ricerca. Elenco elementi trovati -->
 
 <template>
+    <toolbar :title="''" :category_id="''" />
     <div class="container">
         <div class="row">
-            <div class="col-12 titolo">Ricerca tag #{{this.term}}</div>
+            <div class="col-12 titolo">Risultati ricerca</div>
         </div>         
     </div>
     <div class="container">
-        <div class="row">
-            <listitems v-for="item in filterItems" v-bind:key="item.id" v-bind:item="item" v-bind:href="/contenuto/" v-bind:intro_text="item.intro_text"/>
+        <div class="row justify-content-start">
+            <listitems v-for="item in items" v-bind:key="item.id" v-bind:item="item" v-bind:href="/contenuto/" v-bind:intro_text="item.intro_text"/>
         </div>
     </div>    
 </template>
@@ -16,6 +17,8 @@
 <script>
 
 import listitems from './listitems.component.vue';
+import toolbar from './toolbar.component.vue';
+
 const axios = require('axios');
 
 export default {
@@ -33,58 +36,45 @@ export default {
             items: [],
             // filtro ricerca
             term : '',
+            // tag | word
+            type: '',
 
         }
 
     },
 
-    computed: {
+    watch: {
+        
+        /**
+         * Osserva il cambiamento del parametro term nella url.
+         * Chiama il metodo getPlaces per aggiornare i contenuti della pagina.
+         */
+        "$route.params.term"() {
+
+            this.term = this.$route.params.term;
+            this.getPlaces();
+
+        },
 
         /**
-         * Filtra l'array contenuti this.items tramite la stringa di ricerca this.term
+         * Osserva il cambiamento del parametro type nella url.
+         * Chiama il metodo getPlaces per aggiornare i contenuti della pagina.
          */
-        filterItems() {
-            
-            if ( this.items.length == 0 ) return [];
+        "$route.params.type"() {
 
-            return this.items.filter(item => {
+            this.type = this.$route.params.type;
+            this.getPlaces();
 
-                if ( typeof this.term === 'undefined' ) return item;
-
-                if ( this.term == '' ) return item;
-
-                if ( item.tags.length == 0 ) return null;
-
-                if ( item.category_id == 1 ) return null; 
-
-                var found = false;
-
-                item.tags.forEach(tag => {
-                    
-                    if ( tag.toLowerCase() === this.term ) {
-
-                        found = true;
-                        return;
-
-                    }
-
-                });
-
-                
-                if ( found ) return item;
-
-                return null;
-
-            });
-
-        }
+        },
 
     },
     
     beforeMount: async function() {
-    
-        this.items = await this.getPlaces();
-        this.term = this.$route.params.term.toLowerCase();
+            
+        this.term = this.$route.params.term;
+        this.type = this.$route.params.type.toLowerCase();
+
+        await this.getPlaces();
     
     },
 
@@ -102,17 +92,29 @@ export default {
          */
         async getPlaces() {
             
-            const response = await axios.get(this.apiUrl + "/place?limit=200&sort=name%20ASC");
+            let apiUrl = ( this.type == 'word' ) ? "/api/search?term=" : "/api/search-tag?tag=";            
+
+            try {
+
+                var response = await axios.get(this.apiUrl + apiUrl + this.term);
+                this.items = response.data.items;
+
+            }
+            catch (err) {
+
+                console.log(err);
+                this.items = [];
+
+            }                              
             
-            return response.data;      
-            
-        }
+        },
         
     },
 
     components: {
 
-        listitems
+        listitems, 
+        toolbar
 
     }
     

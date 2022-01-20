@@ -1,7 +1,8 @@
 <!-- Home page della WebApp -->
 
 <template>
-    <div class="container mt-4">
+    <toolbar :title="''" :category_id="''" />
+    <div class="container pt-4">
         <div align="center" class="row">            
             <div class="col-6 col-md-4" v-for="category in categories" v-bind:key="category.id" v-bind:category="category">
                 <div class="home-icon-box" align="center">
@@ -16,6 +17,8 @@
 </template>
 
 <script>
+
+import toolbar from './toolbar.component.vue';
 
 const axios = require('axios')
 
@@ -76,6 +79,10 @@ export default {
         }
         
     },
+
+    components: {
+        toolbar
+    }
     
 }
 

@@ -84,7 +84,7 @@ export default {
          * Listener click oggetti "Stelle".
          * Mostra o nasconde la textarea per il commento e il pulsante "Invia".
          * 
-         * @param {Event} e: oggeto Event
+         * @param {Event} e: oggetto Event
          */
         rate(e) {
 

@@ -13,7 +13,7 @@ const routes = [
   },
   {
     path: "/categorie/:id",
-    name: "categories",
+    name: "categories",    
     component: categories,
   },
   {
@@ -27,7 +27,7 @@ const routes = [
     component: place,
   },
   {
-    path: "/cerca/:term",
+    path: "/cerca/:term/:type",
     name: "search",
     component: search,
   },

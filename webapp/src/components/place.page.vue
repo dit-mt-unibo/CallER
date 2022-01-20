@@ -1,6 +1,7 @@
 <!-- Visualizza i contenuti di un luogo -->
 
-<template>    
+<template>
+    <toolbar :title="categoryName" :category_id="item.category_id"/>
     <div id="place" class="container">
         <div class="row">
             <div class="col-12 titolo">{{item.name}}</div>            
@@ -8,10 +9,7 @@
                 <span v-if="item.level == 0" class="livello-facile">Livello: facile</span>
                 <span v-if="item.level == 1" class="livello-intermedio">Livello: intermedio</span>
                 <span v-if="item.level == 2" class="livello-difficile">Livello: difficile</span>
-            </div>
-            <div v-if="categoryName" class="col-12 category-name" @click="goTo(item.category_id , 'category')">
-                Categoria: {{categoryName}}
-            </div>
+            </div>            
         </div>
         <div class="row mt-4 mb-3">
             <div class="col-12 intro-text" v-html="item.intro_text"></div>
@@ -85,6 +83,7 @@
 import modalGlossary from './modal-glossary.component.vue';
 import quiz from './quiz.component.vue';
 import feedback from './feedback.component.vue';
+import toolbar from './toolbar.component.vue';
 import Cookie from '../modules/cookie.module.js';
 
 const axios = require('axios');
@@ -282,7 +281,7 @@ export default {
          */
         search(tag) {
 
-            let url = '/cerca/' + tag;
+            let url = '/cerca/' + tag + '/tag';
             this.$router.push(url);
 
         },
@@ -330,7 +329,8 @@ export default {
 
         modalGlossary ,
         quiz,
-        feedback
+        feedback,
+        toolbar
 
     }
     
