@@ -28,6 +28,7 @@ module.exports.policies = {
   'place/search-tag': true,
   'category/find': true,
   'category/render': true, // category has a custom action for findOne, aka GET /category/:id
+  'category/navigation-menu': true,
   'quiz/find': true,
   'quiz/findOne': true,
   'glossary/find': true,

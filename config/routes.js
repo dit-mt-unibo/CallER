@@ -208,6 +208,9 @@ module.exports.routes = {
   'GET /api/search-tag': {
     action: 'place/search-tag'
   },
+  'GET /api/get-navigation-menu': {
+    action: 'category/navigation-menu'
+  },
   /*
    * 'GET /home': {
     action: 'category/sublist',
