@@ -96,11 +96,13 @@ export default {
             if ( submenuItem.classList.contains("submenu-collapsed") ) {
 
                 submenuItem.classList.remove("submenu-collapsed");
+                document.getElementById(itemId).innerHTML = '-';
 
             }
             else {
 
                 submenuItem.classList.add("submenu-collapsed");
+                document.getElementById(itemId).innerHTML = '+';
 
             }                      
 
