@@ -33,8 +33,8 @@ module.exports = {
         try{
 
             /**
-             * Le query sono due in modo da avere come primi risultati i contenuti
-             * nei quali la stringa cercata compare nel titolo.
+             * Le query sono tre in modo da avere i suggerimenti ordinati
+             * prima per titolo, poi per testo introduttivo e infine per tag.             
              * 
              * Effettua la query cercando la stringa nella colonna name
              */
@@ -76,7 +76,42 @@ module.exports = {
             if ( introTextResults.length > 0 ) {
 
                 introTextResults.forEach(item => {
+                    
                     items.push(item);
+                    ids.push(item.id);
+
+                });
+
+            }
+
+            /**
+             * Query per ricerca tra i tags.
+             * Esclude dai risultati gli ID dei contenuti già trovati con le query precedenti.
+             */
+            const datastore = sails.getDatastore();
+
+            var query = `
+            SELECT id, name, intro_text, imageUID FROM place
+            WHERE JSON_CONTAINS(tags , '"` + term + `"')
+            `
+            if ( ids.length > 0 ) {
+
+                query += " AND id NOT IN (" + ids.join(',')  + ")";
+
+            }
+
+            query += " ORDER BY name ASC";
+            
+            const tagResults = await datastore.sendNativeQuery(query , []);
+
+            // Popola oggetto items
+            if ( tagResults.rows.length > 0 ) {
+
+                tagResults.rows.forEach(item => {
+                    
+                    item.tag = term;
+                    items.push(item);
+
                 });
 
             }

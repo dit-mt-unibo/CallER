@@ -8,6 +8,9 @@
                 <li class="list-group-item" v-for="item in items" v-bind:key="item" @click="openResult(item.id)">
                     <h5 v-html="item.name"></h5>
                     <div class="intro-text" v-html="item.intro_text"></div>
+                    <div id="search-box-tag" v-if="item.tag">
+                        <span class="highlight">#{{item.tag}}</span>                            
+                    </div>
                 </li>
                 <li class="list-group-item" align="right" v-if="itemsCounter > 3" @click="openAllResults">
                     <div>Vedi tutti i risultati ({{itemsCounter}})</div>
