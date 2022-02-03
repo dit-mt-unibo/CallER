@@ -92,7 +92,7 @@ module.exports = {
 
             var query = `
             SELECT id, name, intro_text, imageUID FROM place
-            WHERE JSON_CONTAINS(tags , '"` + term + `"')
+            WHERE JSON_CONTAINS(LOWER(tags) , '"` + term.toLocaleLowerCase() + `"')
             `
             if ( ids.length > 0 ) {
 
