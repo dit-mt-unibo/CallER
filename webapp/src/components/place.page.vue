@@ -39,11 +39,6 @@
             <div class="col-12 mt-3 mb-3" v-if="item.extra_text && !isBlocked">
                 <div v-html="item.extra_text"></div>                
             </div>
-            <div class="col-12 mt-3 mb-3">
-                <i>
-                    Contenuti in revisione. Per segnalazioni, scrivere a <a href="mailto:progetto.caller@gmail.com">progetto.caller@gmail.com</a>
-                </i>
-            </div>
         </div>
         <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock"/>
         <feedback :place_id="item.id" ref="feedback" />
