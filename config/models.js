@@ -52,8 +52,8 @@ module.exports.models = {
   * > https://sailsjs.com/docs/concepts/orm/model-settings#?migrate          *
   *                                                                          *
   ***************************************************************************/
-  /* TODO Comment when we are in production environment */ 
-  migrate: 'alter',
+  /* TODO Comment when we are in production environment */
+  migrate: 'safe',
 
 
   /***************************************************************************
