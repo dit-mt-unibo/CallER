@@ -1,7 +1,4 @@
 <template>
-<!-- <div>
-  <div><h1>Gioco sondaggio</h1></div>
-</div> -->
   <div class="card btn" id="app" @click="goTo()">
             <div class="card-header">
               Parola del giorno: <b id="parola">{{ info }}</b>
@@ -20,11 +17,9 @@
 
 const axios = require('axios');
 
-
 export default {
 
     name: 'glossary' ,
-
     // Utilizza variabile globale apiUrl
     inject: ['apiUrl'],
     data () {
@@ -38,44 +33,15 @@ export default {
         }
 
     } ,
-    //parola del giorno
-//     mounted () {
-//     const log = await axios.post('this.apiUrl', { username: "Admin", password: "Admin" })
-//     await axios.post('this.apiUrl', { username: "Admin", password: "Admin" })
-//     .then(axios
-//       .get(this.apiUrl + "/glossary/list")
-//       // .then(response => (
-//       //   // console.log(response.data)
-//       //   ))
-//     )
-// },
     created : async function () {
-
         await this.login();
-
     } ,
 
     methods : {
-
         /**
          * Recupera la parola del giorno dal glossario
          */
         async login() {
-            //per fare il login alla pagina ma da problemi di cors
-            //Inoltre non credo sia una soluzione
-            // const login = await axios.post(this.apiUrl+ "/check-account", {}, {
-            //   headers: {
-            //     "Access-Control-Allow-Origin": "*",
-            //     "Access-Control-Allow-Credentials": "true",
-            //     "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-            //     "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
-            //   },
-            //   auth: {
-            //     username: 'Admin',
-            //     password: 'Admin'
-            //   }
-            // });
-            // await console.log(login)
 
             //Istanzio la funzione per calcolare il giorno dell'anno
             const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
@@ -89,19 +55,18 @@ export default {
             const glossary = await axios.get(this.apiUrl+ "/glossary?id=" + id );
             await console.log(glossary.data)
             // const glossary = await axios.get(this.apiUrl+ "/glossary");
-
             this.info = glossary.data[0]["term"]
-            this.info2 = glossary.data[0]["definition"]
+            //per rimuvoere <p> ... </p>
+            let definizione = glossary.data[0]["definition"]
+            this.info2 = definizione.slice(3,-4)
             this.info3 = "https://www.dizionario-italiano.it/dizionario-italiano.php?parola="+ this.info
         },
 
         goTo() {
-
                     let url = '/parola/'
                     this.$router.push(url);
                 },
     },
-
 }
 </script>
 

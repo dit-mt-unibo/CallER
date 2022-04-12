@@ -12,7 +12,8 @@
                     </span>
                 </div>
             </div>
-        </div> <!-- chiusura row -->
+        </div>
+        <!-- chiusura row -->
          <!-- Parola del giorno -->
         <div id="popUp">
            <glossary/>
