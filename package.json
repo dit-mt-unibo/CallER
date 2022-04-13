@@ -11,6 +11,7 @@
     "bootstrap": "^4.6.0",
     "express-rate-limit": "^5.5.1",
     "grunt": "1.0.4",
+    "leaflet": "^1.7.1",
     "sails": "^1.4.2",
     "sails-hook-grunt": "^4.0.0",
     "sails-hook-organics": "^2.2.0",
@@ -18,7 +19,8 @@
     "sails-hook-sockets": "^2.0.0",
     "sails-mysql": "^2.0.0",
     "sanitize-html": "^2.6.0",
-    "trumbowyg": "^2.23.0"
+    "trumbowyg": "^2.23.0",
+    "vue2-leaflet": "^2.7.1"
   },
   "devDependencies": {
     "eslint": "5.16.0"

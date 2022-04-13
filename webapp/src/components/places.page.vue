@@ -1,6 +1,7 @@
 <!-- Lista contenuti di una categoria -->
 
 <template>
+<div>
     <toolbar :title="name" :category_id="id"/>
     <div class="container-fluid mt-3 mb-3">
         <div class="row">
@@ -12,6 +13,7 @@
             <listitems v-for="child in children" v-bind:key="child.id" v-bind:item="child" v-bind:href="/contenuto/" v-bind:intro_text="child.intro_text"/>
         </div>
     </div>
+</div>
 </template>
 
 <script>
