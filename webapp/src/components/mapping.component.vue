@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 75vh; width: 50vw">
+  
     <l-map :zoom = "zoom" :center = "center">
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -7,7 +7,7 @@
       <!-- <l-control-layers /> -->
       <l-marker :lat-lng="latLng"> </l-marker>
     </l-map>
-  </div>
+
 </template>
 
 <script>
@@ -20,7 +20,7 @@ import {
 import "leaflet/dist/leaflet.css";
 
 export default {
-  props: ["latLng"],
+  props: ["latLng", "height", "width"],
   inject: ["apiUrl"],
 
   components: {

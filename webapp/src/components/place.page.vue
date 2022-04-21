@@ -127,7 +127,9 @@
 
       <div class="row rounded-top place-content pt-3 mb-3">
         <div align="center" class="col-12">
+          <div style="height: 75vh; width: 50vw">
           <mapping :latLng="latLong" />
+          </div>
         </div>
       </div>
     </div>

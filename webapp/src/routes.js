@@ -5,6 +5,7 @@ import places from './components/places.page.vue'
 import place from './components/place.page.vue'
 import search from './components/search.page.vue'
 import parola from './components/parola-del-giorno.page.vue'
+import hunt from './components/hunt.page.vue'
 import giochi from './components/giochi.page.vue'
 
 const routes = [
@@ -47,6 +48,11 @@ const routes = [
     path: "/giochi",
     name: "giochi",
     component: giochi
+  },
+  {
+    path: "/hunt",
+    name: "hunt",
+    component: hunt
   }
   //Aggiungere route sondaggio da collefare poi in giochi.page.vue
   //Aggiungere route caccia al tesoro
