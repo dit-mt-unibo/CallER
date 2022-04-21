@@ -8,6 +8,7 @@ import parola from './components/parola-del-giorno.page.vue'
 import hunt from './components/hunt.page.vue'
 import giochi from './components/giochi.page.vue'
 import sondaggio from './components/sondaggio.page.vue'
+import indovinello from './components/indovinello.page.vue'
 
 const routes = [
   {
@@ -59,8 +60,13 @@ const routes = [
     path: "/sondaggio",
     name: "sondaggio",
     component: sondaggio
+  },
+  {
+    path: "/indovinello",
+    name: "indovinello",
+    component: indovinello
   }
-  //Aggiungere route caccia al tesoro
+
 ];
 
 const router = createRouter({

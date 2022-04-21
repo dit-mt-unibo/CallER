@@ -7,7 +7,7 @@
     <div class="container">
       <div class="row justify-content-start">
             <!-- <listitems key="./logo.png" item="./logo.png" href="./logo.png" intro_text="Caccia al tesoro" /> -->
-             <div class="col-sm-12 col-lg-4 col-md-8 mb-3" id="app" @click="goTo('caccia')">
+             <div class="col-sm-12 col-lg-4 col-md-8 mb-3" id="app" @click="goTo('indovinello')">
                <div class="card" data-link="">
                  <img id="img-top" class="card-img-top" src="../assets/images/caccia-al-tesoro.png">
                     <div class="card-body"><h5 class="card-title">Caccia al tesoro</h5>
