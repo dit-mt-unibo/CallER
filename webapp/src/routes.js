@@ -7,6 +7,7 @@ import search from './components/search.page.vue'
 import parola from './components/parola-del-giorno.page.vue'
 import hunt from './components/hunt.page.vue'
 import giochi from './components/giochi.page.vue'
+import sondaggio from './components/sondaggio.page.vue'
 
 const routes = [
   {
@@ -53,8 +54,12 @@ const routes = [
     path: "/hunt",
     name: "hunt",
     component: hunt
+  },
+  {
+    path: "/sondaggio",
+    name: "sondaggio",
+    component: sondaggio
   }
-  //Aggiungere route sondaggio da collefare poi in giochi.page.vue
   //Aggiungere route caccia al tesoro
 ];
 
