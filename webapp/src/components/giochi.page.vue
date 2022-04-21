@@ -31,6 +31,7 @@
 // import listitems from './listitems.component.vue';
 import toolbar from './toolbar.component.vue';
 
+
  export default {
    name: 'giochi',
    components: {
