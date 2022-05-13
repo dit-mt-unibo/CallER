@@ -4,6 +4,7 @@ import categories from './components/categories.page.vue'
 import places from './components/places.page.vue'
 import place from './components/place.page.vue'
 import search from './components/search.page.vue'
+import parola from './components/parola.page.vue'
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     path: "/:pathMatch(.*)",
     name: "catch-all",
     component: home
+  },
+  {
+    path: "/parola",
+    name: "parola",
+    component: parola
   }
 ];
 
