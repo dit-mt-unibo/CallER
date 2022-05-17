@@ -28,7 +28,14 @@ module.exports = {
         
         full_text: {
             type: 'string',
-            required: true            
+            required: true,
+            maxLength: 65535            
+        },
+
+        full_text_plain:{
+            type: 'string',
+            allowNull: true,
+            maxLength: 65535
         },
                 
         image: {

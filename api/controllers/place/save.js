@@ -118,6 +118,9 @@ const { exit } = require('process');
             
         }
 
+        // Copies the clean value of full_text to full_text_plain        
+        inputs.full_text_plain = sails.hooks.sanitize.cleanHtml(inputs.full_text);
+
         if ( _.isUndefined(inputs.id) ) {
             
             this.req.file('image').upload({

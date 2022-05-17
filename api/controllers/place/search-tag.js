@@ -24,12 +24,8 @@ module.exports = {
         
         if ( _.isUndefined(this.req.param('tag')) ) return result;
 
-        // Pulizia input
-        const sanitizeHtml = require('sanitize-html');
-        let tag = sanitizeHtml(this.req.param('tag') , {
-            allowedTags: [],
-            allowedAttributes: {},
-        });        
+        // Pulizia input        
+        let tag = sails.hooks.sanitize.deepClean(this.req.param('tag')); 
 
         if ( _.isEmpty(tag) ) return result;
 

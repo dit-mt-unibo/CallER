@@ -22,13 +22,9 @@ module.exports = {
         if ( _.isUndefined(this.req.param('term')) ) return result;
 
         // Pulizia input utente
-        const sanitizeHtml = require('sanitize-html');
-        let term = sanitizeHtml(this.req.param('term') , {
-            allowedTags: [],
-            allowedAttributes: {},
-        });
+        let term = sails.hooks.sanitize.deepClean(this.req.param('term'));
 
-        if ( _.isEmpty(term) ) return result;
+        if ( term.length < 4 ) return result;        
 
         try{
 
@@ -40,7 +36,7 @@ module.exports = {
              */
             const nameResults = await Place.find( { 
                 where: { name:  { contains: term } } ,
-                select: ['id' , 'name' , 'intro_text' , 'imageUID'],
+                select: ['id' , 'name' , 'intro_text' , 'full_text_plain' , 'imageUID'],
                 sort: 'name ASC'
             } );
 
@@ -60,22 +56,35 @@ module.exports = {
             }
 
             /**
-             * Effettua la query cercando la stringa nella colonna intro_text.
+             * Effettua la query cercando la stringa nelle colonne intro_text e full_text_plain.
              * Esclude dai risultati gli ID dei contenuti già trovati con la query precedente.
              */
-            const introTextResults = await Place.find( {                 
-                where : { 
-                    intro_text: { contains: term },
-                    id: { '!=': ids }
-                },
-                select: ['id' , 'name' , 'intro_text' , 'imageUID'],
-                sort: 'name ASC'
-            } );                        
+            const datastore = sails.getDatastore();
+            let uCaseTerm = term[0].toUpperCase() + term.substring(1);
+
+            var queryTexts = `
+            SELECT id, name, intro_text, full_text_plain, imageUID FROM place
+            WHERE 
+            MATCH(full_text_plain) AGAINST('` + term + `*' IN BOOLEAN MODE) OR
+            MATCH(intro_text) AGAINST('` + term + `*' IN BOOLEAN MODE) OR
+            MATCH(full_text_plain) AGAINST('` + uCaseTerm + `*' IN BOOLEAN MODE) OR
+            MATCH(intro_text) AGAINST('` + uCaseTerm + `*' IN BOOLEAN MODE)
+            `
+
+            if ( ids.length > 0 ) {
+
+                queryTexts += " AND id NOT IN (" + ids.join(',')  + ")";
+
+            }
+
+            queryTexts += " ORDER BY name ASC";
+
+            const textResults = await datastore.sendNativeQuery(queryTexts , []);
 
             // Popola oggetto items
-            if ( introTextResults.length > 0 ) {
+            if ( textResults.rows.length > 0 ) {
 
-                introTextResults.forEach(item => {
+                textResults.rows.forEach(item => {
                     
                     items.push(item);
                     ids.push(item.id);
@@ -88,21 +97,21 @@ module.exports = {
              * Query per ricerca tra i tags.
              * Esclude dai risultati gli ID dei contenuti già trovati con le query precedenti.
              */
-            const datastore = sails.getDatastore();
+            //const datastore = sails.getDatastore();
 
-            var query = `
-            SELECT id, name, intro_text, imageUID FROM place
+            var queryTags = `
+            SELECT id, name, intro_text, full_text_plain, imageUID FROM place
             WHERE JSON_CONTAINS(LOWER(tags) , '"` + term.toLocaleLowerCase() + `"')
             `
             if ( ids.length > 0 ) {
 
-                query += " AND id NOT IN (" + ids.join(',')  + ")";
+                queryTags += " AND id NOT IN (" + ids.join(',')  + ")";
 
             }
 
-            query += " ORDER BY name ASC";
+            queryTags += " ORDER BY name ASC";
             
-            const tagResults = await datastore.sendNativeQuery(query , []);
+            const tagResults = await datastore.sendNativeQuery(queryTags , []);
 
             // Popola oggetto items
             if ( tagResults.rows.length > 0 ) {
