@@ -171,7 +171,7 @@ parasails.registerPage('view-create', {
         formRules: {
             name: { required: true , maxLength: 150},
             intro_text: { maxLength: 150},
-            full_text: { required: true },
+            full_text: { required: true , maxLength: 65535},
             image: { 
                 required: true ,
                 custom: function(fileObj) {

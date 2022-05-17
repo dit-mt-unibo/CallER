@@ -46,6 +46,7 @@
             </label>
             <textarea name="full_text" class="form-control" id="tbweditor" rows="8">{{ item.full_text }}</textarea>            
             <cloud-error v-if="formErrors.full_text === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.full_text === 'maxLength'">Il campo può contenere al max. 65535 caratteri</cloud-error>
         </div>
 
         <div class="form-group">
