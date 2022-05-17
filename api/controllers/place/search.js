@@ -28,25 +28,30 @@ module.exports = {
 
         try{
 
+            const datastore = sails.getDatastore();
+            let uCaseTerm = term[0].toUpperCase() + term.substring(1);
+
             /**
              * Le query sono tre in modo da avere i suggerimenti ordinati
              * prima per titolo, poi per testo introduttivo e infine per tag.             
              * 
              * Effettua la query cercando la stringa nella colonna name
              */
-            const nameResults = await Place.find( { 
-                where: { name:  { contains: term } } ,
-                select: ['id' , 'name' , 'intro_text' , 'full_text_plain' , 'imageUID'],
-                sort: 'name ASC'
-            } );
+            var queryName = `
+            SELECT id, name, intro_text, full_text_plain, imageUID FROM place
+            WHERE LOWER(name) LIKE "%` + term.toLocaleLowerCase() + `%"
+            ORDER BY name ASC
+            `;
+
+            const nameResults = await datastore.sendNativeQuery(queryName , []);
 
             // Contiene gli id dei contenuti trovati.
             var ids = [];
 
             // Popola oggetto items
-            if ( nameResults.length > 0 ) {
+            if ( nameResults.rows.length > 0 ) {
 
-                nameResults.forEach(item => {
+                nameResults.rows.forEach(item => {
                     
                     items.push(item);
                     ids.push(item.id);
@@ -59,9 +64,6 @@ module.exports = {
              * Effettua la query cercando la stringa nelle colonne intro_text e full_text_plain.
              * Esclude dai risultati gli ID dei contenuti già trovati con la query precedente.
              */
-            const datastore = sails.getDatastore();
-            let uCaseTerm = term[0].toUpperCase() + term.substring(1);
-
             var queryTexts = `
             SELECT id, name, intro_text, full_text_plain, imageUID FROM place
             WHERE 
@@ -97,8 +99,6 @@ module.exports = {
              * Query per ricerca tra i tags.
              * Esclude dai risultati gli ID dei contenuti già trovati con le query precedenti.
              */
-            //const datastore = sails.getDatastore();
-
             var queryTags = `
             SELECT id, name, intro_text, full_text_plain, imageUID FROM place
             WHERE JSON_CONTAINS(LOWER(tags) , '"` + term.toLocaleLowerCase() + `"')
