@@ -8,6 +8,7 @@
                 <li class="list-group-item" v-for="item in items" v-bind:key="item" @click="openResult(item.id)">
                     <h5 v-html="item.name"></h5>
                     <div class="intro-text" v-html="item.intro_text"></div>
+                    <div v-html="item.full_text_plain"></div>
                     <div id="search-box-tag" v-if="item.tag">
                         <span class="highlight">#{{item.tag}}</span>                            
                     </div>
@@ -81,9 +82,20 @@ export default {
 
                 // Evidenzia la stringa ricercata nei risultati
                 this.items.forEach(item => {
+
+                    if ( item.intro_text != null ){
+
+                        item.intro_text = this.textMarkerShortText(item.intro_text , strLength);
+
+                    }
+
+                    if ( item.full_text_plain != null ){
+
+                        item.full_text_plain = this.textMarkerLongText(item.full_text_plain , strLength);
+
+                    }
                     
-                    item.intro_text = this.textMarker(item.intro_text , strLength);
-                    item.name = this.textMarker(item.name , strLength);
+                    item.name = this.textMarkerShortText(item.name , strLength);
 
                 });
             }
@@ -157,13 +169,13 @@ export default {
         },
 
         /**
-         * Evidenzia la stringa ricercata all'interno di un testo
+         * Evidenzia la stringa ricercata all'interno di un testo breve
          * 
-         * @param {string} text: testo in cui cercare l'input utente
-         * @param {int} length: lunghezza input utente
+         * @param {string} text: testo in cui cercare
+         * @param {int} length: lunghezza stringa di ricerca
          * @return string
          */
-        textMarker(text , length) {
+        textMarkerShortText(text , length) {
 
             var result = text;
 
@@ -203,6 +215,69 @@ export default {
                  * e l'eventuale parte finale del testo in cui non ci sono corrispondenze
                  */
                 result = chunks.join("").concat(text);
+
+            }
+
+            return result;
+
+        },
+
+        /**
+         * Evidenzia la stringa ricercata all'interno di un testo lungo.
+         * Se non ci sono corrispondenze, restituisce una stringa vuota.
+         * Vengono mostrate al massimo 3 corrispondenze.
+         * 
+         * @param {string} text: testo in cui cercare
+         * @param {int} length: lunghezza stringa di ricerca
+         * @return string
+         */
+        textMarkerLongText(text , length){
+
+            var result = "";
+
+            // Cerca le corrispondenze all'interno del testo
+            var regExp = new RegExp(this.search, "gi");
+            var matches = text.match(regExp);
+
+            if ( matches != null ) {
+
+                // array porzioni di testo
+                var chunks = [];
+
+                // contatore corrispondeze
+                var count = 1;
+                
+                /**
+                 * Per ogni corrispondenza, racchiude la porzione di stringa in un tag HTML span con classe highlight.                 
+                 * Per preservare le maiuscolo, ad ogni ciclo il testo viene diviso in tre porzioni: word, charsAfter,  after.
+                 */
+                matches.forEach(match => {
+                    
+                    // Al massimo mostra tre corrispondenze
+                    if ( count >= 3 ) return;
+                    
+                    // Cerca la posizione della corrispondenza all'interno del testo
+                    let pos = text.search(match);
+                    // Estrae la porzione di stringa esatta da evidenziare. Preserva maiuscole
+                    let word = text.slice(pos , pos + length);
+                    // Prende i 30 caratteri successivi alla corrispondenza da inserire nel risultato                    
+                    let charsAfter = text.slice(pos + length , pos + length + 30);
+                    // Salva tutto quello che c'è dopo la stringa evidenziata. Su questa porzione continua il ciclo forEach
+                    let after = text.slice(pos + length);
+                    
+                    // aggiungo la porzione di testo all'array chunks
+                    chunks.push("<span class=\"highlight\">" + word + "</span>" + charsAfter + "...");
+
+                    text = after;
+                    
+                    count++;
+
+                });
+                
+                /**
+                 * Unisce nel risultato finale le porzioni di testo con le stringe evidenziate
+                 */
+                result = chunks.join(" ");
 
             }
 
