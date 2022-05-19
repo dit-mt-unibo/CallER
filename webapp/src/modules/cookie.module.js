@@ -56,6 +56,23 @@ export default {
         
         document.cookie = cname + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         
+    },
+
+    /**
+     * Imposta cookie con scadenza alle 23:59:59 del giorno corrente
+     * 
+     * @param {string} cname nome cookie
+     * @param {string} cvalue valore cookie
+     */
+    setDailyCookie(cname , cvalue){
+        
+        var expDate = new Date();        
+        expDate.setUTCHours(23);
+        expDate.setUTCMinutes(59);
+        expDate.setUTCSeconds(59);
+        var expires = "expires="+expDate.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+
     }
 
 }
