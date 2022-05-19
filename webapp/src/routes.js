@@ -4,7 +4,7 @@ import categories from './components/categories.page.vue'
 import places from './components/places.page.vue'
 import place from './components/place.page.vue'
 import search from './components/search.page.vue'
-import parola from './components/parola.page.vue'
+import glossary from './components/glossary.page.vue'
 
 const routes = [
   {
@@ -38,9 +38,9 @@ const routes = [
     component: home
   },
   {
-    path: "/parola",
-    name: "parola",
-    component: parola
+    path: "/parola-del-giorno",
+    name: "glossary",
+    component: glossary
   }
 ];
 

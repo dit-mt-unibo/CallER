@@ -211,6 +211,12 @@ module.exports.routes = {
   'GET /api/get-navigation-menu': {
     action: 'category/navigation-menu'
   },
+  'GET /api/get-todays-word': {
+    action: 'glossary/todays-word'
+  },
+  'GET /api/get-random-word': {
+    action: 'glossary/random-word'
+  },
   /*
    * 'GET /home': {
     action: 'category/sublist',

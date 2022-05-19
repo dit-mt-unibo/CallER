@@ -12,6 +12,7 @@
                             <div class="resp-menu-bar"></div>
                         </div>
                         <i id="lens" class="fas fa-search" @click="openSearchBox"></i>                       
+                        <i class="fas fa-language" @click="goToTdsWord"></i>                       
                         <div class="titolo card-text-truncate" @click="goTo(category_id)">{{title}}</div>
                     </div>
                 </div>
@@ -23,7 +24,8 @@
                 <div class="resp-menu-bar"></div>
                 <div class="resp-menu-bar"></div>
             </div>
-            <i id="lens" class="fas fa-search" @click="openSearchBox"></i>            
+            <i id="lens" class="fas fa-search" @click="openSearchBox"></i>
+            <i class="fas fa-language" @click="goToTdsWord"></i>          
             <div class="titolo card-text-truncate" @click="goTo(category_id)">{{title}}</div>
         </div>        
     </div>
@@ -76,6 +78,15 @@ export default {
                 this.$router.push("/contenuti/" + category_id);
 
             }            
+
+        },
+
+        /**
+         * Apre la pagina parola del giorno
+         */
+        goToTdsWord(){
+            
+            this.$router.push('/parola-del-giorno');
 
         },
 

@@ -2,6 +2,7 @@
 
 <template>
     <toolbar :title="''" :category_id="''" />
+    <modalTodaysWord/>
     <div class="container pt-4">
         <div align="center" class="row">            
             <div class="col-6 col-md-4" v-for="category in categories" v-bind:key="category.id" v-bind:category="category">
@@ -19,6 +20,7 @@
 <script>
 
 import toolbar from './toolbar.component.vue';
+import modalTodaysWord from './modal-todays-word.component.vue';
 
 const axios = require('axios')
 
@@ -81,7 +83,7 @@ export default {
     },
 
     components: {
-        toolbar
+        toolbar , modalTodaysWord
     }
     
 }

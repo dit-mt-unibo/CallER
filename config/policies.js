@@ -32,6 +32,8 @@ module.exports.policies = {
   'quiz/find': true,
   'quiz/findOne': true,
   'glossary/find': true,
-  'feedback/create': [rateLimit()], // default setup 1 minute max 5 requests  
+  'feedback/create': [rateLimit()], // default setup 1 minute max 5 requests
+  'glossary/todays-word': true,
+  'glossary/random-word': true,
 
 };

@@ -624,6 +624,71 @@ body {
   border-bottom: 1px solid rgba(0,0,0,.125);
 }
 
+/* Parola del giorno homepage */
+.box-word-home {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 980;
+  background-color: #FFFFFF;
+  border: 1px solid #e42589;
+  border-radius: 5px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding: 0;
+  box-sizing:border-box;
+  font-size: 1.1rem;
+}
+
+.box-word-home h5 {
+  font-size: 1.2rem;
+  color: #ffFfFF;
+  background-color: #e42589;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 15px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.box-word-home .term {
+  font-weight: 600;
+  font-size: 1.4rem;
+  overflow-wrap: break-word;
+  margin: 30px 0;
+}
+
+.box-word-home .btn-definition {
+  width: 100%;
+  padding: 0.5rem 0;
+  border: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #2589e4;
+  /* background-color: #d81b60;*/
+  color: #FFF;
+}
+
+.box-word-home .btn-definition:hover {
+  background-color: #1565c0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.5s ease-in;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 @media screen and (max-width:992px) {
 
   .main-container{
