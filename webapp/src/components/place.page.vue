@@ -3,7 +3,7 @@
 <template>
   
   <div id="place" class="container">
-      <toolbar :title="categoryName" :category_id="item.category_id" />
+    <toolbar :title="categoryName" :category_id="item.category_id" />
     <div class="row">
       <div class="col-12 titolo">{{ item.name }}</div>
       <div class="col-12 livello">
@@ -72,6 +72,11 @@
       </div>
     </div>
     <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock" />
+    <div v-if="mapShow" class="row mt-3 mb-3">
+      <div align="center" class="col-12" style="padding:0px; border:1px solid rgba(0, 0, 0, 0.325);">
+        <mapping ref="mapping" :markers="mapLatLong" :center="mapCenter" />
+      </div>
+    </div>
     <feedback :place_id="item.id" ref="feedback" />
     <div class="row box-related mb-3" v-if="item.category_id != 1">
       <ul class="list-group">
@@ -119,13 +124,8 @@
           #{{ tag }}
         </li>
       </ul>
-    </div>
-    <div class="row rounded-top place-content pt-3 mb-3">
-      <div align="center" class="col-12">
-        <mapping :latLng="latLong" />
-      </div>
-    </div>
-      <modalGlossary :title="glossary.term" :text="glossary.definition" />
+    </div>    
+    <modalGlossary :title="glossary.term" :text="glossary.definition" />    
   </div>
 
 </template>
@@ -159,9 +159,12 @@ export default {
       cookie: 0,
       // nome categoria
       categoryName: "",
-
-      //Oggetto da passare al componente mapping
-      latLong:[]
+      // coordinate mappa componente mapping
+      mapLatLong: [44.2227, 12.0407],
+      // coordinate centro mappa componente mapping
+      mapCenter: [44.2227, 12.0407],
+      // mostra/nasconde componente mapping
+      mapShow: false,
     };
   },
 
@@ -194,16 +197,16 @@ export default {
      * Reimposta lo stato iniziale del form feedback
      */
     "$route.params.id"() {
-      if (this.$route.name == "place") {
+      if (this.$route.name == "place") {        
         this.initUI();
         this.$refs.feedback.refresh();
+        this.$refs.mapping.resetZoom();
       }
     },
   },
 
-  created: async function () {
+  created: async function () {    
     await this.initUI();
-    console.log(this.latLong);
   },
 
   mounted: function () {
@@ -211,8 +214,7 @@ export default {
      * Aggiunge listener click all'intero contenuto per ovviare al problema della direttiva v-html
      * V-html non propaga gli eventi
      */
-
-    document.getElementById("place").addEventListener("click", this.bodyClick);
+    document.getElementById("place").addEventListener("click", this.bodyClick);    
   },
 
   methods: {
@@ -220,24 +222,27 @@ export default {
      * Popola la UI
      */
     async initUI() {
-      this.item = await this.getPlace();
-      this.relatedItems = await this.getRelatedPlaces();
-      this.categoryName = await this.getCategoryName();
-      this.latLong = await this.getLatLong();
+        /**
+         * Scroll in cima alla pagina.
+         * Rimedia al problema della navigazione all'interno della stessa route /contenuto/
+         */
+        document.body.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        document.documentElement.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
 
-      let cookieName = "quiz_" + this.item.id;
-      this.cookie = Cookie.getCookie(cookieName);
+        this.item = await this.getPlace();
+        this.relatedItems = await this.getRelatedPlaces();
+        this.categoryName = await this.getCategoryName();
+        this.mapLatLong = [this.item.lat , this.item.long];
+        this.mapCenter = [this.item.lat , this.item.long];
+        
+        this.mapShow = ( this.item.lat != null && this.item.long != null );
 
-      /**
-       * Scroll in cima alla pagina.
-       * Rimedia al problema della navigazione all'interno della stessa route /contenuto/
-       */
-      document.body.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-      document.documentElement.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      });
+        let cookieName = "quiz_" + this.item.id;
+        this.cookie = Cookie.getCookie(cookieName);      
     },
 
     /**
@@ -299,13 +304,6 @@ export default {
         }
       }
     },
-    async getLatLong(){
-      const res = await this.getPlace();
-      let latitude= res.lat;
-      let longitude= res.long;
-      return [latitude, longitude];
-
-    },
 
     /**
      * Sbocca il contenuto bonus impostando la variabile cookie a 1
@@ -349,8 +347,8 @@ export default {
         obj.classList.remove("card-text-truncate");
       } else {
         obj.classList.add("card-text-truncate");
-      }
-    },
+      }      
+    },    
 
   },
 

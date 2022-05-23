@@ -1,42 +1,85 @@
+<!-- Visualizza mappa formita da OpenStreetMap, basato sui componenti di vue-leaflet-->
+
 <template>
-  <div style="height: 75vh; width: 50vw">
-    <l-map :zoom = "zoom" :center = "center">
-      <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      ></l-tile-layer>
-      <!-- <l-control-layers /> -->
-      <l-marker :lat-lng="latLng"> </l-marker>
+    <l-map style="height:300px;" 
+        :zoom="zoom" 
+        :maxZoom="18" 
+        @update:zoom="zoomUpdated"
+        :center="center">
+        <l-tile-layer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png">
+        </l-tile-layer>
+        <l-marker :lat-lng="markers"> </l-marker>
     </l-map>
-  </div>
 </template>
 
 <script>
 import {
-  LMap,
-  LTileLayer,
-  LMarker,
+    LMap,
+    LTileLayer,
+    LMarker,
 } from "@vue-leaflet/vue-leaflet";
 
 import "leaflet/dist/leaflet.css";
 
 export default {
-  props: ["latLng"],
-  inject: ["apiUrl"],
+  
+    props: {
 
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker,
-  },
+        // coordinate per segna posizione
+        markers: {
+            type: Array,
+            default: () => [44.2227, 12.0407]
+        },
 
-  data() {
-    return {
-      zoom: 12,
-      center: [44.2227, 12.0407],
-      iconWidth: 25,
-      iconHeight: 40,
-    };
-  },
+        // cordinate centro mappa
+        center: {
+            type: Array,
+            default: () => [44.2227, 12.0407]
+        }
+
+    },
+
+    data (){
+
+        return{
+                        
+            zoom: 16,
+
+        }
+
+    },
+
+    methods: {
+
+        /**
+         * Listener evento update zoom.
+         * Imposta nuovo valore variabile zoom
+         * 
+         * @param {Number} value: nuovo valore zoom
+         */
+        zoomUpdated(value) {
+            
+            this.zoom = value;
+            
+        },
+
+        /**
+         * Reimposta lo zoom al valore iniziale.         
+         */
+        resetZoom () {
+            
+            this.zoom = 16;
+
+        },
+
+    },
+
+    components: {
+        LMap,
+        LTileLayer,
+        LMarker,
+    },    
 
 };
 </script>
