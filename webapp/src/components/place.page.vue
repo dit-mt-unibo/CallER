@@ -70,6 +70,9 @@
       <div class="col-12 mt-3 mb-3" v-if="item.extra_text && !isBlocked">
         <div v-html="item.extra_text"></div>
       </div>
+      <div align="center" class="col-12 mb-3 d-xl-none">
+        <button class="btn btn-success btn-sm" @click="scrollTop">Torna su</button>
+      </div>
     </div>
     <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock" />
     <div v-if="mapShow" class="row mt-3 mb-3">
@@ -348,7 +351,18 @@ export default {
       } else {
         obj.classList.add("card-text-truncate");
       }      
-    },    
+    },
+
+    /**
+     * Listener evento click pulsante "Torna su".
+     * Scorre la pagina fino in cima. 
+     */
+    scrollTop() {
+
+        document.body.scrollTo({ top:0 , left:0 , behavior: 'smooth' });
+        document.documentElement.scrollTo({ top:0 , left:0 , behavior: 'smooth' });
+
+    }
 
   },
 
