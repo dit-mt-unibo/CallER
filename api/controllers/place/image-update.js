@@ -65,7 +65,7 @@ const { type } = require('os')
 
             this.req.file('image').upload({
 
-                maxBytes: 1000000000000,
+                maxBytes: 3245728,
                 dirname: require('path').resolve(sails.config.appPath, 'assets/images/contenuti'),                
             },
             async function whenDone (err, uploadedFiles) {
