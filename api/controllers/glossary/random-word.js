@@ -37,6 +37,8 @@ module.exports = {
                 id : { '!=' : [excludeId]}
             });
 
+            if ( items.length == 0 ) return result;
+
             let randomIndex = Math.floor(Math.random() * items.length);
             result['item'] = items[randomIndex];
             

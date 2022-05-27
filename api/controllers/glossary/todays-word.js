@@ -61,7 +61,7 @@ module.exports = {
             }
             else {
 
-                result['item'] = { id: dataJson.word.id, term: dataJson.word.term  , definition: dataJson.word.definition };
+                result['item'] = dataJson.word;
                 return result;
 
             }            
@@ -78,6 +78,8 @@ module.exports = {
             let items = await Glossary.find({
                 sort: 'id ASC'
             });
+
+            if ( items.length == 0 ) return result;
             
             today.setHours(23);
             today.setMinutes(59);
