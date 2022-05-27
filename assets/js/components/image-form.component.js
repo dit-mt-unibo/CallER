@@ -1,8 +1,8 @@
 /**
  * <image-form>
  * 
- * Mainly shows a preview of an image.
- * By button "Modifica" shows a form to update the image
+ * Shows the preview of the image.
+ * Allows to upload or delete a new image
  * 
  * @type {Component}
  * 
@@ -11,25 +11,49 @@
  * @event save: save button click event
  * @event changeMode: switches between form mode and view mode
  * @event openResources: files browser
+ * @event deleteImage: deletes image from server
  * 
  */
 
  parasails.registerComponent('imageForm', {
 
-    props: [
-      
-      'syncing',      
-      'formMessage',
-      'item',
-      'mode', // view (shows image) || form (shows form)
-      'imgSrc', // original image source
-    
-    ],
+    props: {
+
+      // show/hide button delete
+      showBtnDelete : {
+        type: Boolean,
+        default: false
+      },
+      // form action attribute
+      formAction : {
+        type: String,
+        default: ""
+      },
+      item : {
+        type: Object,
+        default: () => {}
+      },
+      // 
+      baseImgPath: {
+        type: String,
+        default: '/images'
+      },      
+
+    },
 
     data: function () {
      
         return {
-          //
+          
+          // original image source
+          imgSrc: "",
+          // show/hide loader
+          syncing: false,
+          // form message
+          formMessage: "",
+          // view (shows image) || form (shows form)
+          mode: 'view'
+
         };
   
       },
@@ -41,10 +65,13 @@
     template: `
     <div class="card" style="width:50%">      
       <div v-if="mode == 'view'">        
-        <img id="img" :src="imgSrc" width="100%" style="max-width:400px;">
-        <p class="mt-2">{{item.image_caption}}</p>                   
-        <div class="card-body" align="center">                                             
-            <button type="button" @click="changeMode('form')" class="btn btn-primary col-2">Modifica</button>
+        <img v-if="item.image" id="img" :src="imgSrc" width="100%" style="max-width:400px;">
+        <p v-if="item.image_caption" class="mt-2">{{item.image_caption}}</p>                   
+        <p v-if="!item.image" class="card-text" style="margin-top:20px;">Non hai ancora aggiunto un'immagine</p>                   
+        <div class="card-body" align="center">
+            <button type="button" v-if="!item.image" @click="changeMode('form')" class="btn btn-success col-2">Aggiungi</button>
+            <button type="button" v-if="showBtnDelete && item.image" @click="deleteImage" class="btn btn-danger mr-2 col-2">Rimuovi</button>
+            <button type="button" v-if="item.image" @click="changeMode('form')" class="btn btn-primary col-2">Modifica</button>
         </div>  
       </div>
       <div v-if="mode == 'form'" class="card-body">        
@@ -77,10 +104,7 @@
 
     mounted: async function () {
 
-      this.syncing = false;
-      this.formMessage = '';
-      this.imgSrc = '/images/contenuti/' + this.item.imageUID;
-      this.mode = 'view';
+      this.imgSrc = this.baseImgPath + "/" + this.item.imageUID;
 
     },
   
@@ -113,10 +137,41 @@
 
       },
 
-      // Sets the filename in the field fake-image
+      // Sets value of the field fake-image
       setFakeImage() {
 
         $( "#fake-image").val( this.$refs.file.files[0]["name"] );
+
+      },
+
+      deleteImage: async function() {
+
+        this.syncing = true;
+
+        var data = { id: this.item.id , image: '' , imageUID: '' , image_caption: ''}
+
+        // Submit the form
+        var failedWithCloudExit;
+
+        var result = await Cloud[this.formAction].with(data)                                 
+                .tolerate((err) => {                  
+                    failedWithCloudExit = err.exit || 'error';
+                });
+
+        // When an error occurs, tolerate it, but set the userland "formMessage"
+        if (failedWithCloudExit) {
+            this.formMessage = "Errore durante la rimozione dell'immagine";          
+        }
+
+        this.syncing = false;
+
+        // Data update was successful
+        if (!failedWithCloudExit) {
+
+            this.item.image = result.image;
+            this.mode = 'view';          
+
+        }
 
       },
 
@@ -146,7 +201,7 @@
         // Submit the form
         var failedWithCloudExit;
 
-        var result = await Cloud['updateImage'].with(data)                                 
+        var result = await Cloud[this.formAction].with(data)                                 
                 .tolerate((err) => {                  
                   failedWithCloudExit = err.exit || 'error';
                 });
@@ -166,7 +221,7 @@
             
             this.item.image = result.image;            
             this.item.imageUID = result.imageUID;
-            this.imgSrc = '/images/contenuti/' + result.imageUID;
+            this.imgSrc = this.baseImgPath + '/' + result.imageUID;
 
           }
 

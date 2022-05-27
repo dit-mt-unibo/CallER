@@ -100,7 +100,7 @@
             </div>
 
             <div class="tab-pane p-4 fade" align="center" id="nav-tab2" role="tabpanel" aria-labelledby="nav-tab2-tab">                
-                <image-form :item="item"></image-form>
+                <image-form :item="item" :form-action="'updateImage'" :base-img-path="'/images/contenuti'"></image-form>
             </div>
             <div class="tab-pane p-4 fade" align="center" id="nav-tab3" role="tabpanel" aria-labelledby="nav-tab3-tab">
                 <video-form :item="item" @preview="videoPreview()"></video-form>
