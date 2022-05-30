@@ -3,7 +3,7 @@
     <ajax-form action="saveGlossary" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
         :form-rules="formRules" :form-errors.sync="formErrors" 
         :tbw-editor-id="'tbweditor'" :tbw-editor-field="'definition'"
-        @submitted="submittedForm($event)" @rejected="rejectedForm($event)">
+        @submitted="submittedUpdateForm($event)" @rejected="rejectedForm($event)">
 
         <div class="form-group">
             <label :class="[formErrors.name || cloudError === 'uniqueFail' ? 'text-danger' : '']">
@@ -41,7 +41,7 @@
         <div class="row justify-content-center">
 
             <div class="col-1">
-                <button type="button" class="btn btn-primary" onclick="window.location = '/glossary/list';">Indietro</button>
+                <button type="button" class="btn btn-primary" onclick="window.location = '/glossary/details/<%= item.id %>';">Indietro</button>
             </div>
             <div class="col-1">
                 <ajax-button type="submit" :syncing="syncing">Salva</ajax-button>

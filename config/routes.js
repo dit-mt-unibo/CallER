@@ -155,6 +155,9 @@ module.exports.routes = {
   'GET /glossary/edit/:id': {
     action: 'glossary/view-update'
   },
+  'GET /glossary/details/:id' :{
+    action: 'glossary/view-details'
+  },
   'POST /glossary/save': {
     action: 'glossary/save'
   },
@@ -163,6 +166,15 @@ module.exports.routes = {
   },
   'POST /glossary/definition-update': {
     action: 'glossary/definition-update'
+  },
+  'POST /glossary/definition-update': {
+    action: 'glossary/definition-update'
+  },
+  'POST /glossary/image-update': {
+    action: 'glossary/image-update'
+  },
+  'POST /glossary/audio-update': {
+    action: 'glossary/audio-update'
   },
 
   // Routes for feedback

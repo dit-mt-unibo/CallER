@@ -167,6 +167,24 @@ parasails.registerComponent('ajaxForm', {
 
             }
 
+            if ( $("#glossary_files" ).length ) {
+
+                this.formData['files'] = [];
+
+                if ( _.isUndefined(this.formData['file_image']) === false ) {
+
+                    this.formData['files'].push(this.formData['file_image']);
+
+                }
+
+                if ( _.isUndefined(this.formData['file_audio']) === false ){
+
+                    this.formData['files'].push(this.formData['file_audio']);
+
+                }                
+
+            }
+
             // Determine the argins that will be sent to the server in our request.
             var argins;            
                 

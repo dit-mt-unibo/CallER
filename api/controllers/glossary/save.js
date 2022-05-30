@@ -7,6 +7,8 @@
 
 module.exports = {
 
+    files: ['files'],
+
     inputs: {
 
         name: {
@@ -24,6 +26,21 @@ module.exports = {
         id: {
             type: 'number',
             allowNull: true
+        },
+        image: {
+            type: 'string',
+            allowNull: true
+        },
+        image_caption: {
+            type: 'string',
+            allowNull: true
+        },
+        audio: {
+            type: 'string',
+            allowNull: true
+        },
+        files: {
+            type: 'ref'
         }
 
     },
@@ -37,7 +54,11 @@ module.exports = {
         uniqueFail: {
             description: 'occurs when a term already exists',
             statusCode: 409
-        }
+        },
+        uploadFilesFail: {
+            description: 'when upload fails',
+            statusCode: 409
+        },
 
     },
 
@@ -47,34 +68,67 @@ module.exports = {
 
         if ( _.isUndefined(inputs.id) ) {
 
+            var uploadedFiles = await sails.upload(inputs.files , {
+                maxBytes: 4194304,
+                dirname: require('path').resolve(sails.config.appPath , 'assets/glossario'),
+            })
+            .intercept('E_EXCEEDS_UPLOAD_LIMIT' , 'uploadFilesFail')
+            .intercept((err) => { console.log(err.message); });            
+            
+            if ( uploadedFiles ) {
+    
+                uploadedFiles.forEach(file => {
+                    
+                    if ( file.filename == inputs.audio ) {
+    
+                        inputs.audioUID = file.fd.replace(/^.*[\\\/]/, '');
+    
+                    }
+    
+                    if ( file.filename == inputs.image ) {
+    
+                        inputs.imageUID = file.fd.replace(/^.*[\\\/]/, '');
+    
+                    }
+    
+                });
+    
+            }
+            else {
+    
+                return exits.uploadFilesFail();
+    
+            }
+    
             try {
-
+    
                 await Glossary.create(inputs);
-
+    
             }
             catch(err) {
-                
-                if ( err.code === 'E_UNIQUE') {
-
+    
+                if ( err.code === 'E_UNIQUE' ) {
+    
                     return exits.uniqueFail();
-
+    
                 }
                 else {
-                    
+    
                     console.log(err.message);
                     return exits.saveFail();
-
+    
                 }
-
+    
             }
-
+    
             this.req.session.flash = {type: 'success' , message: 'Dati salvati correttamente'};
 
         }
-        else {            
+        else{
+
+            inputs.files.noMoreFiles();
 
             var result = null;
-            console.log()
 
             try {
                 
@@ -107,8 +161,8 @@ module.exports = {
 
             }
 
-        }
-        
+        }   
+
         return exits.success();
 
     }

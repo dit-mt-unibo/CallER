@@ -1,6 +1,6 @@
 <div id="view-create" class="container" v-cloak>
     
-    <ajax-form action="saveGlossary" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
+    <ajax-form action="saveGlossary" enctype="multipart/form-data" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
         :form-rules="formRules" :form-errors.sync="formErrors" 
         :tbw-editor-id="'tbweditor'" :tbw-editor-field="'definition'"
         @submitted="submittedForm($event)" @rejected="rejectedForm($event)">
@@ -35,7 +35,46 @@
         </div>
 
         <div class="form-group">
+            <label :class="[formErrors.file_image || cloudError == 'uploadFilesFail' ? 'text-danger' : '']">
+                Immagine <span class="small">(opzionale max. 3MB)</span>
+            </label>
+            <div class="input-group">                            
+                <input type="text" name="image" class="form-control" :class="[formErrors.file_image || cloudError == 'uploadFilesFail' ? 'is-invalid' : '']"
+                    v-model="formData.image" readonly style="background-color: #FFF;">
+                <button type="button" @click="openResources('image')" class="btn btn-outline-secondary">Sfoglia</button>                                
+            </div>
+            <cloud-error v-if="formErrors.file_image === 'custom'">Estensione o dimensione file non valida</cloud-error>            
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.image_caption ? 'text-danger' : '']">
+                Didascalia immagine <span class="small">(opzionale)</span>
+            </label>
+            <div class="input-group">                            
+                <textarea name="image_caption" class="form-control" :class="[formErrors.image_caption ? 'is-invalid' : '']"
+                v-model="formData.image_caption" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.file_audio || cloudError === 'uploadFilesFail' ? 'text-danger' : '']">
+                Audio mp3 <span class="small">(opzionale max. 1MB)</span>
+            </label>
+            <div class="input-group">                            
+                <input type="text" name="audio" class="form-control" :class="[formErrors.file_audio || cloudError === 'uploadFilesFail' ? 'is-invalid' : '']"
+                   v-model="formData.audio" readonly style="background-color: #FFF;">
+                <button type="button" @click="openResources('audio')" class="btn btn-outline-secondary">Sfoglia</button>                                
+            </div>
+            <cloud-error v-if="formErrors.file_audio === 'custom'">Estensione o dimensione file non valida</cloud-error>
+        </div>
+
+        <input type="file" style="display:none;" ref="file_image" name="file_image" v-on:change="setFileImage()">
+        <input type="file" style="display:none;" ref="file_audio" name="file_audio" v-on:change="setFileAudio()">
+        <input id="glossary_files" type="file" style="display:none;" name="files">
+
+        <div class="form-group">
             <cloud-error v-if="cloudError === 'saveFail'">{{ saveFailError }}</cloud-error>
+            <cloud-error v-if="cloudError === 'uploadFilesFail'">Errore durante il caricamento dei file sul server. Controllare che le dimensioni e le estensioni dei file siano corrette</cloud-error>
         </div>
         
         <div class="row justify-content-center">

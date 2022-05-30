@@ -40,6 +40,20 @@ module.exports = {
 
             this.req.session.flash = {type: 'success' , message: 'Vocabolo eliminato correttamente'};
 
+            if ( result.imageUID ) {
+
+                sails.hooks.filemanager.delete('assets/glossario' , result.imageUID);
+                sails.hooks.filemanager.delete('.tmp/public/glossario' , result.imageUID);
+
+            }
+
+            if ( result.audioUID ) {
+
+                sails.hooks.filemanager.delete('assets/glossario' , result.audioUID);
+                sails.hooks.filemanager.delete('.tmp/public/glossario' , result.audioUID);
+
+            }
+
         }
         else {
 

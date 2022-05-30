@@ -53,7 +53,7 @@
                     <text-truncate :text="item.definition"></text-truncate>
                 </td>
                 <td align="center">
-                    <a class="btn btn-primary" :href="'/glossary/edit/' + item.id">Modifica</a>                    
+                    <a class="btn btn-primary" :href="'/glossary/details/' + item.id">Visualizza</a>                    
                     <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)" 
                         data-toggle="modal" data-target="#confirmDeleteModal">
                         Elimina

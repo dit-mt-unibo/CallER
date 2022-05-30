@@ -148,12 +148,16 @@
 
         this.syncing = true;
 
-        var data = { id: this.item.id , image: '' , imageUID: '' , image_caption: ''}
+        var data = { 
+          id: this.item.id ,
+          image_caption: "",
+          oldImage: this.item.imageUID
+        }
 
         // Submit the form
         var failedWithCloudExit;
 
-        var result = await Cloud[this.formAction].with(data)                                 
+        await Cloud[this.formAction].with(data)                                 
                 .tolerate((err) => {                  
                     failedWithCloudExit = err.exit || 'error';
                 });
@@ -168,7 +172,9 @@
         // Data update was successful
         if (!failedWithCloudExit) {
 
-            this.item.image = result.image;
+            this.item.image = "";
+            this.item.imageUID = "";
+            this.item.image_caption = "";
             this.mode = 'view';          
 
         }
@@ -209,9 +215,7 @@
         // When an error occurs, tolerate it, but set the userland "formMessage"
         if (failedWithCloudExit) {
           this.formMessage = "Errore durante l'aggiornamento dell'immagine";          
-        }
-
-        this.syncing = false;
+        }        
 
         // Data update was successful
         if (!failedWithCloudExit) {
@@ -229,6 +233,8 @@
           this.mode = 'view';          
 
         }
+
+        this.syncing = false;
           
       },
       

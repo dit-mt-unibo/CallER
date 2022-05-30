@@ -28,7 +28,9 @@ Cloud.setup({
     "saveQuiz": { "verb":"POST" , "url":"/quiz/save" },
     "deleteQuiz": { "verb":"POST" , "url":"/quiz/delete"},
     "saveGlossary": { "verb":"POST", "url":"/glossary/save" },
-    "updateGlossaryDefinition": { "verb": "POST", "url": "/glossary/definition-update" }
+    "updateGlossaryDefinition": { "verb": "POST", "url": "/glossary/definition-update" },
+    "updateGlossaryAudio": { "verb": "POST", "url": "/glossary/audio-update" },
+    "updateGlossaryImage": { "verb": "POST", "url": "/glossary/image-update" },
   }
   /* eslint-enable */
 
