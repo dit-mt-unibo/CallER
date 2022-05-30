@@ -43,15 +43,19 @@ export default ({
 
             this.item = await this.getTodaysWord();
 
-            this.show = true;
+            if ( typeof this.item.term != 'undefined' ) {
 
-            // Mostra la finestra per 5 secondi
-            setTimeout(()=> {
+                this.show = true;
+
+                // Mostra la finestra per 5 secondi
+                setTimeout(()=> {
                 
-                this.show = false;
-                Cookie.setDailyCookie("cookie_tds_word" , 1);
+                    this.show = false;
+                    Cookie.setDailyCookie("cookie_tds_word" , 1);
 
                 }, 5000);
+
+            }
 
         }
 
