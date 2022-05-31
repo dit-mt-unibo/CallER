@@ -4,8 +4,6 @@
  * @description updates the image of a place
  */
 
-const { type } = require('os')
-
  module.exports = {
 
     inputs: {
@@ -66,14 +64,16 @@ const { type } = require('os')
             this.req.file('image').upload({
 
                 maxBytes: 3245728,
-                dirname: require('path').resolve(sails.config.appPath, 'assets/images/contenuti'),                
+                dirname: require('path').resolve(sails.config.appPath, '.tmp/public/images/contenuti'),                
             },
             async function whenDone (err, uploadedFiles) {
                     
                if(err) return exits.uploadFail();  
     
                var imgSrc = uploadedFiles[0].filename;
-               var imgUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');                            
+               var imgUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');
+
+               sails.hooks.filemanager.copy('.tmp/public/images/contenuti' , 'assets/images/contenuti' , imgUID);
     
                 try {
                     
@@ -92,8 +92,9 @@ const { type } = require('os')
                 }                                     
     
                 if (result) {
-    
-                    deleteOldImage(inputs.oldImage);
+
+                    sails.hooks.filemanager.delete('assets/images/contenuti' , inputs.oldImage);
+                    sails.hooks.filemanager.delete('.tmp/public/images/contenuti' , inputs.oldImage);            
     
                     return exits.success( { image: imgSrc, imageUID: imgUID }); 
     
@@ -104,20 +105,5 @@ const { type } = require('os')
         }        
 
     }    
-
-}
-
-/**
- * Deletes the old images from .tmp and assets folders
- * @param imageUID
- */
-function deleteOldImage(imageUID) {
-    
-    const fs = require('fs');
-    var filePath = require('path').resolve(sails.config.appPath, 'assets/images/contenuti') + '/' + imageUID;
-    var filePathTmp = require('path').resolve(sails.config.appPath, '.tmp/public/images/contenuti') + '/' + imageUID;
-
-    fs.unlink(filePath, function(err) {});
-    fs.unlink(filePathTmp, function(err) { });
 
 }

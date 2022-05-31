@@ -48,7 +48,7 @@
 
         var uploadedFile = await sails.uploadOne(inputs.image , {
             maxBytes: 4194304,
-            dirname: require('path').resolve(sails.config.appPath , 'assets/glossario'),
+            dirname: require('path').resolve(sails.config.appPath , '.tmp/public/glossario'),
         })
         .intercept('E_EXCEEDS_UPLOAD_LIMIT' , 'uploadFileFail')
         .intercept((err) => { console.log(err.message); });
@@ -59,6 +59,8 @@
 
                 imageUID = uploadedFile.fd.replace(/^.*[\\\/]/, '');
                 imageSrc = uploadedFile.filename;
+
+                sails.hooks.filemanager.copy('.tmp/public/glossario' , 'assets/glossario' , imageUID);
     
             }
             else {
@@ -70,15 +72,15 @@
         }        
 
         var result = null;
+        var values = { image_caption: inputs.image_caption };
+
+        if ( imageSrc != null ) values.image = imageSrc;
+
+        if ( imageUID != null ) values.imageUID = imageUID;
 
         try{
 
-            result = await Glossary.updateOne( {id: inputs.id} )
-                                .set({
-                                    image: imageSrc,
-                                    imageUID: imageUID,
-                                    image_caption: inputs.image_caption
-                                });
+            result = await Glossary.updateOne( {id: inputs.id} ).set( values );
 
         }
         catch(err) {
@@ -95,6 +97,8 @@
             sails.hooks.filemanager.delete('.tmp/public/glossario' , inputs.oldImage);
 
         }
+
+        if ( imageUID == null ) return exits.success();
 
         return exits.success( { image: imageSrc, imageUID: imageUID } );
     }

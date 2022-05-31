@@ -1,53 +1,42 @@
 /**
  * <audio-form>
  * 
- * Shows audio player.
- * Button "Modifica" for uploading a new file
+ * Shows audio player and allows to upload a new file to the server. 
  * 
  * @type {Component}
- * 
- * 
- * @event submit: form submit
- * @event save: save button click event
- * @event changeMode: switches between form mode and view mode
- * @event deleteAudio: removes audio from server
  * 
  */
 
  parasails.registerComponent('audioPlayerForm', {
 
-    props: [
-      
-      'syncing',      
-      'formMessage',
-      'item',
-      'mode', // view (shows audio player) || form (shows form)
-    
-    ],
+    props: ['item'],
 
     data: function () {
      
         return {
-          //
+            // src attribute of the tag <audio>
+            audioSrc: "",
+            // show/hide loader
+            syncing: false,
+            // form message
+            formMessage: "",
+            // view (shows audio player) || form (shows form)
+            mode: 'view'
         };
   
-      },
-    
-      beforeMount: function() {
-        //
-      },
+    },    
 
     template: `
     <div class="card" style="width:50%">      
       <div v-if="mode == 'view'">
         <p v-if="!item.audio" class="card-text" style="margin-top:20px;">
-            Non hai ancora aggiunto un audio
+            Carica un nuovo file audio
         </p>
         <div v-if="item.audio" style="margin-top:20px;">
-            <audio controls :src="'/glossario/' + item.audioUID"/>            
+            <audio controls :src="audioSrc"/>            
         </div>
         <div class="card-body" align="center">
-            <button type="button" v-if="!item.audio" @click="changeMode('form')" class="btn btn-success col-2">Aggiungi</button>
+            <button type="button" v-if="!item.audio" @click="changeMode('form')" class="btn btn-success">Carica</button>
             <button type="button" v-if="item.audio" @click="deleteAudio" class="btn btn-danger mr-2 col-2">Rimuovi</button>
             <button type="button" v-if="item.audio" @click="changeMode('form')" class="btn btn-primary col-2">Modifica</button>
         </div>
@@ -76,21 +65,19 @@
     </div>    
     `,
 
-    mounted: async function () {
+    mounted: function () {
 
-      this.syncing = false;
-      this.formMessage = '';      
-      this.mode = 'view';
+      this.audioSrc = '/glossario/' + this.item.audioUID;
 
-    },
-  
-    beforeDestroy: function() {
-  
     },
   
     methods: {
         
-        save: async function() {
+        /**
+         * Listener button save click event.
+         * Submits form
+         */
+        save: function() {
         
             $( "#audio" ).removeClass('is-invalid');
             this.formMessage = '';
@@ -98,38 +85,52 @@
 
         },
 
+        /**
+         * Changes GUI among display mode: 'view' , 'form' and 'success'
+         * @param {string} mode 'view' | 'form' | 'success'
+         */
         changeMode: function(mode) {
 
-        this.syncing = false;
-        this.mode = mode;
-        this.formMessage = '';        
+            this.syncing = false;
+            this.mode = mode;
+            this.formMessage = '';        
 
         },
 
+        /**
+         * Listener button browse click event.
+         * Opens file explorer
+         */
         openResources: function() {
 
             this.$refs.file.click();
 
         },
 
+        /**
+         * Sets the value of the field audio
+         */
         setFileAudio: function() {
 
             $( "#audio" ).val( this.$refs.file.files[0].name );
 
         },
 
+        /**
+         * Calls API to remove file from server
+         */
         deleteAudio: async function() {
 
             this.syncing = true;
 
             var data = { 
-              id: this.item.id , 
-              audio: '' , 
-              audioUID: '',
-              oldAudioUID: this.item.audioUID
+                id: this.item.id , 
+                audio: '' , 
+                audioUID: '',
+                oldAudioUID: this.item.audioUID
             }
 
-            // Submit the form
+            // Submits form
             var failedWithCloudExit;
 
             await Cloud['updateGlossaryAudio'].with(data)                                 
@@ -155,6 +156,9 @@
 
         },
 
+        /**
+         * Submits form data         
+         */
         submit: async function() {        
 
             // the field is required
@@ -200,9 +204,10 @@
             // Data update was successful
             if (!failedWithCloudExit) {              
 
-              this.item.audio = result.audio;
-              this.item.audioUID = result.audioUID;
-              this.mode = 'view';
+                this.item.audio = result.audio;
+                this.item.audioUID = result.audioUID;
+                this.audioSrc = '/glossario/' + this.item.audioUID;
+                this.mode = 'view';
 
             }
 
@@ -210,6 +215,12 @@
             
         },
         
+        /**
+         * Validates file extension and size
+         * 
+         * @param {object} fileObj the selected file
+         * @returns boolean
+         */
         validate: function(fileObj) {                    
             
             var result = false;
@@ -232,7 +243,7 @@
             
             return result;               
 
-        },              
+        },
 
     }
 

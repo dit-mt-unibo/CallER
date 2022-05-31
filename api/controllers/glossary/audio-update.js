@@ -44,7 +44,7 @@ module.exports = {
 
         var uploadedFile = await sails.uploadOne(inputs.audioFile , {
             maxBytes: 1048576,
-            dirname: require('path').resolve(sails.config.appPath , 'assets/glossario'),
+            dirname: require('path').resolve(sails.config.appPath , '.tmp/public/glossario'),
         })
         .intercept('E_EXCEEDS_UPLOAD_LIMIT' , 'uploadFileFail')
         .intercept((err) => { console.log(err.message); });
@@ -54,6 +54,8 @@ module.exports = {
             if ( uploadedFile ) {
 
                 inputs.audioUID = uploadedFile.fd.replace(/^.*[\\\/]/, '');
+
+                sails.hooks.filemanager.copy('.tmp/public/glossario' , 'assets/glossario' , inputs.audioUID);
     
             }
             else {
