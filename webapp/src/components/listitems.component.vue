@@ -1,8 +1,8 @@
 <!-- Mostra un elenco di elementi con immagine, nome, testo introduttivo ed eventuale livello -->
 
 <template>
-<div class="col-sm-12 col-lg-4 col-md-8 mb-3">
-    <div class="card" @click="goTo" data-link>
+<div class="col-12 col-sm-6 col-lg-4 mb-3">
+    <div class="card mx-auto" style="max-width:300px;" @click="goTo" data-link>
         <img id="img-top" class="card-img-top" :src="imageUrl"/>
         <div class="card-body">
             <h5 class="card-title">{{item.name}}</h5>
