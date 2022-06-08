@@ -68,12 +68,16 @@
             },
             async function whenDone (err, uploadedFiles) {
                     
-               if(err) return exits.uploadFail();  
+                if(err) return exits.uploadFail();  
     
-               var imgSrc = uploadedFiles[0].filename;
-               var imgUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');
+                var imgSrc = uploadedFiles[0].filename;
+                var imgUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');                
 
-               sails.hooks.filemanager.copy('.tmp/public/images/contenuti' , 'assets/images/contenuti' , imgUID);
+                await sails.hooks.imageresize.optimize('.tmp/public/images/contenuti' , imgUID);
+                await sails.hooks.imageresize.resize('.tmp/public/images/contenuti' , '.tmp/public/images/contenuti/thumbs' , imgUID , 300);
+
+                sails.hooks.filemanager.copy('.tmp/public/images/contenuti' , 'assets/images/contenuti' , imgUID);
+                sails.hooks.filemanager.copy('.tmp/public/images/contenuti/thumbs' , 'assets/images/contenuti/thumbs' , imgUID);
     
                 try {
                     
@@ -94,7 +98,9 @@
                 if (result) {
 
                     sails.hooks.filemanager.delete('assets/images/contenuti' , inputs.oldImage);
+                    sails.hooks.filemanager.delete('assets/images/contenuti/thumbs' , inputs.oldImage);
                     sails.hooks.filemanager.delete('.tmp/public/images/contenuti' , inputs.oldImage);            
+                    sails.hooks.filemanager.delete('.tmp/public/images/contenuti/thumbs' , inputs.oldImage);            
     
                     return exits.success( { image: imgSrc, imageUID: imgUID }); 
     

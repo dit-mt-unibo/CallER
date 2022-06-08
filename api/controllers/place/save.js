@@ -130,10 +130,13 @@ const { exit } = require('process');
             },
             async function whenDone (err, uploadedFiles) {
                     
-              if (err) return exits.uploadFail({ description : 'upload image failed. Server error:' + err.message });
+                if (err) return exits.uploadFail({ description : 'upload image failed. Server error:' + err.message });
 
-               inputs.image = uploadedFiles[0].filename;
-               inputs.imageUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');                            
+                inputs.image = uploadedFiles[0].filename;
+                inputs.imageUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');
+                
+                await sails.hooks.imageresize.optimize('assets/images/contenuti' , inputs.imageUID);
+                await sails.hooks.imageresize.resize('assets/images/contenuti' , 'assets/images/contenuti/thumbs' , inputs.imageUID , 300);
 
                 try {
                     

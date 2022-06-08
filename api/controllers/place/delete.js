@@ -44,13 +44,12 @@
 
         if ( result ) {
 
-            // removes image
-            const fs = require('fs');
-            var filePath = require('path').resolve(sails.config.appPath, 'assets/images/contenuti') + '/' + result.imageUID;
-            var filePathTmp = require('path').resolve(sails.config.appPath, '.tmp/public/images/contenuti') + '/' + result.imageUID;
+            // removes images
 
-            fs.unlink(filePath, function(err) {});
-            fs.unlink(filePathTmp, function(err) { });
+            sails.hooks.filemanager.delete('assets/images/contenuti' , result.imageUID);
+            sails.hooks.filemanager.delete('assets/images/contenuti/thumbs' , result.imageUID);
+            sails.hooks.filemanager.delete('.tmp/public/images/contenuti' , result.imageUID);
+            sails.hooks.filemanager.delete('.tmp/public/images/contenuti/thumbs' , result.imageUID);
 
             this.req.session.flash = {type: 'success' , message: 'Dati eliminati correttamente'};
 

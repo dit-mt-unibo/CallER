@@ -71,7 +71,7 @@
               <input type="text" name="fake-image"  class="form-control"
                   id="fake-image" readonly style="background-color: #FFF;">
               <button type="button" @click="openResources()" class="btn btn-outline-secondary">Sfoglia</button>                                
-            </div>
+            </div>            
             <p align="left" v-if="formMessage" class="text-danger">{{formMessage}}</p>
             <input type="file" placeholder="massimo 3MB" style="display:none;" ref="file" name="image" v-on:change="setFakeImage()">
           </div>
@@ -88,6 +88,16 @@
           </div>
         </form>
       </div>
+      <p v-if="mode == 'form'" class="medium" style="margin: 15px auto; width:90%" align="left">
+          <b>N.B.</b>
+          <u>
+              L'immagine perfetta deve avere un orientamento orizzontale, ovvero più larga che alta, una larghezza di 1200px e una risoluzione di 72dpi.
+          </u>
+          <br/>
+          <u>
+              Se l'immagine ha dimensioni maggiori o una risoluzione più alta, il sistema la ottimizzerà automaticamente.
+          </u>
+      </p>
     </div>    
     `,
 

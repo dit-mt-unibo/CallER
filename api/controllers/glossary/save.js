@@ -76,6 +76,8 @@ module.exports = {
             .intercept((err) => { console.log(err.message); });            
             
             if ( uploadedFiles ) {
+
+                let optimizeImage = false;
     
                 uploadedFiles.forEach(file => {
                     
@@ -88,10 +90,18 @@ module.exports = {
                     if ( file.filename == inputs.image ) {
     
                         inputs.imageUID = file.fd.replace(/^.*[\\\/]/, '');
+                        
+                        optimizeImage = true;
     
                     }
     
                 });
+
+                if ( optimizeImage ) {
+
+                    await sails.hooks.imageresize.optimize('assets/glossario' , inputs.imageUID);
+
+                }                
     
             }
             else {

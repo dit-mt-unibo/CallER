@@ -60,6 +60,8 @@
                 imageUID = uploadedFile.fd.replace(/^.*[\\\/]/, '');
                 imageSrc = uploadedFile.filename;
 
+                await sails.hooks.imageresize.optimize('.tmp/public/glossario' , imageUID);
+
                 sails.hooks.filemanager.copy('.tmp/public/glossario' , 'assets/glossario' , imageUID);
     
             }
