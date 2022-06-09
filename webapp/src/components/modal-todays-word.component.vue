@@ -3,9 +3,13 @@
 <template>
     <transition name="fade">
         <div v-if="show" class="box-word-home">
-            <h5><i class="fas fa-language mr-2"></i>Parola del giorno</h5>
-            <p align="center" class="term">{{item.term}}</p>
-            <div class="mt-3">
+            <div class="header">
+                <i class="fas fa-language fa-2x"></i>
+                <h5>Parola del giorno</h5>
+            </div>
+            <div class="triangle-down"></div>        
+            <p class="term">{{item.term}}</p>
+            <div class="my-3" align="center">
                 <button type="button" class="btn-definition" @click="goTo">Apri definizione</button>                
             </div>
         </div>
