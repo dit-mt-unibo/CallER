@@ -20,30 +20,30 @@ Template principale della WebApp all'interno del quale vengono visualizzate le p
                 </div>
             </div>
         </div>        
-        <div class="container main-container">            
+        <div class="container main-container pb-3">            
             <router-view/>
-        </div>        
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div align="center" class="col-12 footer">
-                <p class="info d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                    Dipartimento di Interpretazione e Traduzione - DIT - Forlì
-                </p>
-                <p class="info d-block d-sm-none d-md-none d-lg-none d-xl-none">
-                    Dipartimento di Interpretazione e
-                </p>
-                <p class="info d-block d-sm-none d-md-none d-lg-none d-xl-none">
-                    Traduzione - DIT - Forlì
-                </p>
-                <p>
-                    <span @click="this.$router.push('/contenuto/81');">Credits</span>
-                    <a href="https://www.unibo.it/it/ateneo/privacy-e-note-legali/privacy/privacy-sistema-portale-ateneo" target="_blank" class="ml-3">Cookie</a>
-                </p>
-            </div>
         </div>
-    </div>    
-    <cookie-gdpr/>    
+        <div class="container-fluid">
+            <div class="row">
+                <div align="center" class="col-12 footer">
+                    <p class="info d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                        Dipartimento di Interpretazione e Traduzione - DIT - Forlì
+                    </p>
+                    <p class="info d-block d-sm-none d-md-none d-lg-none d-xl-none">
+                        Dipartimento di Interpretazione e
+                    </p>
+                    <p class="info d-block d-sm-none d-md-none d-lg-none d-xl-none">
+                        Traduzione - DIT - Forlì
+                    </p>
+                    <p>
+                        <span @click="this.$router.push('/contenuto/81');">Credits</span>
+                        <a href="https://www.unibo.it/it/ateneo/privacy-e-note-legali/privacy/privacy-sistema-portale-ateneo" target="_blank" class="ml-3">Cookie</a>
+                    </p>
+                </div>
+            </div>
+        </div>     
+    </div>
+    <cookie-gdpr/>
 </template>
 
 <script>
@@ -55,8 +55,8 @@ export default {
     // Definisce variabili globali
     provide: {
         // server nodejs
-        apiUrl : 'http://137.204.200.9:1337', 
-    },    
+        apiUrl : 'http://137.204.200.9:1337',
+    },
 
     components: {
         
