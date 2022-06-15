@@ -12,7 +12,7 @@
                             <div class="resp-menu-bar"></div>
                         </div>
                         <i id="lens" class="fas fa-search" @click="openSearchBox"></i>                       
-                        <i class="fas fa-language" @click="goToTdsWord"></i>                       
+                        <i class="fas fa-book" @click="goToTdsWord"></i>                       
                         <div class="titolo card-text-truncate" @click="goTo(category_id)">{{title}}</div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="resp-menu-bar"></div>
             </div>
             <i id="lens" class="fas fa-search" @click="openSearchBox"></i>
-            <i class="fas fa-language" @click="goToTdsWord"></i>          
+            <i class="fas fa-book" @click="goToTdsWord"></i>          
             <div class="titolo card-text-truncate" @click="goTo(category_id)">{{title}}</div>
         </div>        
     </div>

@@ -226,8 +226,8 @@ module.exports.routes = {
   'GET /api/get-todays-word': {
     action: 'glossary/todays-word'
   },
-  'GET /api/get-random-word': {
-    action: 'glossary/random-word'
+  'GET /api/get-glossary-related-content': {
+    action: 'glossary/related-content'
   },
   /*
    * 'GET /home': {

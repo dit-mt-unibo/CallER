@@ -43,9 +43,7 @@ body {
   color: #212529;  
 }
 
-.main-container {  
- /* min-height: 100% !important;
-  height: auto !important;*/  
+.main-container { 
   position: relative;
   min-height: calc(100% - 230px);
   height: auto !important;
@@ -642,7 +640,7 @@ body {
   z-index: 980;
   background-color: #33333388;
   box-sizing:border-box;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .box-word-container {
@@ -674,7 +672,7 @@ body {
 }
 
 .box-word-home h5 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
 }
 
@@ -711,7 +709,7 @@ body {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1.5s ease-in;
+  transition: opacity 1s ease-in;
 }
 
 .fade-enter-from,
@@ -730,6 +728,7 @@ body {
   vertical-align: middle;
   display: inline-block;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .audio-player-label{  
@@ -739,7 +738,7 @@ body {
 @media screen and (max-width:992px) {
 
   .main-container{
-    max-width: 100% !important;    
+    max-width: 100% !important; 
   }  
   
     .home-icon-box {
@@ -809,6 +808,13 @@ body {
       font-size: 1.3em;
       margin-top: 10px;
     }
+    
+    .audio-player-box{
+      display: block;
+      margin-left: 0;
+      margin-top: 10px;
+      width: 90px;
+    }
 
 }
 
@@ -822,6 +828,10 @@ body {
         height: 100px;
         width: auto;
     }
+
+    .main-container{      
+      min-height: calc(100% - 180px);    
+    }  
 
 }
 

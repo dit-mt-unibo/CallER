@@ -2,16 +2,17 @@
 
 <template>
     <transition name="fade">
-        <div v-if="show" class="box-word-home">
-            <div class="header">
-                <i class="fas fa-language fa-2x"></i>
-                <h5>Parola del giorno</h5>
-            </div>
-            <div class="triangle-down"></div>        
-            <p class="term">{{item.term}}</p>
-            <div class="my-3" align="center">
-                <button type="button" class="btn-definition" @click="goTo">Apri definizione</button>                
-            </div>
+        <div v-if="show" class="box-word-home" @click="close">
+            <div class="box-word-container">
+                <div class="header">
+                    <h5>Parola del giorno</h5>
+                </div>
+                <div class="triangle-down"></div>        
+                    <p class="term">{{item.term}}</p>
+                <div class="my-3" align="center">
+                    <button type="button" class="btn-definition" @click="goTo">Apri definizione</button>                
+                </div>
+            </div>            
         </div>
     </transition>    
 </template>
@@ -51,13 +52,7 @@ export default ({
 
                 this.show = true;
 
-                // Mostra la finestra per 5 secondi
-                setTimeout(()=> {
-                
-                    this.show = false;
-                    Cookie.setDailyCookie("cookie_tds_word" , 1);
-
-                }, 5000);
+                Cookie.setDailyCookie("cookie_tds_word" , 1);
 
             }
 
@@ -85,9 +80,20 @@ export default ({
             
             let url = '/parola-del-giorno';
             this.$router.push(url);
+            this.show = true;
             Cookie.setDailyCookie("cookie_tds_word" , 1);
 
         },
+
+        /**
+         * Chiude la finestra modale
+         */
+        close() {
+
+            this.show = false;
+            Cookie.setDailyCookie("cookie_tds_word" , 1);
+
+        }
 
     }
 })

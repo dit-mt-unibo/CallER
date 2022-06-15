@@ -1,8 +1,8 @@
 <!-- Pagina per visualizzare le info della parole del giorno -->
 
-<template>    
-    <div class="container">
-        <toolbar :title="'Glossario'" :category_id="''" />
+<template>
+    <toolbar :title="'Glossario'" :category_id="''" />
+    <div class="container">        
         <div class="row mb-2">
             <div class="col-12 titolo">
                 <div style="display: inline-block; vertical-align:middle;">{{item.term}}</div>
@@ -12,7 +12,7 @@
                 </div>                
             </div>            
         </div>
-        <div class="row rounded-top place-content pt-3">
+        <div class="row rounded-top place-content pt-3 mb-3">
             <div v-if="item.term" class="col-12">
                 <div v-if="item.image" class="box-place-img">
                     <div class="place-container-img">
@@ -28,11 +28,29 @@
                 <p>Nessun vocabolo disponibile</p>
             </div>
         </div>
-        <div class="row mt-4 mb-4">
-            <div align="center" class="col-12">
-                <button class="btn btn-info mr-2" @click="getRandomWord">Nuova parola</button>
-                <button class="btn btn-success" @click="getTodaysWord">Parola del giorno</button>
-            </div>
+        <div class="row box-related mt-3" v-if="relatedItems">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h5>Continua a leggere</h5>
+                </li>
+                <li class="list-group-item" v-for="rItem in relatedItems"
+                    v-bind:key="rItem" @click="goTo(rItem.id)">
+                    <div class="box-related-img">
+                        <img id="img-top" class="card-img-mini"
+                            :src="this.apiUrl + '/images/contenuti/' + rItem.imageUID"/>
+                    </div>
+                    <div class="box-related-entry card-text-truncate">
+                        <div class="box-related-entry-level">
+                            <span v-if="rItem.level == 0" class="livello-facile">Livello: facile</span>
+                            <span v-if="rItem.level == 1" class="livello-intermedio">Livello: intermedio</span>
+                            <span v-if="rItem.level == 2" class="livello-difficile">Livello: difficile</span>
+                        </div>
+                        <div>{{ rItem.name }}</div>
+                        <p class="d-none d-sm-block card-text card-text-truncate box-related-intro-text" v-html="rItem.intro_text"></p>
+                    </div>
+                    <div style="clear: both"></div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -58,6 +76,8 @@ export default {
             item: {},
             // oggetto audio
             audioElement: null,
+            // oggetto contenuti relativi. I contenuti in cui il vocabolo è presente.
+            relatedItems: [],
 
         }
     },
@@ -112,6 +132,8 @@ export default {
          });
 
         await this.getTodaysWord();
+
+        await this.getRelatedItems();
         
     },
 
@@ -134,13 +156,16 @@ export default {
 
         },
 
-        /**
-         * Chiamata API, recupera una parola a caso dal glossario
-         */
-        async getRandomWord() {
+        async getRelatedItems() {
 
-            const response = await axios.get(this.apiUrl + '/api/get-random-word');
-            this.item = response.data.item;
+            const response = await axios.get(this.apiUrl + '/api/get-glossary-related-content?term=' + this.item.name);
+            this.relatedItems = response.data;
+
+        },
+
+        goTo(id) {
+                        
+            this.$router.push('/contenuto/' + id);
 
         },
 
