@@ -198,12 +198,14 @@ export default {
      * Osserva il cambiamento del parametro id nella url.
      * Chiama il metodo initUI per aggiornare i contenuti della pagina.
      * Reimposta lo stato iniziale del form feedback
+     * Reset zoom componente mappa solo se presente
      */
     "$route.params.id"() {
       if (this.$route.name == "place") {        
         this.initUI();
         this.$refs.feedback.refresh();
-        this.$refs.mapping.resetZoom();
+
+        if (this.mapShow) this.$refs.mapping.resetZoom();
       }
     },
   },
