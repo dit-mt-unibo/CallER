@@ -96,7 +96,7 @@
             <img
               id="img-top"
               class="card-img-mini"
-              :src="this.apiUrl + '/images/contenuti/' + rItem.imageUID"
+              :src="this.apiUrl + '/images/contenuti/thumbs/' + rItem.imageUID"
             />
           </div>
           <div class="box-related-entry card-text-truncate">

@@ -48,7 +48,7 @@ export default {
 
             if ( this.item.imageUID != "" ) {
 
-                return this.apiUrl + "/images/contenuti/" + this.item.imageUID;
+                return this.apiUrl + "/images/contenuti/thumbs/" + this.item.imageUID;
 
             }
 
