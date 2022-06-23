@@ -147,8 +147,7 @@ body {
 
 .glossary {
   color: #1565c0;
-  font-weight: bold;
-  text-decoration: underline;
+  font-weight: bold;  
 }
 
 .glossary:hover{
@@ -236,6 +235,10 @@ body {
 
 .place-content {
   background-color: #FFF;
+}
+
+.place-content a {
+  text-decoration: underline;
 }
 
 .box-related {
@@ -553,15 +556,26 @@ body {
   box-sizing:border-box;
 }
 
+.search-box-input {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.search-box-input i {
+  font-size: 1.2em;
+  color: #0d47a1;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
 .search-box input {
   height: 40px;
   border: 1px solid #CCC;
   border-radius: 3px;
   padding: 0 6px;
-  font-size: 1.2em; 
-  width: 100%;   
-  margin-top: 15px;
-  margin-bottom: 15px; 
+  font-size: 1.2em;        
+  width: 90%; 
 }
 
 .search-box input:focus {  
@@ -644,12 +658,12 @@ body {
 }
 
 .box-word-container {
-  width: 280px;  
-  height: 250px;
+  width: 250px;  
+  /*height: 220px;*/
   position: absolute;
   left: 0;
   right: 0;
-  top: 10px;  
+  top: 150px;  
   margin-left: auto;
   margin-right: auto;
   background-color: #FFF;
@@ -667,7 +681,7 @@ body {
   border-top-right-radius: 15px;  
   font-family: 'Montserrat', sans-serif;
   text-align: center;
-  padding: 15px 0;
+  padding: 13px 0;
   color: #FFF;
 }
 
@@ -679,18 +693,18 @@ body {
 .box-word-home .triangle-down {
   width: 0;
   height: 0;
-  border-left: 25px solid transparent;
-  border-right: 25px solid transparent;
-  border-top: 25px solid #FF5D55;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #FF5D55;
   margin: 0 auto;
 }
 
 .box-word-home .term {
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   overflow-wrap: break-word;
   text-align: center;
-  margin: 5px 0 25px 0;
+  margin: 15px 0;
 }
 
 .box-word-home .btn-definition {  
@@ -789,12 +803,22 @@ body {
     .btn-rate{
         width: 100%;
         max-width: 250px;
-    }
-
+    }    
+    
     .search-box {
-      height: 100%;
       border: 0px;
     }
+
+}
+
+@media screen and (max-width:768px) {
+
+  .search-box {
+    border: 0px;
+    height: 100%;  
+    position: fixed;
+    top: 0;
+  }
 
 }
 
@@ -815,6 +839,10 @@ body {
       margin-top: 10px;
       width: 90px;
     }
+
+    .box-word-container {
+      top: 100px;  
+    }    
 
 }
 

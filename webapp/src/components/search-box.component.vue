@@ -2,7 +2,10 @@
 
 <template>
     <div id="search-box" class="search-box search-box-collapsed">
-        <input type="text" name="search" id="search-field" placeholder="cerca tra i contenuti"  v-model="search" @input="openSuggestions" autocomplete="off"/>
+        <div class="search-box-input">
+            <i class="fas fa-arrow-left" @click="collapseSearchBox"></i>
+            <input type="text" name="search" id="search-field" placeholder="cerca nei contenuti"  v-model="search" @input="openSuggestions" autocomplete="off"/>
+        </div>        
         <div class="search-box-dropdown" v-if="showDropDown">
             <ul class="list-group">
                 <li class="list-group-item" v-for="item in items" v-bind:key="item" @click="openResult(item.id)">

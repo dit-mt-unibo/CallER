@@ -62,6 +62,7 @@ export default {
          */
         openSidebar () {
 
+            this.$refs.searchbox.collapseSearchBox();
             this.$refs.sidebar.openSidebar();
 
         },
@@ -86,6 +87,8 @@ export default {
          */
         goToTdsWord(){
             
+            this.$refs.sidebar.closeSidebar();
+            this.$refs.searchbox.collapseSearchBox();
             this.$router.push('/parola-del-giorno');
 
         },
@@ -95,6 +98,7 @@ export default {
          */
         openSearchBox() {
             
+            this.$refs.sidebar.closeSidebar();
             this.$refs.searchbox.showHideSearchBox();
 
         },

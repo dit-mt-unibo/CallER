@@ -1,7 +1,7 @@
 <!-- Pagina per visualizzare le info della parole del giorno -->
 
 <template>
-    <toolbar :title="'Glossario'" :category_id="''" />
+    <toolbar :title="'Parola del giorno'" :category_id="''" />
     <div class="container">        
         <div class="row mb-2">
             <div class="col-12 titolo">
