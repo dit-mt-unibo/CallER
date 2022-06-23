@@ -8,7 +8,7 @@ module.exports = function(){
 
     const sanitizeHtml = require('sanitize-html');
     const blackListWords = [];
-    const blackListChars = [];
+    const blackListChars = ['"' , '\\' , '/' , '<' , '>' , '(' , ')' , '[' , ']' , '*' , '?' , '!' , '^' , '$' , '&' , '='];
 
     return {
 

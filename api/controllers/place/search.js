@@ -29,7 +29,7 @@ module.exports = {
         try{
 
             const datastore = sails.getDatastore();
-            let uCaseTerm = term[0].toUpperCase() + term.substring(1);
+            let termEscaped = term.replace(new RegExp("[']", "g") , "\\'");            
 
             /**
              * Le query sono tre in modo da avere i suggerimenti ordinati
@@ -39,7 +39,7 @@ module.exports = {
              */
             var queryName = `
             SELECT id, name, intro_text, full_text_plain, imageUID FROM place
-            WHERE LOWER(name) LIKE "%` + term.toLocaleLowerCase() + `%"
+            WHERE LOWER(name) LIKE "%` + termEscaped.toLocaleLowerCase() + `%"
             ORDER BY name ASC
             `;
 
@@ -66,20 +66,22 @@ module.exports = {
              */
             var queryTexts = `
             SELECT id, name, intro_text, full_text_plain, imageUID FROM place
-            WHERE 
-            MATCH(full_text_plain) AGAINST('` + term + `*' IN BOOLEAN MODE) OR
-            MATCH(intro_text) AGAINST('` + term + `*' IN BOOLEAN MODE) OR
-            MATCH(full_text_plain) AGAINST('` + uCaseTerm + `*' IN BOOLEAN MODE) OR
-            MATCH(intro_text) AGAINST('` + uCaseTerm + `*' IN BOOLEAN MODE)
-            `
+            WHERE
+            `;
 
             if ( ids.length > 0 ) {
 
-                queryTexts += " AND id NOT IN (" + ids.join(',')  + ")";
+                queryTexts += " id NOT IN (" + ids.join(',')  + ") AND ";
 
             }
 
-            queryTexts += " ORDER BY name ASC";
+            queryTexts += `
+            (
+                LOWER(full_text_plain) LIKE "%` + termEscaped.toLocaleLowerCase() + `%" OR
+                LOWER(intro_text) LIKE "%` + termEscaped.toLocaleLowerCase() + `%"
+            )
+            ORDER BY name ASC            
+            `;
 
             const textResults = await datastore.sendNativeQuery(queryTexts , []);
 
@@ -99,6 +101,9 @@ module.exports = {
              * Query per ricerca tra i tags.
              * Esclude dai risultati gli ID dei contenuti già trovati con le query precedenti.
              */
+
+            term = term.replace(new RegExp("[']", "g") , "");
+
             var queryTags = `
             SELECT id, name, intro_text, full_text_plain, imageUID FROM place
             WHERE JSON_CONTAINS(LOWER(tags) , '"` + term.toLocaleLowerCase() + `"')
@@ -110,6 +115,8 @@ module.exports = {
             }
 
             queryTags += " ORDER BY name ASC";
+
+
             
             const tagResults = await datastore.sendNativeQuery(queryTags , []);
 
