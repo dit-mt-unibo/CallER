@@ -126,6 +126,21 @@
         </div>        
 
         <div class="form-group">
+            <label :class="[formErrors.address ? 'text-danger' : '']">
+                Indirizzo <span class="small">(opzionale)</span>
+            </label>
+            <input type="text" name="address" class="form-control" :class="[formErrors.address ? 'is-invalid' : '']" 
+                v-model="formData.address" maxlength="200" id="address" />            
+            <p class="medium mt-2">
+                <b>N.B.</b>
+                <u>
+                    Utilizzare l'indirizzo fornito da Google Maps
+                </u>
+            </p>
+            <cloud-error v-if="formErrors.address === 'maxLength'">Il campo può contenere al max. 200 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
             <label :class="[formErrors.lat || formErrors.long ? 'text-danger' : '']">
                 Coordinate <span class="small">(opzionale)</span>
             </label>

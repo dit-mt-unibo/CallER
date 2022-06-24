@@ -140,6 +140,12 @@ module.exports = {
             required: true
         },
 
+        address: {
+            type: 'string',
+            allowNull: true,
+            maxLength: 200
+        },
+
         // reference to the feedback model
         feedbacks: {
             collection: 'feedback',

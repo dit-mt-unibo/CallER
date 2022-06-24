@@ -74,7 +74,11 @@ const { exit } = require('process');
         id: {
             type: 'number',
             allowNull: true
-        }   
+        },
+        address: {
+            type: 'string',
+            allowNull: true
+        }
     },
 
     exits: {

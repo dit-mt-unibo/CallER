@@ -256,7 +256,8 @@ parasails.registerPage('view-create', {
                     return _.isNumber(CatID);
 
                 }
-            }
+            },
+            address: { maxLength: 200},
         },
 
         // Server error state for the form
