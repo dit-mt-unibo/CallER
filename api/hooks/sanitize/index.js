@@ -52,7 +52,7 @@ module.exports = function(){
 
             blackListChars.forEach(char => {
 
-                let pattern = new RegExp("[" + char + "]", "g");
+                let pattern = new RegExp('\\' + char, "g");
                 text = text.replace(pattern , "");
 
             });

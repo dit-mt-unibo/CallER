@@ -4,10 +4,13 @@
     <div id="search-box" class="search-box search-box-collapsed">
         <div class="search-box-input">
             <i class="fas fa-arrow-left" @click="collapseSearchBox"></i>
-            <input type="text" name="search" id="search-field" placeholder="cerca nei contenuti"  v-model="search" @input="openSuggestions" autocomplete="off"/>
+            <input type="text" name="search" id="search-field" placeholder="cerca nei contenuti"  v-model="search" @input="openSuggestions" maxlength="50" autocomplete="off"/>
         </div>        
         <div class="search-box-dropdown" v-if="showDropDown">
             <ul class="list-group">
+                <li class="list-group-item" align="right" v-if="itemsCounter > 3" @click="openAllResults">
+                    <div>Vedi tutti i risultati ({{itemsCounter}})</div>
+                </li>
                 <li class="list-group-item" v-for="item in items" v-bind:key="item" @click="openResult(item.id)">
                     <h5 v-html="item.name"></h5>
                     <div class="intro-text" v-html="item.intro_text"></div>
@@ -15,10 +18,7 @@
                     <div id="search-box-tag" v-if="item.tag">
                         <span class="highlight">#{{item.tag}}</span>                            
                     </div>
-                </li>
-                <li class="list-group-item" align="right" v-if="itemsCounter > 3" @click="openAllResults">
-                    <div>Vedi tutti i risultati ({{itemsCounter}})</div>
-                </li>
+                </li>                
             </ul>
             <p class="intro-text" align="center" v-if="itemsCounter == 0">
                 Non sono stati trovati risultati
@@ -42,6 +42,8 @@ export default {
         return {
             // input utente
             search: "",
+            // input utente "pulito"
+            cleanString: "",
             // mostra/nasconde risultati ricerca
             showDropDown: false,
             // risultati ricerca
@@ -61,7 +63,13 @@ export default {
          */
         async openSuggestions() {
 
-            var strLength = this.search.length;
+            // pulizia stringa inviata dall'utente
+            const specialChars = /[`!$%^&*()_+\-={};':"\\|<>/?~]/g;
+            this.cleanString = this.search.replace(specialChars, "");
+            this.cleanString = this.cleanString.replace(/\[/g, "");
+            this.cleanString = this.cleanString.replace(/\]/g, "").trim();
+
+            var strLength = this.cleanString.length;
 
             if ( strLength > 3 ) {
 
@@ -70,7 +78,7 @@ export default {
                 
                 try {
 
-                    response = await axios.get(this.apiUrl + "/api/search?term=" + this.search);
+                    response = await axios.get(this.apiUrl + "/api/search?term=" + this.cleanString);
 
                 }
                 catch (err) {
@@ -166,7 +174,7 @@ export default {
         openAllResults() {
 
             this.collapseSearchBox();
-            let url = '/cerca/' + this.search + '/word';
+            let url = '/cerca/' + this.cleanString + '/word';
             this.$router.push(url);
 
         },
@@ -183,7 +191,7 @@ export default {
             var result = text;
 
             // Cerca le corrispondenze all'interno del testo
-            var regExp = new RegExp(this.search, "gi");
+            var regExp = new RegExp(this.cleanString, "gi");
             var matches = text.match(regExp);
 
             if ( matches != null ) {
@@ -239,7 +247,7 @@ export default {
             var result = "";
 
             // Cerca le corrispondenze all'interno del testo
-            var regExp = new RegExp(this.search, "gi");
+            var regExp = new RegExp(this.cleanString, "gi");
             var matches = text.match(regExp);
 
             if ( matches != null ) {

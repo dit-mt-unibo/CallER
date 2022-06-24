@@ -24,7 +24,7 @@ module.exports = {
         // Pulizia input utente
         let term = sails.hooks.sanitize.deepClean(this.req.param('term'));
 
-        if ( term.length < 4 ) return result;        
+        if ( term.length < 4 || term.length > 50 ) return result;        
 
         try{
 
@@ -39,7 +39,7 @@ module.exports = {
              */
             var queryName = `
             SELECT id, name, intro_text, full_text_plain, imageUID FROM place
-            WHERE LOWER(name) LIKE "%` + termEscaped.toLocaleLowerCase() + `%"
+            WHERE LOWER(name) LIKE "%` + _.escape(termEscaped.toLocaleLowerCase()) + `%"
             ORDER BY name ASC
             `;
 
@@ -77,8 +77,8 @@ module.exports = {
 
             queryTexts += `
             (
-                LOWER(full_text_plain) LIKE "%` + termEscaped.toLocaleLowerCase() + `%" OR
-                LOWER(intro_text) LIKE "%` + termEscaped.toLocaleLowerCase() + `%"
+                LOWER(full_text_plain) LIKE "%` + _.escape(termEscaped.toLocaleLowerCase()) + `%" OR
+                LOWER(intro_text) LIKE "%` + _.escape(termEscaped.toLocaleLowerCase()) + `%"
             )
             ORDER BY name ASC            
             `;
@@ -102,11 +102,11 @@ module.exports = {
              * Esclude dai risultati gli ID dei contenuti già trovati con le query precedenti.
              */
 
-            term = term.replace(new RegExp("[']", "g") , "");
+            //term = term.replace(new RegExp("[']", "g") , "");
 
             var queryTags = `
             SELECT id, name, intro_text, full_text_plain, imageUID FROM place
-            WHERE JSON_CONTAINS(LOWER(tags) , '"` + term.toLocaleLowerCase() + `"')
+            WHERE JSON_CONTAINS(LOWER(tags) , '"` + _.escape(term.toLocaleLowerCase()) + `"')
             `
             if ( ids.length > 0 ) {
 
