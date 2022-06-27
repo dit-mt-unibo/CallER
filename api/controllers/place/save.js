@@ -78,6 +78,10 @@ const { exit } = require('process');
         address: {
             type: 'string',
             allowNull: true
+        },
+        gmaps_place_id: {
+            type: 'string',
+            allowNull: true
         }
     },
 

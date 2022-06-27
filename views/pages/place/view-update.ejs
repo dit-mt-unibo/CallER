@@ -104,6 +104,21 @@
         </div>
 
         <div class="form-group">
+            <label :class="[formErrors.gmaps_place_id ? 'text-danger' : '']">
+                Google maps place ID <span class="small">(opzionale)</span>
+            </label>
+            <input type="text" name="gmaps_place_id" class="form-control" :class="[formErrors.gmaps_place_id ? 'is-invalid' : '']" 
+                v-model="formData.gmaps_place_id" maxlength="300" id="gmaps_place_id" />            
+            <p class="medium mt-2">
+                <b>N.B.</b>
+                <u>
+                    Inserire l'ID del luogo fornito da Google, vedi pagina https://developers.google.com/maps/documentation/places/web-service/place-id
+                </u>
+            </p>
+            <cloud-error v-if="formErrors.gmaps_place_id === 'maxLength'">Il campo può contenere al max. 300 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
             <label :class="[formErrors.lat || formErrors.long ? 'text-danger' : '']">
                 Coordinate <span class="small">(opzionale)</span>
             </label>

@@ -86,11 +86,14 @@
                     <h5>Indirizzo: <small><%- item.address %></small></h5>
                 </div>
                 <div class="mt-3">
-                    <h5>Geolocalizzazione:
-                        <small v-if="item.lat" class="ml-2">(latitudine) <%- item.lat %>,</small>
+                    <h5>GMaps place ID: <small><%- item.gmaps_place_id %></small></h5>
+                </div>
+                <div class="mt-3">
+                    <h5>Coordinate:
+                        <small v-if="item.lat" class="ml-1">(latitudine) <%- item.lat %>,</small>
                         <small class="ml-1">(longitudine) <%- item.long %></small>
                     </h5>
-                </div> 
+                </div>
                 <div class="mt-3">
                     <h5>Categoria: <small><%= item.category %></small></h5>
                 </div>           

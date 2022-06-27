@@ -146,6 +146,13 @@ module.exports = {
             maxLength: 200
         },
 
+        gmaps_place_id: {
+            type: 'string',
+            description: 'google maps place_id',
+            allowNull: true,            
+            maxLength: 300
+        },
+
         // reference to the feedback model
         feedbacks: {
             collection: 'feedback',

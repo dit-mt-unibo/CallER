@@ -258,6 +258,7 @@ parasails.registerPage('view-create', {
                 }
             },
             address: { maxLength: 200},
+            gmaps_place_id: { maxLength: 300},
         },
 
         // Server error state for the form
