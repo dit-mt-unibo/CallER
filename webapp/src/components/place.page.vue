@@ -5,7 +5,11 @@
   <div id="place" class="container">
     <toolbar :title="categoryName" :category_id="item.category_id" />
     <div class="row">
-      <div class="col-12 titolo">{{ item.name }}</div>
+      <div class="col-12 titolo">{{ item.name }}</div>      
+      <div v-if="item.address" class="col-12 card-text-truncate" style="margin-bottom:10px;">
+        <i class="fas fa-map-marker-alt"></i>
+        <span class="ml-1">{{ item.address }}</span>
+      </div>
       <div class="col-12 livello">
         <span v-if="item.level == 0" class="livello-facile"
           >Livello: facile</span
@@ -16,7 +20,7 @@
         <span v-if="item.level == 2" class="livello-difficile"
           >Livello: difficile</span
         >
-      </div>
+      </div>      
     </div>
     <div class="row mt-4 mb-3">
       <div class="col-12 intro-text" v-html="item.intro_text"></div>
@@ -25,20 +29,7 @@
       <div class="col-12">
         <div class="box-place-img">
           <div class="place-container-img">
-            <img class="place-img" :src="imagePath" />
-            <a
-              v-if="item.lat && item.long"
-              class="map-icon"
-              :href="
-                'https://www.google.com/maps/search/?api=1&query=' +
-                item.lat +
-                '%2C' +
-                item.long
-              "
-              target="_blank"
-            >
-              <i class="fas fa-map-marker-alt"></i>
-            </a>
+            <img class="place-img" :src="imagePath" />            
           </div>
           <p id="caption" class="caption card-text-truncate" @click="expand">
             {{ item.image_caption }}
@@ -76,9 +67,14 @@
     </div>
     <quiz v-if="isBlocked" v-bind:quiz="item.quiz" v-on:answer-right="unlock" />
     <div v-if="mapShow" class="row mt-3 mb-3">
-      <div align="center" class="col-12" style="padding:0px; border:1px solid rgba(0, 0, 0, 0.325);">
-        <mapping ref="mapping" :markers="mapLatLong" :center="mapCenter" />
-      </div>
+      <iframe
+        width="100%"
+        height="300"
+        frameborder="0" style="border:0"
+        referrerpolicy="no-referrer-when-downgrade"
+        :src="srcGMaps"
+        allowfullscreen>
+      </iframe>
     </div>
     <feedback :place_id="item.id" ref="feedback" />
     <div class="row box-related mb-3" v-if="item.category_id != 1">
@@ -139,8 +135,6 @@ import quiz from "./quiz.component.vue";
 import feedback from "./feedback.component.vue";
 import toolbar from "./toolbar.component.vue";
 import Cookie from "../modules/cookie.module.js";
-import mapping from "./mapping.component.vue";
-
 
 const axios = require("axios");
 
@@ -162,12 +156,10 @@ export default {
       cookie: 0,
       // nome categoria
       categoryName: "",
-      // coordinate mappa componente mapping
-      mapLatLong: [44.2227, 12.0407],
-      // coordinate centro mappa componente mapping
-      mapCenter: [44.2227, 12.0407],
-      // mostra/nasconde componente mapping
+      // mostra/nasconde Google maps
       mapShow: false,
+      // Google maps link
+      srcGMaps: "",
     };
   },
 
@@ -204,8 +196,6 @@ export default {
       if (this.$route.name == "place") {        
         this.initUI();
         this.$refs.feedback.refresh();
-
-        if (this.mapShow) this.$refs.mapping.resetZoom();
       }
     },
   },
@@ -241,10 +231,11 @@ export default {
         this.item = await this.getPlace();
         this.relatedItems = await this.getRelatedPlaces();
         this.categoryName = await this.getCategoryName();
-        this.mapLatLong = [this.item.lat , this.item.long];
-        this.mapCenter = [this.item.lat , this.item.long];
         
         this.mapShow = ( this.item.lat != null && this.item.long != null );
+
+        this.srcGMaps = 'https://www.google.com/maps/embed/v1/place?key=' + process.env.VUE_APP_GOOGLE_MAPS_API +
+          '&q=' + this.item.lat + ',' + this.item.long + '&zoom=18';
 
         let cookieName = "quiz_" + this.item.id;
         this.cookie = Cookie.getCookie(cookieName);      
@@ -373,7 +364,6 @@ export default {
     quiz,
     feedback,
     toolbar,
-    mapping,
   },
 };
 </script>
