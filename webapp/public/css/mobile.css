@@ -548,7 +548,7 @@ body {
   z-index: 990;
   background-color: #FEFEFE;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
   transition: transform 1s;
   transform: scaleY(1);
   transform-origin: top;
@@ -562,11 +562,11 @@ body {
   margin-bottom: 15px;
 }
 
-.search-box-input i {
-  font-size: 1.2em;
+.search-box .close-link {
+  font-size: 1em;
   color: #0d47a1;
   cursor: pointer;
-  margin-right: 10px;
+  text-decoration: underline;
 }
 
 .search-box input {
@@ -575,7 +575,7 @@ body {
   border-radius: 3px;
   padding: 0 6px;
   font-size: 1.2em;        
-  width: 90%; 
+  width: 100%; 
 }
 
 .search-box input:focus {  

@@ -2,11 +2,11 @@
 
 <template>
     <div id="search-box" class="search-box search-box-collapsed">
-        <div class="search-box-input">
-            <i class="fas fa-arrow-left" @click="collapseSearchBox"></i>
+        <div class="search-box-input">            
             <input type="text" name="search" id="search-field" placeholder="cerca nei contenuti"  v-model="search" @input="openSuggestions" maxlength="50" autocomplete="off"/>
-        </div>        
-        <div class="search-box-dropdown" v-if="showDropDown">
+        </div>
+        <p class="close-link" @click="collapseSearchBox">Chiudi ricerca</p>
+        <div class="search-box-dropdown" v-if="showDropDown">            
             <ul class="list-group">
                 <li class="list-group-item" align="right" v-if="itemsCounter > 3" @click="openAllResults">
                     <div>Vedi tutti i risultati ({{itemsCounter}})</div>
