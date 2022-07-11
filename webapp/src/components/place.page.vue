@@ -7,8 +7,13 @@
     <div class="row">
       <div class="col-12 titolo">{{ item.name }}</div>      
       <div v-if="item.address" class="col-12 card-text-truncate" style="margin-bottom:10px;">
-        <i class="fas fa-map-marker-alt"></i>
-        <span class="ml-1">{{ item.address }}</span>
+        <a style="text-decoration:underline"
+          :href="addressLinkMap"
+          target="_blank"
+        >
+          <i class="fas fa-map-marker-alt"></i>
+          <span class="ml-1">{{ item.address }}</span>
+        </a>
       </div>
       <div class="col-12 livello">
         <span v-if="item.level == 0" class="livello-facile"
@@ -160,6 +165,8 @@ export default {
       mapShow: false,
       // Google maps link
       srcGMaps: "",
+      // Google maps link indirizzo
+      addressLinkMap: "",
     };
   },
 
@@ -230,15 +237,56 @@ export default {
 
         this.item = await this.getPlace();
         this.relatedItems = await this.getRelatedPlaces();
-        this.categoryName = await this.getCategoryName();
+        this.categoryName = await this.getCategoryName();        
+
+        this.getGMap();
+
+        let cookieName = "quiz_" + this.item.id;
+        this.cookie = Cookie.getCookie(cookieName);      
         
-        this.mapShow = ( this.item.lat != null && this.item.long != null );
+    },
+
+    /**
+     * Aggiorna l'iframe di Google maps.
+     * Aggiorna l'attributo href del link indirizzo civico  
+     */
+    getGMap() {
+
+      if ( this.item.gmaps_place_id != null ) {
+
+        this.srcGMaps = 'https://www.google.com/maps/embed/v1/place?key=' + process.env.VUE_APP_GOOGLE_MAPS_API +
+          '&q=place_id:' + this.item.gmaps_place_id + '&zoom=18';
+        
+        this.mapShow = true;
+
+      }
+      else if ( this.item.lat != null && this.item.long != null ){
 
         this.srcGMaps = 'https://www.google.com/maps/embed/v1/place?key=' + process.env.VUE_APP_GOOGLE_MAPS_API +
           '&q=' + this.item.lat + ',' + this.item.long + '&zoom=18';
 
-        let cookieName = "quiz_" + this.item.id;
-        this.cookie = Cookie.getCookie(cookieName);      
+        this.mapShow = true;
+
+      }
+      else {
+        
+        this.mapShow = false;
+
+      }
+
+      if ( this.item.gmaps_place_id != null && this.item.lat != null && this.item.long != null ) {
+
+        this.addressLinkMap = 'https://www.google.com/maps/search/?api=1' + 
+          '&query=' + this.item.lat + '%2C' + this.item.long + 
+          '&query_place_id=' + this.item.gmaps_place_id;
+
+      }
+      else {
+
+        this.addressLinkMap = '';
+
+      }
+
     },
 
     /**
