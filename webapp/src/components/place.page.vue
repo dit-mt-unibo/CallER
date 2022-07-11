@@ -5,16 +5,32 @@
   <div id="place" class="container">
     <toolbar :title="categoryName" :category_id="item.category_id" />
     <div class="row">
-      <div class="col-12 titolo">{{ item.name }}</div>      
-      <div v-if="item.address" class="col-12 card-text-truncate" style="margin-bottom:10px;">
+      <div class="col-12 titolo">{{ item.name }}</div>
+    </div>
+    <div class="row mb-2">
+      <div v-if="item.address" class="col-1 d-block d-sm-none" style="padding-right:0; color:#007bff;">
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+      <div class="col-11 d-block d-sm-none">
         <a style="text-decoration:underline"
           :href="addressLinkMap"
           target="_blank"
         >
-          <i class="fas fa-map-marker-alt"></i>
-          <span class="ml-1">{{ item.address }}</span>
+          {{ item.address }}
         </a>
       </div>
+      <div class="col-12 d-none d-sm-block">
+        <i class="fas fa-map-marker-alt" style="color:#007bff;"></i>
+        <a style="text-decoration:underline"
+          :href="addressLinkMap"
+          target="_blank"
+          class="ml-2"
+        >
+          {{ item.address }}
+        </a>
+      </div>      
+    </div>    
+    <div class="row">
       <div class="col-12 livello">
         <span v-if="item.level == 0" class="livello-facile"
           >Livello: facile</span
