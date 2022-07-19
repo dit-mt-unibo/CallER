@@ -1,0 +1,105 @@
+<div id="view-create" class="container" v-cloak>
+
+    <modal-glossary :terms="terms" @click="insertGlossaryLink()"></modal-glossary>
+
+    <ajax-form action="saveStage" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
+        :form-rules="formRules" :form-errors.sync="formErrors" :hunt-id="huntId"
+        :tbw-editor-id="'tbweditor'" :tbw-editor-field="'full_text'"
+        @submitted="submittedUpdateForm($event)" @rejected="rejectedForm($event)">
+
+        <div class="form-group">
+            <label :class="[formErrors.name ? 'text-danger' : '']">
+                Titolo
+            </label>
+            <input type="text" name="name" class="form-control" :class="[formErrors.name ? 'is-invalid' : '']"
+                v-model="formData.name" maxlength="150" id="name" />
+            <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.full_text ? 'text-danger' : '']">
+                Testo
+            </label>
+            <textarea name="full_text" class="form-control" id="tbweditor" rows="8">{{ item.full_text }}</textarea>
+            <cloud-error v-if="formErrors.full_text === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.full_text === 'maxLength'">Il campo può contenere al max. 65535 caratteri</cloud-error>
+        </div>
+
+
+        <div class="form-group">
+            <label :class="[formErrors.gmaps_place_id ? 'text-danger' : '']">
+                Google maps place ID <span class="small">(opzionale)</span>
+            </label>
+            <input type="text" name="gmaps_place_id" class="form-control" :class="[formErrors.gmaps_place_id ? 'is-invalid' : '']"
+                v-model="formData.gmaps_place_id" maxlength="300" id="gmaps_place_id" />
+            <p class="medium mt-2">
+                <b>N.B.</b>
+                <u>
+                    Inserire l'ID del luogo fornito da Google, vedi pagina https://developers.google.com/maps/documentation/places/web-service/place-id
+                </u>
+            </p>
+            <cloud-error v-if="formErrors.gmaps_place_id === 'maxLength'">Il campo può contenere al max. 300 caratteri</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.lat || formErrors.long ? 'text-danger' : '']">
+                Coordinate <span class="small">(opzionale)</span>
+            </label>
+            <div class="input-group">
+                <span class="input-group-text">Latitudine e Longitudine</span>
+                <input type="text" name="lat" class="form-control" :class="[formErrors.lat ? 'is-invalid' : '']"
+                    v-model="formData.lat" id="lat" autocomplete="off">
+                <input type="text" name="long" class="form-control" :class="[formErrors.long ? 'is-invalid' : '']"
+                    v-model="formData.long" id="long" autocomplete="off">
+            </div>
+            <cloud-error v-if="formErrors.lat === 'custom'">Valore latitudine non valido</cloud-error>
+            <cloud-error v-if="formErrors.long === 'custom'">Valore longitudine non valido</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.hunt_id ? 'text-danger' : '']">
+                Caccia al tesoro
+            </label>
+            <select name="hunt_id" ref="huntId" class="form-control" :class="[formErrors.hunt_id ? 'is-invalid' : '']"
+                id="hunt_id" v-on:change="selectOption()">
+                <option value=""></option>
+                <% hunts.forEach(element => { %>
+                    <option value="<%= element.id %>"
+                        <% if ( element.id == item.hunt_id ) { %> selected <% } %> >
+                        <%= element.name %>
+                    </option>
+                <% }) %>
+            </select>
+            <cloud-error v-if="formErrors.hunt_id === 'required'">Campo obbligatorio</cloud-error>
+        </div>
+
+        <input type="hidden" name="id" v-model="formData.id">
+
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <cloud-error  v-if="cloudError === 'saveFail'" >Errore durante il salvataggio dei dati</cloud-error>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-1">
+                <button type="button" class="btn btn-primary" onclick="window.location = '/stage/details/<%= item.id %>';">Indietro</button>
+            </div>
+            <div class="col-1">
+                <ajax-button type="submit" :syncing="syncing">Salva</ajax-button>
+            </div>
+
+        </div>
+
+    </ajax-form>
+
+</div>
+
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/ajax-button.component.js"></script>
+<script src="/js/components/ajax-form.component.js"></script>
+<script src="/js/components/cloud-error.component.js"></script>
+<script src="/js/components/modal-glossary.component.js"></script>
+<script src="/js/pages/stage/view-create.page.js"></script>

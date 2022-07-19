@@ -1,0 +1,81 @@
+<div id="view-list" v-cloak>
+
+    <modal-editor action="updateDescription" :syncing.sync="syncing" :form-message.sync="formMessage"
+        :required="required" :item="item" :field="'description'">
+        <div slot="header">
+            Modifica descrizione
+        </div>
+    </modal-editor>
+
+    <modal-delete :item-id="deleteItemId" :action="'/hunt/delete/'">
+        <div slot="body">
+            <p>Stai per eliminare una caccia al tesoro.</p>
+            <p>Vuoi proseguire?</p>
+        </div>
+    </modal-delete>
+
+    <div class="container-fluid">
+
+    <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
+
+    <div class="container-fluid row" style="margin:30px 0">
+
+        <div class="col-3">
+            <a class="btn btn-success" href="/hunt/add">Nuova Caccia al Tesoro</a>
+        </div>
+        <div class="col-7">
+            <input type="text" class="form-control" placeholder="filtra risultati" v-model="search">
+        </div>
+
+    </div>
+
+<%  if ( items.length == 0 ) { %>
+
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono state ancora inserite delle cacce al tesoro. Utilizza il bottone Nuova Caccia per iniziare."}) %>
+
+<% } else { %>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="30%">Nome</th>
+                <th width="40%">Descrizione</th>
+                <th width="15"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in filteredItems">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td v-if="item.id > 1" @click="openModalEditor(item, 'description')" class="text-highlight">
+                    <text-truncate :text="item.description"></text-truncate>
+                </td>
+                <td v-if="item.id == 1" >{{item.description}}</td>
+
+                <td align="center">
+                    <a class="btn btn-primary" :href="'/hunt/edit/' + item.id">Modifica</a>
+                    <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)"
+                        data-toggle="modal" data-target="#confirmDeleteModal">
+                        Elimina
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<% } %>
+
+    </div>
+
+</div>
+
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/modal-editor.component.js"></script>
+<script src="/js/components/modal-delete.component.js"></script>
+<script src="/js/components/flash-message.component.js"></script>
+<script src="/js/components/text-truncate.component.js"></script>
+<script src="/js/pages/view-list.page.js"></script>
+
+
+

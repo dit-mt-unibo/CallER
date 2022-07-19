@@ -1,0 +1,79 @@
+<div id="view-list" v-cloak>
+
+    <modal-editor action="updateFullText" :syncing.sync="syncing" :form-message.sync="formMessage"
+        :required="required" :item="item" :field="'full_text'">
+        <div slot="header">
+            Modifica testo
+        </div>
+    </modal-editor>
+
+    <modal-delete :item-id="deleteItemId" :action="'/stage/delete/'">
+        <div slot="body">
+            <p>Stai per eliminare una tappa, vuoi proseguire?</p>
+        </div>
+    </modal-delete>
+
+    <div class="container-fluid">
+
+    <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
+
+    <div class="container-fluid row" style="margin:30px 0">
+
+        <div class="col-3">
+            <a class="btn btn-success" href="/stage/add">Nuova tappa</a>
+        </div>
+        <div class="col-7">
+            <input type="text" class="form-control" placeholder="filtra risultati" v-model="search">
+        </div>
+
+    </div>
+
+<%  if ( items.length == 0 ) { %>
+
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono state ancora inserite delle tappe. Utilizza il bottone Nuovo contenuto per iniziare."}) %>
+
+<% } else { %>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="25%">Nome</th>
+                <th with="30%">Testo</th>
+                <th style="text-align: center" width="10%">Creato</th>
+                <th style="text-align: center" width="10%">Modificato</th>
+                <th width="15%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in filteredItems">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td @click="openModalEditor(item, 'full_text')" class="text-highlight">
+                    <text-truncate :text="item.full_text"></text-truncate>
+                </td>
+                <td align="center">{{ new Date(item.createdAt).toLocaleString() }}</td>
+                <td align="center">{{ new Date(item.updatedAt).toLocaleString() }}</td>
+                <td align="center">
+                    <a class="btn btn-primary" :href="'/stage/details/' + item.id">Visualizza</a>
+                    <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)"
+                        data-toggle="modal" data-target="#confirmDeleteModal">
+                        Elimina
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<% } %>
+
+    </div>
+
+</div>
+
+<script src="/js/cloud.setup.js"></script>
+<script src="/js/components/modal-editor.component.js"></script>
+<script src="/js/components/modal-delete.component.js"></script>
+<script src="/js/components/flash-message.component.js"></script>
+<script src="/js/components/text-truncate.component.js"></script>
+<script src="/js/pages/view-list.page.js"></script>

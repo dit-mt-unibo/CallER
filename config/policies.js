@@ -14,12 +14,12 @@ module.exports.policies = {
 
   '*': 'is-logged-in',
 
-  // Bypass the 'is-logged-in' policy for:  
+  // Bypass the 'is-logged-in' policy for:
   'user/logout': true,
   'user/view-login': true,
   'user/login': true,
 
-  // unlock / bypass for reading list and single items, so app work anonymously 
+  // unlock / bypass for reading list and single items, so app work anonymously
   'place/find': true,
   'place/findOne': true,
   'place/render': true,
@@ -35,5 +35,7 @@ module.exports.policies = {
   'feedback/create': [rateLimit()], // default setup 1 minute max 5 requests
   'glossary/todays-word': true,
   'glossary/related-content': true,
+  'hunt/render': true,
+  'stage/render': true,
 
 };
