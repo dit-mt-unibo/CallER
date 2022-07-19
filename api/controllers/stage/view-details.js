@@ -31,21 +31,21 @@
 
     fn: async function( {id} ) {
 
-        var pageTitle = "Contenuto";
+        var pageTitle = "Tappa";
         // Item for the form
         let item = {};
         let flash = ''; // message to be displayed on the page when session.flash is not empty
 
         try {
 
-            item = await Place.findOne({ id: id }).populate('feedbacks');
+            item = await Stage.findOne({ id: id });
 
         }
         catch (err) {
 
             throw { fail : {
                 pageTitle: pageTitle ,
-                error: { title: "Errore database" , message: "Impossibile trovare il contenuto richiesto" }
+                error: { title: "Errore database" , message: "Impossibile trovare la tappa richiesta" }
             } };
 
         }
@@ -54,7 +54,7 @@
 
             throw { fail : {
                 pageTitle: pageTitle ,
-                error: { title: "Contenuto non trovato" , message: "Il contenuto richiesto non esiste nel database" }
+                error: { title: "Tappa non trovata" , message: "La tappa richiesta non esiste nel database" }
             } };
 
         }
@@ -69,8 +69,6 @@
                 item.hunt = huntResults.name;
 
             }
-
-            item.quiz = await Quiz.findOne({ stage_id: item.id });
 
         }
 

@@ -37,6 +37,8 @@ parasails.registerComponent('ajaxForm', {
         'tbwEditorField', // trumbowyg field name
         'placeImage', // place field image
         'level', // place. Content difficulty level
+        'stageImage',  // stage field image
+        'huntId', // hunt id for stages
 
     ],
 
@@ -165,7 +167,15 @@ parasails.registerComponent('ajaxForm', {
 
               this.$set(this.formData, 'hunt_id' , this.huntId);
 
-          }
+            }
+
+            // Stage form. Adds image key to the formData object
+            if ( _.isUndefined(this.stageImage) === false ) {
+
+              this.$set(this.formData, 'image' , this.stageImage);
+
+            }
+
 
             // Adds trumbowyg content to the formData object
             if ( _.isUndefined(this.tbwEditorId) === false ) {
