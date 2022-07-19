@@ -10,11 +10,6 @@
             <a class="nav-item nav-link" id="nav-tab2-tab" data-toggle="tab" href="#nav-tab2" role="tab" aria-controls="nav-tab2" aria-selected="false">
                 Immagine
             </a>
-
-            <a class="nav-item nav-link" id="nav-tab5-tab" data-toggle="tab" href="#nav-tab5" role="tab" aria-controls="nav-tab5" aria-selected="false">
-                Quiz
-            </a>
-
         </div>
     </nav>
 
@@ -45,6 +40,14 @@
                         <small class="ml-1">(longitudine) <%- item.long %></small>
                     </h5>
                 </div>
+
+                <div class="mt-3">
+                  <h5>Domanda: <small><%= item.question %></small></h5>
+                </div>
+                <div class="mt-3">
+                  <h5>Risposta: <small><%= item.answer %></small></h5>
+                </div>
+
                 <div class="mt-3">
                     <h5>Caccia al tesoro: <small><%= item.hunt %></small></h5>
                 </div>
@@ -60,10 +63,6 @@
                 <image-form :item="item" :form-action="'updateImage'" :base-img-path="'/images/contenuti'"></image-form>
             </div>
 
-            <div class="tab-pane p-4 fade" align="center" id="nav-tab5" role="tabpanel" aria-labelledby="nav-tab5-tab">
-                <quiz-form :item="item"></quiz-form>
-            </div>
-
         </div>
 
     </div>
@@ -73,5 +72,4 @@
 <script src="/js/cloud.setup.js"></script>
 <script src="/js/components/image-form.component.js"></script>
 <script src="/js/components/flash-message.component.js"></script>
-<script src="/js/components/quiz-form.component.js"></script>
 <script src="/js/pages/stage/view-details.page.js"></script>

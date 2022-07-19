@@ -42,7 +42,17 @@ const { exit } = require('process');
         gmaps_place_id: {
             type: 'string',
             allowNull: true
-        }
+        },
+
+        question: {
+          type: 'string',
+          allowNull: false
+        },
+
+        answer: {
+          type: 'string',
+          allowNull: false
+        },
     },
 
     exits: {

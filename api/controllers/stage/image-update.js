@@ -42,7 +42,7 @@
 
             try {
 
-                await Place.updateOne( { id: inputs.id } ).set( { image_caption : inputs.image_caption } )
+                await Stage.updateOne( { id: inputs.id } ).set( { image_caption : inputs.image_caption } )
                 .intercept( (err) => {
 
                     return exits.saveFail({ description: 'Query update error. Error: ' + err.message });

@@ -25,7 +25,7 @@ module.exports = {
     image: {
       type: 'string',
       description: 'filename. Allowed file extensions png, jpg, jpeg',
-      required: false, //TODO: cambia a true appena sono pronti i controller per fare l'upload per bene
+      required: true,
       custom: function(filename) {
           return validateExtension(filename, ['png' , 'jpg' , 'jpeg']);
       }
@@ -59,6 +59,16 @@ module.exports = {
       description: 'google maps place_id',
       allowNull: true,
       maxLength: 300
+    },
+
+    question: {
+      type: 'string',
+      required: true
+    },
+
+    answer: {
+      type: 'string',
+      required: true
     },
 
     hunt_id: {
