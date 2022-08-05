@@ -76,6 +76,10 @@ module.exports = {
       required: false
     },
 
+    points: {
+      type: 'number',
+      defaultsTo: 1,
+    }
   },
 
 };

@@ -53,6 +53,10 @@ const { exit } = require('process');
           type: 'string',
           allowNull: false
         },
+
+        points: {
+          type: 'number'
+        }
     },
 
     exits: {
