@@ -33,6 +33,7 @@ module.exports = {
         try {
 
             items = await Stage.find( {
+              //TODO: filter by hunt_id
                 sort: 'id ASC'
             });
 

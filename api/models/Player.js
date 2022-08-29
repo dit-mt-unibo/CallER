@@ -9,6 +9,7 @@ module.exports = {
 
   attributes: {
 
+    // necessario per la registrazione e per inviare eventuali comunicazioni e premi.
     email: {
       type: 'string',
       required: true,
@@ -23,7 +24,8 @@ module.exports = {
 
     // la caccia al tesoro a cui il partecipante si è iscritto (a cui sta giocando)
     hunt_id: {
-      type: 'number'
+      type: 'number',
+      required: true
     },
 
     // a quale tappa è arrivato (quella da superare!)
@@ -36,6 +38,10 @@ module.exports = {
       type: 'number'
     },
 
+    // campo json con tutte le risposte fornite finora.
+    answers: {
+      type: 'string'
+    }
   },
 
 };
