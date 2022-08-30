@@ -55,7 +55,7 @@ export default {
     // Definisce variabili globali
     provide: {
         // server nodejs
-        apiUrl : 'http://137.204.200.9:1337',
+        apiUrl : 'https://www.forliviamo.it',
     },
 
     components: {
