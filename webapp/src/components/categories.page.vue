@@ -77,7 +77,7 @@ export default {
         async getCategory() {
             
             let id = this.$route.params.id;
-            const response = await axios.get(this.apiUrl + "/category/" + id);
+            const response = await axios.get(this.apiUrl + "/api/category/" + id);
 
             this.name = response.data.item.name;
             this.description = response.data.item.description;

@@ -59,7 +59,7 @@ export default {
         async getPlaces() {
             
             this.id = this.$route.params.cat_id;
-            const response = await axios.get(this.apiUrl + "/category/" + this.id);            
+            const response = await axios.get(this.apiUrl + "/api/category/" + this.id);            
 
             this.name = response.data.item.name;
             this.description = response.data.item.description;
