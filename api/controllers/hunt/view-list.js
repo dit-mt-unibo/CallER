@@ -46,6 +46,32 @@ module.exports = {
 
         }
 
+        /*
+        // Then, iterates hunt times and gets their stages, if any.
+        if ( items.length > 0 ) {
+
+          for (const element of items) {
+
+              try {
+
+                  var stages = await Stage.find( {
+                      where: { hunt_id: element.id },
+                      sort: 'id ASC'
+                  });
+
+              }
+              catch (err) {
+
+                  var stages = [];
+
+              }
+
+              element.stages = stages;
+
+          }
+
+      }*/
+
         if ( _.isUndefined( this.req.session.flash ) === false ) {
 
             flash = {

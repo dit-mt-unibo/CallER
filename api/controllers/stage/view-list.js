@@ -32,10 +32,10 @@ module.exports = {
 
         try {
 
-            items = await Stage.find( {
-              //TODO: filter by hunt_id
-                sort: 'id ASC'
-            });
+            items = await Stage.find().sort([
+              { hunt_id: 'ASC' },
+              { id: 'ASC' },
+            ]);
 
         }
         catch (err) {
@@ -44,6 +44,25 @@ module.exports = {
                 pageTitle: pageTitle ,
                 error: { title: "Errore database" , message: "Impossibile effetuare query select sulla tabella stage" }
             } };
+
+        }
+
+        if ( items.length > 0 ) {
+
+          for (const element of items) {
+
+              try {
+                  var hunt = await Hunt.findOne({id: element.hunt_id });
+                  element.hunt_name = hunt.name;
+              }
+              catch (err) {
+                throw { fail: {
+                  pageTitle: pageTitle ,
+                  error: { title: "Errore database" , message: "Impossibile trovare la caccia al tesoro per una tappa" }
+                } };
+              }
+
+          }
 
         }
 

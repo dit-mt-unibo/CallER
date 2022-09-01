@@ -38,7 +38,8 @@
         <thead>
             <tr>
                 <th width="5%">#</th>
-                <th width="25%">Nome</th>
+                <th width="10%">Caccia</th>
+                <th width="20%">Nome</th>
                 <th with="30%">Testo</th>
                 <th style="text-align: center" width="10%">Creato</th>
                 <th style="text-align: center" width="10%">Modificato</th>
@@ -46,8 +47,10 @@
             </tr>
         </thead>
         <tbody>
+          <% current_hunt_id = -1 %>
             <tr v-for="item in filteredItems">
                 <td>{{ item.id }}</td>
+                <td>{{ item.hunt_name }}</td>
                 <td>{{ item.name }}</td>
                 <td @click="openModalEditor(item, 'full_text')" class="text-highlight">
                     <text-truncate :text="item.full_text"></text-truncate>
