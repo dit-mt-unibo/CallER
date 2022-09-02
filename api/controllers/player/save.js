@@ -56,6 +56,8 @@ module.exports = {
             answers: answers,
         };
 
+        response = { 'success' : 0 , 'err' : 'undefined error' };
+
         if ( _.isUndefined(id) ) {
 
             await User.create(valuesToSet)
@@ -86,19 +88,14 @@ module.exports = {
                                     });
 
             if ( _.isUndefined(result) ) {
-
-                this.req.session.flash = {type: 'error' , message: 'Aggiornamento giocatore non riuscito'};
-
+                response = { 'success' : 0 , 'err' : 'Aggiornamento giocatore non riuscito' };
             }
+            else
+              response = { 'success' : 1 , 'err' : "" };
 
         }
 
-        this.req.session.flash = {type: 'success' , message: 'Dati giocatore salvati correttamente'};
-
-        /*
-         * This is a pure API, we shouldn't need or want redirects.
-         * We're still in the Hunt game, going to next stage.
-         */
+        return response;
 
     }
 
