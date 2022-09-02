@@ -230,6 +230,10 @@ module.exports.routes = {
     action: 'feedback/view-list'
   },
 
+  // Routes for player
+  'GET /player/list' : {
+    action: 'player/view-list'
+  },
 
 
   /***************************************************************************

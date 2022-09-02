@@ -37,5 +37,8 @@ module.exports.policies = {
   'glossary/related-content': true,
   'hunt/render': true,
   'stage/render': true,
+  'player/create': true,
+  'player/save': true,
+  'player/save-answer': true,
 
 };

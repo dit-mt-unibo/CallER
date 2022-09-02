@@ -1,0 +1,51 @@
+<div id="view-list" v-cloak>
+
+
+    <div class="container-fluid row" style="margin:30px 0">
+        <div class="col-3"></div>
+        <div class="col-7">
+            <input type="text" class="form-control" placeholder="filtra risultati per caccia al tesoro" v-model="filter_hunt">
+        </div>
+
+    </div>
+
+<%  if ( items.length == 0 ) { %>
+
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono stati ancora registrati dei giocatori."}) %>
+
+<% } else { %>
+
+
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th width="10%">id</th>
+              <th width="30%">Email</th>
+              <th width="10%">Caccia</th>
+              <th width="10%">Tappa</th>
+              <th width="10%">Punteggio</th>
+              <th style="text-align: center" width="30%">Ultima visita</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr v-for="item in filteredItems">
+              <td>{{ item.id }}</td>
+              <td>{{ item.email }}</td>
+              <td class="feedback-title" @click="filter_hunt = item.hunt_id">{{item.hunt_id}}</td>
+
+              <td>{{ item.current_stage_id }}</td>
+              <td>{{ item.points }}</td>
+
+              <td align="center">{{ new Date(item.updatedAt).toLocaleString() }}</td>
+          </tr>
+      </tbody>
+  </table>
+
+<% } %>
+
+    </div>
+
+</div>
+
+<script src="/js/pages/player/view-list.page.js"></script>
+

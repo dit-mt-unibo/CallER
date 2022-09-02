@@ -43,7 +43,7 @@ module.exports = {
         else {
 
           // get the stage object
-          var stage = Stage.findOne({id:current_stage_id});
+          var stage = await Stage.findOne({id:current_stage_id});
 
           var correct = false;
 
@@ -61,10 +61,29 @@ module.exports = {
           var jsonAnswers = JSON.parse(player.answers);
           jsonAnswers[jsonAnswers.length] = answer;
 
+          // find next stage: get all stages ordered by ID
+          var stages = Stage.find({
+            where: {hunt_id:hunt_id},
+            sort: 'id ASC'
+          });
+
+          var nextIndex = -1;
+          var nextStageId = -1;
+          for( c=0; c<stages.length; c++)
+          {
+            if(stages[c].id == current_stage_id)
+            {
+              nextIindex = c+1;
+              break;
+            }
+          }
+          if(nextIndex < stages.length) // fine della caccia
+            nextStageId = stages[nextIndex].id;
+
           // new values for query
           let valuesToSet = {
             hunt_id: hunt_id,
-            current_stage_id: current_stage_id +1, // go to next stage
+            current_stage_id: nextStageId, // go to next stage
             points: player.points,
             answers: JSON.stringify(jsonAnswers),
           };
