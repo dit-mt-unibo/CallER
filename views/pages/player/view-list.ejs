@@ -20,17 +20,19 @@
       <thead>
           <tr>
               <th width="10%">id</th>
-              <th width="30%">Email</th>
+              <th width="20%">Email</th>
+              <th width="20%">uuid</th>
               <th width="10%">Caccia</th>
               <th width="10%">Tappa</th>
               <th width="10%">Punteggio</th>
-              <th style="text-align: center" width="30%">Ultima visita</th>
+              <th style="text-align: center" width="20%">Ultima visita</th>
           </tr>
       </thead>
       <tbody>
           <tr v-for="item in filteredItems">
               <td>{{ item.id }}</td>
               <td>{{ item.email }}</td>
+              <td>{{ item.uuid }}</td>
               <td class="feedback-title" @click="filter_hunt = item.hunt_id">{{item.hunt_id}}</td>
 
               <td>{{ item.current_stage_id }}</td>

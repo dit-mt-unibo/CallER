@@ -234,6 +234,9 @@ module.exports.routes = {
   'GET /player/list' : {
     action: 'player/view-list'
   },
+  'POST /player/save-answer': {
+    action: 'player/save-answer'
+  },
 
 
   /***************************************************************************

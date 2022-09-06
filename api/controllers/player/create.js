@@ -45,11 +45,22 @@ module.exports = {
         // generate uuid
         inputs.uuid = crypto.randomUUID();
 
+        // get the first stage...
+        var stages = await Stage.find({
+          where: {hunt_id:inputs.hunt_id},
+            sort: 'id ASC'
+        });
+
+        var first_stage_id = stages[0].id;
+
+        inputs.current_stage_id = first_stage_id;
+        inputs.answers = "[]";
+
         try{
 
             await Player.create(inputs);
 
-            response = { 'success' : 1 , 'err' : "" };
+            response = { 'success' : 1 , 'err' : "" , 'uuid' : inputs.uuid };
 
         }
         catch(err){

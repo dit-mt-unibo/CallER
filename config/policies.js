@@ -40,5 +40,6 @@ module.exports.policies = {
   'player/create': true,
   'player/save': true,
   'player/save-answer': true,
+  'player/find': true,
 
 };
