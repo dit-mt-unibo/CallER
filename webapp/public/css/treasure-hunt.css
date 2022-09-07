@@ -120,6 +120,10 @@
     padding-left: 30px;
 }
 
+.thunt-box-login .thunt-input-error {
+    border: 2px solid #e4252a;
+}
+
 .thunt-button {
     font-weight: 400;
     text-align: center;
@@ -381,7 +385,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2000;
+    z-index: 990;
     background-color: #FFF;
     width: 100%;
     height: 100%;

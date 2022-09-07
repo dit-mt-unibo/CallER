@@ -38,7 +38,7 @@
                     </p>
                     <input v-if="showField" type="text" v-model="email"
                     :placeholder="[ showFieldError ? 'inserire un indirizzo email' : 'indirizzo email']"
-                    :class="[ showFieldError ? 'border-red' : '']">                    
+                    :class="[ showFieldError ? 'thunt-input-error' : '']">                    
                     <div align="center" class="mt-2">
                         <button class="thunt-button" @click="[showField ? login() : next()]">Cominciamo</button>
                     </div>
@@ -62,7 +62,7 @@
 
 <script>
 
-//const axios = require('axios');
+const axios = require('axios');
 import Cookie from '../../modules/cookie.module.js';
 
 export default ({
@@ -76,11 +76,12 @@ export default ({
             email: '',
             showField: true,
             showFieldError: false,
+            huntId: '',
         }
 
     },
 
-    created: function() {
+    created: async function() {
 
         /**
          * Mostra il campo nickname se l'utente non ha memorizzato il cookie treasure_hunt
@@ -88,11 +89,27 @@ export default ({
          */
         var cookies = JSON.parse(Cookie.getCookie("treasure_hunt"));
 
-        this.showField = (typeof cookies.uuid === 'undefined');        
+        this.showField = (typeof cookies.uuid === 'undefined');
+        
+        if ( typeof cookies.hunt_id === 'undefined' ) {
+
+            this.huntId = await this.getHuntId();
+
+        }
 
     },
 
     methods: {
+
+        /**
+         * Chiamati API recupero ID caccia al tesoro
+         */
+        async getHuntId() {
+
+            const response = await axios.get(this.apiUrl + "/api/get-hunt-id?limit=1&sort=id%20DESC" );
+            return response.data[0].id;
+
+        },
 
         /**
          * Controlla che il campo nickname sia compilato.
@@ -105,27 +122,27 @@ export default ({
 
             if ( this.email.length > 0 ) {                
 
-                /**
-                 * const response = await axios.post(this.apiUrl + "/api/player" , { email: this.email });
-                 * const cookie = {
-                 * email: this.email,
-                 * uuid: response.data.item.uuid,
-                 * hunt_id = response.data.item.hunt_id,
-                 * stages: {},
-                 * };
-                 * Cookie.setCookieJson("treasure_hunt" , cookie , 1);
-                 */
+                const response = await axios.post(this.apiUrl + "/api/player/create" , { email: this.email , hunt_id: this.huntId });
+                
+                if ( response.data.success == 1 ) {
 
-                const response = {
-                    email: this.email,
-                    uuid: 'ahid',
-                    hunt_id: 1,
-                    stages: {},
+                    const cookie = {
+                        email: this.email,
+                        uuid: response.data.uuid,
+                        hunt_id: this.huntId,
+                        stages: {},
+                    };
+
+                    Cookie.setCookieJson("treasure_hunt" , cookie , 1);
+
+                    this.$router.push('/caccia-al-tesoro/intro');
+
                 }
+                else {
 
-                Cookie.setCookieJson("treasure_hunt" , response , 1);
+                    this.$router.push('/caccia-al-tesoro/errore');
 
-                this.$router.push('/caccia-al-tesoro/intro');
+                }                             
 
             }
             else {

@@ -68,14 +68,24 @@ export default ({
             /**
              * Recupera i dati relativi alla caccia al tesoro con una chiamata API 
              */
-            const response = await axios.get(this.apiUrl + "/api/hunt" + "?id=" + cookies.hunt_id );            
+            const response = await axios.get(this.apiUrl + "/api/hunt" + "?id=" + cookies.hunt_id );
 
-            this.title = response.data.item.name;
-            this.description = response.data.item.description;
+            if ( response.data.children.length > 1 ) {
 
-            cookies.stages = response.data.children;
+                this.title = response.data.item.name;
+                this.description = response.data.item.description;
 
-            cookieModule.setCookieJson("treasure_hunt" , cookies , 1);
+                cookies.stages = response.data.children;
+
+                cookieModule.setCookieJson("treasure_hunt" , cookies , 1);
+
+            }
+            else {
+
+                console.log("ID caccia inesistente");
+                this.$router.push('/caccia-al-tesoro/errore');
+
+            }            
 
         }
 

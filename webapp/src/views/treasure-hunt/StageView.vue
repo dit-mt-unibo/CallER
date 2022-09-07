@@ -76,7 +76,7 @@
                     </div>            
                 </div>
             </transition>
-        </div>         
+        </div>                 
     </div>
     <div class="container-fluid thunt-max-width-layout">
         <div class="row">
@@ -90,18 +90,18 @@
         </div>
     </div>
     <!-- Sidebar -->
-    <div id="tHuntSidebar" class="sidebar thunt-gradient">
-        <div class="thunt-sidebar-content">
-            <h5>{{cookies.email}}</h5>
-            <h4>Tappe</h4>
-            <ol class="thunt-sidebar-ol">
-                <li class="stage-none" v-for="item in cookies.stages" v-bind:key="item.id">{{item.name}}</li>
-            </ol>
-            <div align="center" class="mt-5">
-                <button class="thunt-button thunt-button-red" type="button" @click="showModalQuitGame = true">Esci dal gioco</button>
-            </div>
-        </div>        
-    </div>
+        <div id="tHuntSidebar" class="sidebar thunt-gradient">
+            <div class="thunt-sidebar-content">
+                <h5>{{cookies.email}}</h5>
+                <h4>Tappe</h4>
+                <ol class="thunt-sidebar-ol">
+                    <li :class="'stage-' + item.status" v-for="item in cookies.stages" v-bind:key="item.id">{{item.name}}</li>
+                </ol>
+                <div align="center" class="mt-5">
+                    <button class="thunt-button thunt-button-red" type="button" @click="showModalQuitGame = true">Esci dal gioco</button>
+                </div>
+            </div>        
+        </div>    
     <!-- Finestra modale avvisi controllo posizione -->
     <transition name="fade">
         <div v-if="showModalGPS" class="thunt-modal-box">
@@ -161,7 +161,7 @@ export default ({
 
         return {
 
-            stageNumber: '1',
+            stageNumber: 0,
             stageName: 'nomeTappa',
             stageImg: '',
             stageDescription: '',
@@ -199,7 +199,7 @@ export default ({
             // Se il cookie treasure_hunt non esiste, torna alla home            
             if ( typeof this.cookies.uuid === "undefined" ) {
 
-                this.$router.push('/caccia-al-tesoro');
+                return this.$router.push('/caccia-al-tesoro');
 
             }
 
@@ -209,21 +209,76 @@ export default ({
             document.body.scrollTo({top: 0, left: 0, behavior: "smooth"});
             document.documentElement.scrollTo({top: 0, left: 0, behavior: "smooth"});                        
 
-            /** Recupera i dati relativi alla tappa con una chiamata API */
-            const response = await axios.get(this.apiUrl + "/api/stage?token=" + this.cookies.uuid );
+            /** Recupera i dati relativi al giocatore */
+            const player = await axios.get(this.apiUrl + "/api/player/find?uuid=" + this.cookies.uuid );
 
-            this.stageName = response.data.item.name;
-            this.stageDescription = response.data.item.full_text;
-            this.stageImg = this.apiUrl + '/images/contenuti/' + response.data.item.imageUID;
-            this.quizQuestion = response.data.item.question;
+            if ( player.data.length === 0 ) {
+
+                console.log("UUID giocatore non esistente");
+                return this.$router.push('/caccia-al-tesoro/errore');
+
+            }
+
+            // Gioco completato se current_stage_id = -1
+            if ( player.data[0].current_stage_id === -1 ) {
+                
+                return this.$router.push('/caccia-al-tesoro/completata');
+
+            }
+
+            // Recupera i dati della tappa corrente
+            const stage = await axios.get(this.apiUrl + "/api/stage?id=" + player.data[0].current_stage_id);
+
+            if ( typeof stage.data.item === 'undefined' ){
+
+                console.log("Id tappa non trovato");
+                return this.$router.push('/caccia-al-tesoro/errore');
+
+            }            
+            
+            this.stageName = stage.data.item.name;
+            this.stageDescription = stage.data.item.full_text;
+            this.stageImg = this.apiUrl + '/images/contenuti/' + stage.data.item.imageUID;
+            this.quizQuestion = stage.data.item.question;
             this.srcGMaps = 'https://www.google.com/maps/embed/v1/place?key=' + process.env.VUE_APP_GOOGLE_MAPS_API +
-            '&q=' + response.data.item.lat + ',' + response.data.item.long + '&zoom=18';
+            '&q=' + stage.data.item.lat + ',' + stage.data.item.long + '&zoom=18';
 
-            this.stageCoords = { lat: response.data.item.lat , lon: response.data.item.long };
+            this.stageCoords = { lat: stage.data.item.lat , lon: stage.data.item.long };
 
             this.quizAnswer = '';
 
             this.disableNextButton = true;
+
+            /**
+             * Assegna alle tappe uno stato che può essere current, completed, none.
+             * Lo status current è per la tappa corrente
+             * Lo status completed è le tappe completate. Non avendo questo dato dal server,
+             * si impostano come completed tutte le tappe con ID inferiore a quello della tappa corrente,
+             * perché si parte dall'assunto che le tappe siano ordinate per ID crescente.
+             * Queste impostazioni servono ad applicare lo stile corretto agli oggetti della barra laterale             
+             */
+            for (let i=0; i < this.cookies.stages.length; ++i) {
+
+                if ( this.cookies.stages[i].id == stage.data.item.id ) {
+                    
+                    this.stageNumber = i+1;
+                    this.cookies.stages[i].status = "current";
+
+                }
+                else if( this.cookies.stages[i].id < stage.data.item.id ) {
+
+                    this.cookies.stages[i].status = "completed";
+
+                }
+                else {
+
+                    this.cookies.stages[i].status = "none";
+
+                }
+
+            }
+
+            cookieModule.setCookieJson("treasure_hunt" , this.cookies , 1);
 
             this.showPageLoader = false;
 
@@ -329,21 +384,52 @@ export default ({
          * Invia la risposta dell'utente e prosegue alla tappa successiva.
          * Chiamata API
          */
-        next() {
+        async next() {
 
             // pulizia stringa inviata dall'utente
             const specialChars = /[`!$%^&*()+\-={};':"\\|<>/?~]/g;
             var answer = this.quizAnswer.replace(specialChars, "");
             answer = this.quizAnswer.replace(/\[/g, "");
             answer = this.quizAnswer.replace(/\]/g, "").trim();
+                        
+            let response = null;
+            let apiError = false;
 
-            /**
-             * await axios.post(this.apiUrl + "/api/player" , { uuid: this.cookies.uuid , answer: answer });
-             */
+            try{
 
-            console.log(answer);
+                response = await axios.post(this.apiUrl + "/api/player/save-answer" , { uuid: this.cookies.uuid , answer: answer , hunt_id: this.cookies.hunt_id });
 
-            this.loadStage();
+            }
+            catch(err) {
+
+                apiError = true;
+                console.log(err.response.data.message);
+
+            }
+
+            if ( apiError ) {
+
+                this.modalMessage = "Impossibile salvare la risposta, riprovare tra qualche istante";
+                this.modalStyleClass = "thunt-modal-box-red";
+                this.showModalGPS = true;
+
+            }
+            else {
+
+                if ( response.data.success == 1 ) {
+
+                    this.loadStage();
+
+                }
+                else {
+
+                    this.modalMessage = "Impossibile salvare la risposta, riprovare tra qualche istante";
+                    this.modalStyleClass = "thunt-modal-box-red";
+                    this.showModalGPS = true;
+
+                }
+
+            }                
                     
         },
 
@@ -379,7 +465,7 @@ export default ({
             document.getElementById("tHuntSidebar").style.paddingRight = "0px";
             document.getElementById("tHuntSidebar").setAttribute("data-aria" , "");
 
-        },
+        }, 
 
         /**
          * Chiude finestra modale
