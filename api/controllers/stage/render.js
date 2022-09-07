@@ -31,7 +31,10 @@ module.exports = {
 
     let item = {};
     try {
-      item = await Stage.findOne( inputs.id );
+      item = await Stage.findOne( {
+        select: ['name' , 'full_text' , 'imageUID' , 'image_caption' , 'lat' , 'long' , 'question'],
+        where: { id: inputs.id }
+      } );
     }
     catch (err) {
       throw {
