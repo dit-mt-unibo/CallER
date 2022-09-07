@@ -233,10 +233,7 @@ module.exports.routes = {
   // Routes for player
   'GET /player/list' : {
     action: 'player/view-list'
-  },
-  'POST /player/save-answer': {
-    action: 'player/save-answer'
-  },
+  },  
 
 
   /***************************************************************************
@@ -250,7 +247,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  // routes per la client app
+  // routes per il client app
   // questa è necessaria perché restituisce un json con
     // category
     // childCategories : le categorie collegate (se esistono)
@@ -284,38 +281,27 @@ module.exports.routes = {
   'GET /api/get-glossary-related-content': {
     action: 'glossary/related-content'
   },
-  /*
-   * 'GET /home': {
-    action: 'category/sublist',
-    // view: 'pages/clientapp/home',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
-  },
 
-  'GET /place/sublist:id': {
-    action: 'place/sublist',
-    view: 'pages/clientapp/category',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
+  // Caccia al tesoro
+  'GET /api/get-hunt-id': {
+    action: 'hunt/find'
+  },  
+  'GET /api/hunt': {
+    action: 'hunt/render'
   },
-  'GET /place/:id': {
-    controller: 'PlaceController',
-    action: 'render',
-   // view: 'pages/clientapp/home',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
+  'POST /api/player/create': {
+    action: 'player/create',
+    csrf: false
   },
-
-
-  'GET /quiz/:id': {
-    action: 'quiz/render',
-    //view: 'pages/quiz/create',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
+  'POST /api/player/save-answer': {
+    action: 'player/save-answer',
+    csrf: false
   },
-  */
+  'GET /api/player/find': {
+    action: 'player/find'
+  },
+  'GET /api/stage': {
+    action: 'stage/render'
+  },
+  
 };

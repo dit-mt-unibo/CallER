@@ -35,6 +35,7 @@ module.exports.policies = {
   'feedback/create': [rateLimit()], // default setup 1 minute max 5 requests
   'glossary/todays-word': true,
   'glossary/related-content': true,
+  'hunt/find': true,
   'hunt/render': true,
   'stage/render': true,
   'player/create': true,
