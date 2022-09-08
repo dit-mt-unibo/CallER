@@ -310,7 +310,7 @@ export default {
      */
     async getPlace() {
       let id = this.$route.params.id;
-      const response = await axios.get(this.apiUrl + "/place/" + id);
+      const response = await axios.get(this.apiUrl + "/api/place/" + id);
 
       return response.data.item;
     },
@@ -323,7 +323,7 @@ export default {
       let cat_id = this.item.category_id;
 
       const response = await axios.get(
-        this.apiUrl + "/place-related/" + id + "/" + cat_id
+        this.apiUrl + "/api/place-related/" + id + "/" + cat_id
       );
 
       return response.data.items;
@@ -338,7 +338,7 @@ export default {
 
       if (cat_id == 1) return "";
 
-      const response = await axios.get(this.apiUrl + "/category/" + cat_id);
+      const response = await axios.get(this.apiUrl + "/api/category/" + cat_id);
 
       return response.data.item.name;
     },
@@ -353,7 +353,7 @@ export default {
         e.preventDefault();
 
         const response = await axios.get(
-          this.apiUrl + "/glossary?name=" + e.target.dataset.id
+          this.apiUrl + "/api/glossary?name=" + e.target.dataset.id
         );
 
         if (typeof response != "undefined") {

@@ -252,17 +252,20 @@ module.exports.routes = {
     // category
     // childCategories : le categorie collegate (se esistono)
     // childPlaces: i contenuti di questa category (se esistono)
-  'GET /category/:id': {
+  'GET /api/category': {
+      action: 'category/find'
+  },
+    'GET /api/category/:id': {
     action: 'category/render'
   },
   // aggiungi quiz all'oggetto place:
-  'GET /place/:id': {
+  'GET /api/place/:id': {
     action: 'place/render'
   },
-  'GET /place-related/:id/:cat_id': {
+  'GET /api/place-related/:id/:cat_id': {
     action: 'place/related'
   },
-  'POST /feedback': {
+  'POST /api/feedback': {
     action: 'feedback/create',
     csrf: false
   },
@@ -280,6 +283,9 @@ module.exports.routes = {
   },
   'GET /api/get-glossary-related-content': {
     action: 'glossary/related-content'
+  },
+  'GET /api/glossary': {
+    action: 'glossary/find'
   },
 
   // Caccia al tesoro

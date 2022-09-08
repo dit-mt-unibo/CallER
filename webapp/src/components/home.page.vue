@@ -54,7 +54,7 @@ export default {
          */
         async getCategories() {
             
-            const response = await axios.get(this.apiUrl + "/category");
+            const response = await axios.get(this.apiUrl + "/api/category");
             
             response.data.forEach(element => {
                 

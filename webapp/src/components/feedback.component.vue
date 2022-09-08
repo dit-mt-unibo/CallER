@@ -129,7 +129,7 @@ export default {
          */
         async send() {
 
-            let url = this.apiUrl + "/feedback";
+            let url = this.apiUrl + "/api/feedback";
             let rate = document.getElementById("rate").value;
             let comment = document.getElementById("comment").value;
 
