@@ -1,6 +1,6 @@
 <template>
     <!--<div class="container-fluid main-container pb-3 padding-none">-->
-    <div class="container-fluid thunt-max-width-layout thunt-container">
+    <div class="container-fluid thunt-container">
 
         <div class="row thunt-header">
             <div class="col-12">
@@ -47,7 +47,7 @@
         </div>       
         
     </div>
-    <div class="container-fluid thunt-max-width-layout">
+    <div class="container-fluid">
         <div class="row">
             <div align="center" class="col-12 thunt-footer">
                 <p>@2022 DIT - Forlì</p>
@@ -140,14 +140,14 @@ export default ({
                 }
                 else {
 
-                    this.$router.push('/caccia-al-tesoro/errore');
+                    this.email = "";
+                    this.showFieldError = true;
 
                 }                             
 
             }
             else {
-
-                this.email = "";
+                
                 this.showFieldError = true;
 
             }

@@ -14,7 +14,6 @@
     z-index:1; 
     background-color:#FFF; 
     width:100%;
-    max-width:1100px;
 }
 
 .thunt-header-stage i {
@@ -46,10 +45,6 @@
 
 .thunt-footer a {
     color: #FFF;
-}
-
-.thunt-max-width-layout{
-    max-width: 1100px;
 }
 
 .thunt-padding-none{
@@ -311,8 +306,8 @@
 }
 
 .thunt-sidebar-content{
-    padding: 25px 0;
-    height: 100%; 
+    padding: 25px 0;    
+    box-sizing: content-box;
     background-color: #FFF;
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid thunt-max-width-layout thunt-container">
+    <div class="container-fluid thunt-container">
         <div class="row thunt-header">
             <div class="col-12">
                 <span class="thunt-header-title">Caccia al tesoro</span>
@@ -26,7 +26,7 @@
             </div>
         </div>        
     </div>
-    <div class="container-fluid thunt-max-width-layout">
+    <div class="container-fluid">
         <div class="row">
             <div align="center" class="col-12 thunt-footer">
                 <p>@2022 DIT - Forlì</p>

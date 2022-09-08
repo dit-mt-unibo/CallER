@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid thunt-max-width-layout thunt-container">
+    <div class="container-fluid thunt-container">
         <div class="row thunt-header-stage" @click="openSidebar">
             <div class="col-1">
                 <div class="thunt-resp-menu-btn" >
@@ -13,7 +13,7 @@
             </div>
             <div class="col-12" style="background-color: #E4252A;">
                 <h4 style="padding:10px 0; margin:0; font-size:1.3rem;">Tappa {{stageNumber}}: {{stageName}}</h4>
-            </div>
+            </div>            
         </div>
         <div style="position: relative;">
             <div class="row" style="margin-top:100px;">
@@ -76,9 +76,9 @@
                     </div>            
                 </div>
             </transition>
-        </div>                 
+        </div>                         
     </div>
-    <div class="container-fluid thunt-max-width-layout">
+    <div class="container-fluid">
         <div class="row">
             <div align="center" class="col-12 thunt-footer">
                 <p>@2022 DIT - Forlì</p>
@@ -89,19 +89,23 @@
             </div>
         </div>
     </div>
-    <!-- Sidebar -->
-        <div id="tHuntSidebar" class="sidebar thunt-gradient">
+    <!-- Sidebar  --> 
+        <div id="tHuntSidebar" class="sidebar thunt-gradient" data-aria>
             <div class="thunt-sidebar-content">
                 <h5>{{cookies.email}}</h5>
                 <h4>Tappe</h4>
                 <ol class="thunt-sidebar-ol">
-                    <li :class="'stage-' + item.status" v-for="item in cookies.stages" v-bind:key="item.id">{{item.name}}</li>
+                    <li :class="'stage-' + item.status" v-for="item in cookies.stages" v-bind:key="item.id">
+                        {{item.name}}
+                        <i v-show="item.status == 'current'" class="fas fa-hand-point-left"></i>
+                        <i v-show="item.status == 'completed'" class="fas fa-check-circle"></i>
+                    </li>
                 </ol>
                 <div align="center" class="mt-5">
                     <button class="thunt-button thunt-button-red" type="button" @click="showModalQuitGame = true">Esci dal gioco</button>
                 </div>
             </div>        
-        </div>    
+        </div>  
     <!-- Finestra modale avvisi controllo posizione -->
     <transition name="fade">
         <div v-if="showModalGPS" class="thunt-modal-box">
@@ -182,7 +186,7 @@ export default ({
         }
     },
     
-    created: function() {        
+    created: function() {                
 
         this.loadStage();
 
@@ -440,7 +444,7 @@ export default ({
             
             const attr = document.getElementById("tHuntSidebar").getAttribute("data-aria");
 
-            if ( attr == "" ) {
+            if ( attr == "" ) {                
 
                 document.getElementById("tHuntSidebar").style.width = "100%";
                 document.getElementById("tHuntSidebar").style.paddingLeft = "10px";
