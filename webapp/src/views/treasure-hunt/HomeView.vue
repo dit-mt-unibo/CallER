@@ -37,7 +37,7 @@
                         Inserisci l'indirizzo email e premi il pulsante "Cominciamo"!
                     </p>
                     <input v-if="showField" type="text" v-model="email"
-                    :placeholder="[ showFieldError ? 'inserire un indirizzo email' : 'indirizzo email']"
+                    :placeholder="[ showFieldError ? 'inserire indirizzo email valido' : 'indirizzo email']"
                     :class="[ showFieldError ? 'thunt-input-error' : '']">                    
                     <div align="center" class="mt-2">
                         <button class="thunt-button" @click="[showField ? login() : next()]">Cominciamo</button>
@@ -147,6 +147,7 @@ export default ({
             }
             else {
 
+                this.email = "";
                 this.showFieldError = true;
 
             }

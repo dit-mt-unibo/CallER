@@ -27,6 +27,17 @@ module.exports = function() {
             });
 
             return result;
+        },
+
+        validateEmail: function(email) {
+
+            if ( email == "" || email == null || typeof email === "undefined") return false;
+
+            const pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            const regExp = new RegExp(pattern);
+
+            return regExp.test(email);
+
         }
 
     }

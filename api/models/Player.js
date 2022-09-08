@@ -13,7 +13,12 @@ module.exports = {
     email: {
       type: 'string',
       required: true,
-      maxLength: 150
+      maxLength: 320,
+      custom: function(email) {
+                
+        return sails.hooks.validation.validateEmail(email);
+        
+      }
     },
 
     // identificatore unico (guid) creato server-side e tenuto su cookie sul client

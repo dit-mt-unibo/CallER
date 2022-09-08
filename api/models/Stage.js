@@ -26,8 +26,8 @@ module.exports = {
       type: 'string',
       description: 'filename. Allowed file extensions png, jpg, jpeg',
       required: true,
-      custom: function(filename) {
-          return validateExtension(filename, ['png' , 'jpg' , 'jpeg']);
+      custom: function(filename) {          
+          return sails.hooks.validation.validateExtension(filename, ['png' , 'jpg' , 'jpeg']);
       }
     },
 
@@ -83,33 +83,3 @@ module.exports = {
   },
 
 };
-
-// TODO: this should be common between Place and Stage, in a shared module?
-/**
- * Validates file extension
- *
- * @param filename: string filename
- * @param allowedExts: array allowed file extensions
- * @return bool
- */
- function validateExtension(filename, allowedExts) {
-
-  if (filename == '') return true;
-
-    var result = false;
-    var extension = filename.split('.').slice(-1).toString().toLowerCase();
-
-    allowedExts.forEach(elm => {
-
-        if (extension == elm) {
-
-            result = true;
-            return;
-
-        }
-
-    });
-
-    return result
-
-}
