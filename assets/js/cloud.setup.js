@@ -31,6 +31,8 @@ Cloud.setup({
     "updateGlossaryDefinition": { "verb": "POST", "url": "/glossary/definition-update" },
     "updateGlossaryAudio": { "verb": "POST", "url": "/glossary/audio-update" },
     "updateGlossaryImage": { "verb": "POST", "url": "/glossary/image-update" },
+    "saveHunt": { "verb":"POST" , "url":"/hunt/save" },
+    "saveStage": { "verb":"POST" , "url":"/stage/save" },
   }
   /* eslint-enable */
 

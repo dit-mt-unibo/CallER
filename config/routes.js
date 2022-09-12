@@ -19,30 +19,30 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { 
+  '/': {
     action: 'homepage'
   },
 
   // Routes for places
-  'GET /place/list': {    
+  'GET /place/list': {
     action: 'place/view-list'
   },
   'GET /place/add': {
     action: 'place/view-create'
   },
-  'GET /place/edit/:id': {    
+  'GET /place/edit/:id': {
     action: 'place/view-update'
   },
   'GET /place/details/:id': {
     action: 'place/view-details'
   },
-  'POST /place/save': {    
+  'POST /place/save': {
     action: 'place/save'
   },
-  'GET /place/delete/:id': {    
+  'GET /place/delete/:id': {
     action: 'place/delete'
   },
-  'POST /place/publish/': {    
+  'POST /place/publish/': {
     action: 'place/publish'
   },
   'POST /place/fulltext-update': {
@@ -56,7 +56,7 @@ module.exports.routes = {
   },
   'POST /place/audio-update': {
     action: 'place/audio-update'
-  },  
+  },
 
 
 
@@ -91,6 +91,54 @@ module.exports.routes = {
   'POST /quiz/delete': {
     action: 'quiz/delete'
   },
+
+
+  // Routes for hunt (caccia al tesoro)
+  'GET /hunt/list' : {
+    action: 'hunt/view-list'
+  },
+  'GET /hunt/add': {
+    action: 'hunt/view-create',
+    view: 'pages/hunt/view-create'
+  },
+  'GET /hunt/edit/:id': {
+    action: 'hunt/view-update'
+  },
+  'POST /hunt/save': {
+    action: 'hunt/save'
+  },
+  'GET /hunt/delete/:id': {
+    action: 'hunt/delete'
+  },
+
+  // Routes for stages
+  'GET /stage/list' : {
+    action: 'stage/view-list'
+  },
+  'GET /stage/add': {
+    action: 'stage/view-create'
+  },
+  'GET /stage/edit/:id': {
+    action: 'stage/view-update'
+  },
+  'GET /stage/details/:id': {
+    action: 'stage/view-details'
+  },
+  'POST /stage/save': {
+    action: 'stage/save'
+  },
+  'GET /stage/delete/:id': {
+    action: 'stage/delete'
+  },
+  'POST /stage/fulltext-update': {
+    action: 'stage/fulltext-update'
+  },
+  'POST /stage/image-update': {
+    action: 'stage/image-update'
+  },
+
+
+
 
   // Potrebbero tornare utili in futuro
   /*'/quiz/list': {
@@ -182,6 +230,10 @@ module.exports.routes = {
     action: 'feedback/view-list'
   },
 
+  // Routes for player
+  'GET /player/list' : {
+    action: 'player/view-list'
+  },  
 
 
   /***************************************************************************
@@ -195,7 +247,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  // routes per la client app
+  // routes per il client app
   // questa è necessaria perché restituisce un json con
     // category
     // childCategories : le categorie collegate (se esistono)
@@ -235,38 +287,27 @@ module.exports.routes = {
   'GET /api/glossary': {
     action: 'glossary/find'
   },
-  /*
-   * 'GET /home': {
-    action: 'category/sublist',
-    // view: 'pages/clientapp/home',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
-  },
 
-  'GET /place/sublist:id': {
-    action: 'place/sublist',
-    view: 'pages/clientapp/category',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
+  // Caccia al tesoro
+  'GET /api/get-hunt-id': {
+    action: 'hunt/find'
+  },  
+  'GET /api/hunt': {
+    action: 'hunt/render'
   },
-  'GET /place/:id': {
-    controller: 'PlaceController',
-    action: 'render',
-   // view: 'pages/clientapp/home',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
+  'POST /api/player/create': {
+    action: 'player/create',
+    csrf: false
   },
-
- 
-  'GET /quiz/:id': {
-    action: 'quiz/render',
-    //view: 'pages/quiz/create',
-    locals: {
-      layout: 'layouts/app-layout'
-    }
+  'POST /api/player/save-answer': {
+    action: 'player/save-answer',
+    csrf: false
   },
-  */
+  'GET /api/player/find': {
+    action: 'player/find'
+  },
+  'GET /api/stage': {
+    action: 'stage/render'
+  },
+  
 };

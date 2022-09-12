@@ -37,6 +37,8 @@ parasails.registerComponent('ajaxForm', {
         'tbwEditorField', // trumbowyg field name
         'placeImage', // place field image
         'level', // place. Content difficulty level
+        'stageImage',  // stage field image
+        'huntId', // hunt id for stages
 
     ],
 
@@ -58,7 +60,7 @@ parasails.registerComponent('ajaxForm', {
         //
     },
     mounted: async function () {
-       
+
 
         if (this.formRules) {
             var SUPPORTED_RULES = [
@@ -130,7 +132,7 @@ parasails.registerComponent('ajaxForm', {
 
                 this.$set(this.formData, 'parent_id' , this.catParentId);
 
-            } 
+            }
 
             // Place form. Adds category_id key to the formData object
             if ( _.isUndefined(this.categoryId) === false ) {
@@ -145,7 +147,7 @@ parasails.registerComponent('ajaxForm', {
                 this.$set(this.formData, 'level' , this.level);
 
             }
-            
+
             // Place form. Adds image key to the formData object
             if ( _.isUndefined(this.placeImage) === false ) {
 
@@ -159,6 +161,21 @@ parasails.registerComponent('ajaxForm', {
                 this.$set(this.formData, 'extra_text', $( "#extra_text" ).trumbowyg('html'));
 
             }
+
+            // Stage form. Adds hunt_id key to the formData object
+            if ( _.isUndefined(this.huntId) === false ) {
+
+              this.$set(this.formData, 'hunt_id' , this.huntId);
+
+            }
+
+            // Stage form. Adds image key to the formData object
+            if ( _.isUndefined(this.stageImage) === false ) {
+
+              this.$set(this.formData, 'image' , this.stageImage);
+
+            }
+
 
             // Adds trumbowyg content to the formData object
             if ( _.isUndefined(this.tbwEditorId) === false ) {
@@ -181,21 +198,21 @@ parasails.registerComponent('ajaxForm', {
 
                     this.formData['files'].push(this.formData['file_audio']);
 
-                }                
+                }
 
             }
 
             // Determine the argins that will be sent to the server in our request.
-            var argins;            
-                
+            var argins;
+
             // use the simpler, built-in absorbtion strategy.
             // > This uses the provided form data as our argins, verbatim.  Then it runs
-            // > built-in client-side validation, if configured to do so.                                              
-            
-            argins = this.formData;                                   
+            // > built-in client-side validation, if configured to do so.
+
+            argins = this.formData;
 
             let formData = this.formData;
-            let formErrors = {};                
+            let formErrors = {};
 
             for (let fieldName in this.formRules) {
                 let fieldValue = formData[fieldName];
@@ -335,17 +352,17 @@ parasails.registerComponent('ajaxForm', {
             var failedWithCloudExit;
             var rawErrorFromCloudSDK;
             var result;
-            
+
             // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
             // FUTURE: Potentially filter unused data in argins here before proceeding
             // (assuming cloudsdk has that information available)
             // Or better yet, just have `Cloud.*.with()` take care of that automatically.
-            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                
-            
-            result = await Cloud[this.action].with(argins)                                 
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+            result = await Cloud[this.action].with(argins)
                 .tolerate((err) => {
                     rawErrorFromCloudSDK = err;
-                    failedWithCloudExit = err.exit || 'error';                    
+                    failedWithCloudExit = err.exit || 'error';
                 });
 
 

@@ -44,7 +44,7 @@ module.exports = {
             required: true,
             custom: function(filename) {
                 
-                return validateExtension(filename, ['png' , 'jpg' , 'jpeg']);
+                return sails.hooks.validation.validateExtension(filename, ['png' , 'jpg' , 'jpeg']);
                 
             }
         },
@@ -162,32 +162,3 @@ module.exports = {
     }
   
 };
-
-/**
- * Validates file extension
- * 
- * @param filename: string filename
- * @param allowedExts: array allowed file extensions
- * @return bool
- */
-function validateExtension(filename, allowedExts) {
-
-  if (filename == '') return true;
-
-    var result = false;
-    var extension = filename.split('.').slice(-1).toString().toLowerCase();
-    
-    allowedExts.forEach(elm => {
-        
-        if (extension == elm) {
-            
-            result = true;
-            return;
-            
-        }
-        
-    });    
-    
-    return result
-    
-}
