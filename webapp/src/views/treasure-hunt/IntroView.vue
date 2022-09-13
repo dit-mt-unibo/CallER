@@ -70,7 +70,7 @@ export default ({
              */
             const response = await axios.get(this.apiUrl + "/api/hunt" + "?id=" + cookies.hunt_id );
 
-            if ( response.data.children.length > 1 ) {
+            if ( response.data.children.length > 0 ) {
 
                 this.title = response.data.item.name;
                 this.description = response.data.item.description;
