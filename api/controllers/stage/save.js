@@ -39,19 +39,21 @@ const { exit } = require('process');
             allowNull: true
         },
 
-        gmaps_place_id: {
-            type: 'string',
-            allowNull: true
-        },
-
         question: {
           type: 'string',
-          allowNull: false
+          allowNull: true
+        },
+
+        choices: {
+          type: 'json',
         },
 
         answer: {
           type: 'string',
-          allowNull: false
+        },
+
+        task: {
+          type: 'string',
         },
 
         points: {
@@ -110,7 +112,24 @@ const { exit } = require('process');
 
                 try {
 
-                    var result = await Stage.create(inputs).fetch();
+                  // find last stage in the same hunt:
+                  var lastStage = await Stage.findOne({
+                    where: { hunt_id: inputs.hunt_id, next_stage_id: -1}
+                  });
+
+                  // creiamo la nuova tappa:
+                  var result = await Stage.create(inputs).fetch();
+
+                  if(result)
+                  {
+                    if(lastStage)
+                    {
+                      // ATTENZIONE: in questo momento ci sono 2 'ultime tappe' nel db
+                      // finché non chiamiamo updateOne:
+                      var other = await Stage.updateOne({id:lastStage.id}).set(
+                        { next_stage_id:result.id });
+                    } // else we are the one and only stage so far.
+                  }
 
                 }
                 catch(err) {

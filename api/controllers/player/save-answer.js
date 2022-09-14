@@ -56,41 +56,29 @@ module.exports = {
         return response;
       }
 
-      var correct = false;
-
-      // compare answers case-insensitive
-      // for fuzzy-matching, we could use list.js library
-      if(stage.answer.toLowerCase() === answer.toLowerCase())
-          correct = true;
-
-      if(correct)
-        player.points += stage.points;
-
       if(player.answers == null)
       {
         player.answers = "[]";
       }
+
       var jsonAnswers = JSON.parse(player.answers);
-      jsonAnswers[jsonAnswers.length] = answer;
+      var thisAnswer = {
+        stage_id: stage.id,
+        stage_name: stage.name,
+        answer: answer
+      };
+      jsonAnswers.push(thisAnswer);
 
-      // find next stage: get all stages ordered by ID
-      var stages = await Stage.find({
-        where: {hunt_id:hunt_id},
-        sort: 'id ASC'
-      });
+      var nextStageId = stage.next_stage_id;
 
-      var nextIndex = -1;
-      var nextStageId = -1;
-      for( c=0; c<stages.length; c++)
+      if(!stage.task) // se c'è un'attività, il controllo è offline (umano)
       {
-        if(stages[c].id == player.current_stage_id)
-        {
-          nextIndex = c+1;
-          break;
-        }
+        // controlla validità risposta e aggiorna punteggio:
+        // compare answers case-insensitive
+        // for fuzzy-matching, we could use list.js library
+        if(stage.answer.toLowerCase() === answer.toLowerCase())
+            player.points += stage.points;
       }
-      if(nextIndex < stages.length) // fine della caccia
-        nextStageId = stages[nextIndex].id;
 
       // new values for query
       let valuesToSet = {

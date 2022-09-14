@@ -51,6 +51,8 @@
             sails.hooks.filemanager.delete('.tmp/public/images/contenuti' , result.imageUID);
             sails.hooks.filemanager.delete('.tmp/public/images/contenuti/thumbs' , result.imageUID);
 
+            //TODO: change position (index) of all stages AFTER this one
+
             this.req.session.flash = {type: 'success' , message: 'Dati eliminati correttamente'};
 
         }

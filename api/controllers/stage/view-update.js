@@ -32,7 +32,7 @@
 
     fn: async function( {id} ) {
 
-        let pageTitle = "Modifica contenuto";
+        let pageTitle = "Modifica Tappa";
         // Item for the form
         let item = {};
         // Provides options to the select box.

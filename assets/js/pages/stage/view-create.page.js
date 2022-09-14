@@ -162,6 +162,7 @@ parasails.registerPage('view-create', {
         syncing: false,
         formData: {
             /* ... */
+            choices : ['A','B','C','D']
         },
 
         // For tracking client-side validation errors in our form
@@ -228,7 +229,6 @@ parasails.registerPage('view-create', {
 
                 }
             },
-            gmaps_place_id: { maxLength: 300},
         },
 
         // Server error state for the form
@@ -257,10 +257,10 @@ parasails.registerPage('view-create', {
             this.formData.long = ( _.isNull(this.formData.long) === false ) ? String(this.formData.long) : null;
             this.formRules["image"] = {}; // image validation is not required in update mode
 
+
         }
         else {
-
-
+          this.formData.choices = ['A','B','C','D'];
         }
 
         this.terms = window.SAILS_LOCALS['terms'];
@@ -309,14 +309,14 @@ parasails.registerPage('view-create', {
         },
         submittedForm: async function () {
 
-            this.syncing = true;
-            window.location = '/stage/list';
+          this.syncing = true;
+          window.location = '/stage/list';
 
         },
         submittedUpdateForm: async function() {
 
-            this.syncing = true;
-            window.location = '/stage/details/' + this.item.id;
+          this.syncing = true;
+          window.location = '/stage/details/' + this.item.id;
 
         },
         rejectedForm (err) {
@@ -349,8 +349,7 @@ parasails.registerPage('view-create', {
 
             $.trumbowyg.plugins.glossary.createLink();
 
-        }
-
+        },
 
     },
 });
