@@ -69,7 +69,7 @@ module.exports = {
       };
       jsonAnswers.push(thisAnswer);
 
-      var nextStageId = stage.next_stage_id;
+      var nextStagePosition = stage.position +1;
 
       if(!stage.task) // se c'è un'attività, il controllo è offline (umano)
       {
@@ -83,7 +83,7 @@ module.exports = {
       // new values for query
       let valuesToSet = {
         hunt_id: hunt_id,
-        current_stage_id: nextStageId, // go to next stage
+        current_stage_id: nextStagePosition, // go to next stage
         points: player.points,
         answers: JSON.stringify(jsonAnswers),
       };

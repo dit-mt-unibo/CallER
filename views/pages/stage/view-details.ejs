@@ -67,14 +67,12 @@
               <div class="mt-3">
                   <h5>Ultima modifica: <small><%= new Date(item.updatedAt).toLocaleString("it-IT") %></small></h5>
               </div>
+
+              <div class="mt-3">
+                <h5>Posizione: <small><%= item.position %></small></h5>
+                </div>
+
             </div>
-
-            <% if(item.next_stage_id > 0){ %>
-              <div align="right" class="mtb-4">
-                <a class="btn btn-primary" :href="'/stage/details/' + item.next_stage_id">Prossima tappa</a>
-              </div>
-            <% } %>
-
 
 
             <div class="tab-pane p-4 fade" align="center" id="nav-tab2" role="tabpanel" aria-labelledby="nav-tab2-tab">

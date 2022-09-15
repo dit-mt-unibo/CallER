@@ -14,6 +14,10 @@ const { exit } = require('process');
             type: 'string',
             required: true
         },
+        position: {
+          type: 'number',
+          required: false
+        },
         full_text: {
             type: 'string',
             required: true
@@ -113,23 +117,19 @@ const { exit } = require('process');
                 try {
 
                   // find last stage in the same hunt:
-                  var lastStage = await Stage.findOne({
-                    where: { hunt_id: inputs.hunt_id, next_stage_id: -1}
+                  var lastStage = await Stage.find({
+                    where: { hunt_id: inputs.hunt_id },
+                    limit: 1,
+                    sort: 'position DESC'
                   });
+
+                  if(lastStage)
+                  {
+                    inputs.position = lastStage[0].position + 1;
+                  }
 
                   // creiamo la nuova tappa:
                   var result = await Stage.create(inputs).fetch();
-
-                  if(result)
-                  {
-                    if(lastStage)
-                    {
-                      // ATTENZIONE: in questo momento ci sono 2 'ultime tappe' nel db
-                      // finché non chiamiamo updateOne:
-                      var other = await Stage.updateOne({id:lastStage.id}).set(
-                        { next_stage_id:result.id });
-                    } // else we are the one and only stage so far.
-                  }
 
                 }
                 catch(err) {

@@ -34,7 +34,7 @@ module.exports = {
 
             items = await Stage.find().sort([
               { hunt_id: 'ASC' },
-              { id: 'ASC' },
+              { position: 'ASC' },
             ]);
 
         }

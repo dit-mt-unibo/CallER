@@ -16,9 +16,9 @@ module.exports = {
       maxLength: 150
     },
 
-    next_stage_id: {
+    position: {
       type: 'number',
-      defaultsTo: -1
+      defaultsTo: 999
     },
 
     full_text: {

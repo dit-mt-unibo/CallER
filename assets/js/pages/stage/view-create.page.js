@@ -260,7 +260,7 @@ parasails.registerPage('view-create', {
 
         }
         else {
-          this.formData.choices = ['A','B','C','D'];
+          //this.formData.choices = ['A','B','C','D'];
         }
 
         this.terms = window.SAILS_LOCALS['terms'];
