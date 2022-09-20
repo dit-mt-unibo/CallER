@@ -4,8 +4,6 @@
  * @description save or update stage
  */
 
-const { exit } = require('process');
-
  module.exports = {
 
     inputs: {
@@ -28,10 +26,12 @@ const { exit } = require('process');
         },
 
         lat: {
-            type: 'ref'
+            type: 'ref',
+            required: true
         },
         long: {
-          type: 'ref'
+          type: 'ref',
+          required: true
         },
 
         hunt_id: {
@@ -82,19 +82,6 @@ const { exit } = require('process');
 
         var session = this.req.session;
 
-        if ( _.isEmpty(inputs.lat) ) {
-
-            inputs.lat = null;
-
-        }
-
-        if ( _.isEmpty(inputs.long) ) {
-
-            inputs.long = null;
-
-        }
-
-
         if ( _.isUndefined(inputs.id) ) {
 
             this.req.file('image').upload({
@@ -105,8 +92,6 @@ const { exit } = require('process');
             async function whenDone (err, uploadedFiles) {
 
                 if (err) return exits.uploadFail({ description : 'upload image failed. Server error:' + err.message });
-
-                console.log("uploaded files: ", uploadedFiles);
 
                 inputs.image = uploadedFiles[0].filename;
                 inputs.imageUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');
@@ -123,7 +108,7 @@ const { exit } = require('process');
                     sort: 'position DESC'
                   });
 
-                  if(lastStage)
+                  if(lastStage.length > 0)
                   {
                     inputs.position = lastStage[0].position + 1;
                   }

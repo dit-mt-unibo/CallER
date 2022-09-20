@@ -79,7 +79,7 @@
 
         <div class="form-group">
             <label :class="[formErrors.lat || formErrors.long ? 'text-danger' : '']">
-                Coordinate <span class="small">(opzionale)</span>
+                Coordinate
             </label>
             <div class="input-group">
                 <span class="input-group-text">Latitudine e Longitudine</span>
@@ -88,6 +88,7 @@
                 <input type="text" name="long" class="form-control" :class="[formErrors.long ? 'is-invalid' : '']"
                     v-model="formData.long" id="long" autocomplete="off">
             </div>
+            <cloud-error v-if="formErrors.lat === 'required' || formErrors.long === 'required'">Campo obbligatorio</cloud-error>
             <cloud-error v-if="formErrors.lat === 'custom'">Valore latitudine non valido</cloud-error>
             <cloud-error v-if="formErrors.long === 'custom'">Valore longitudine non valido</cloud-error>
         </div>
@@ -158,7 +159,7 @@
         </select>
       </div>
     </div>
-    <span>DEBUG current answer: {{formData.answer}}</span>
+    <!-- <span>DEBUG current answer: {{formData.answer}}</span> -->
 
     <div><label font="bold">-- Oppure --</label></div>
 
@@ -200,6 +201,7 @@
         <div class="row justify-content-center">
             <div class="col-4">
                 <cloud-error  v-if="cloudError === 'saveFail'" >Errore durante il salvataggio dei dati</cloud-error>
+                <cloud-error v-if="Object.keys(formErrors).length > 0">Errore, campi form non compilati correttamente</cloud-error>
             </div>
         </div>
 

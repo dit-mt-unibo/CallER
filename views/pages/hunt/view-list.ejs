@@ -48,10 +48,9 @@
             <tr v-for="item in filteredItems">
                 <td>{{ item.id }}</td>
                 <td>{{ item.name }}</td>
-                <td v-if="item.id > 1" @click="openModalEditor(item, 'description')" class="text-highlight">
+                <td @click="openModalEditor(item, 'description')" class="text-highlight">
                     <text-truncate :text="item.description"></text-truncate>
                 </td>
-                <td v-if="item.id == 1" >{{item.description}}</td>
 
                 <td align="center">
                     <a class="btn btn-primary" :href="'/hunt/edit/' + item.id">Modifica</a>

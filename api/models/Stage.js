@@ -18,7 +18,7 @@ module.exports = {
 
     position: {
       type: 'number',
-      defaultsTo: 999
+      defaultsTo: 1
     },
 
     full_text: {
