@@ -142,9 +142,9 @@
     background-color: #75A9F9;
 }
 
-.thunt-button-red{
-    border: 1px solid #e4252a;
-    background-color: #e4252a;
+.thunt-button-red {
+    border: 1px solid #ef5350;
+    background-color: #ef5350;
 }
 
 .thunt-button-error {
@@ -249,15 +249,15 @@
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     color: #FFF;
-    height: 35px;
+    height: 25px;
 }
 
 .thunt-modal-box-red .header {
-    background-color: #b71c1c;
+    background-color: #E53935;
 }
 
 .thunt-modal-box-orange .header {
-    background-color: #ff6f00;
+    background-color: #FB8C00;
 }
 
 .thunt-modal-box-green .header {
