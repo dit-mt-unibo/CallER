@@ -47,7 +47,6 @@ module.exports = {
 
       var currentStage = null;
       var next_stage_id = 0;
-      var position = 0;
       var positionToFind = -1;
 
       // get all stages for the current Hunt
@@ -70,7 +69,6 @@ module.exports = {
           currentStage = stage;
           positionToFind = stage.position +1;
         }
-        position++;
       }
       // now:
       //  currentStage contains the current stage;
