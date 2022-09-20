@@ -25,13 +25,10 @@ module.exports = {
     },
 
     exits: {
-
         hunt_id: {
             description: 'validation field hunt_id failed',
             statusCode: 409
         },
-
-
     },
 
     // in caso di successo, ritorna current_stage_id aggiornato, se la risposta è giusta
@@ -48,9 +45,39 @@ module.exports = {
         return response;
       }
 
-      // get the stage object
-      var stage = await Stage.findOne({id:player.current_stage_id});
-      if(stage == null)
+      var currentStage = null;
+      var next_stage_id = 0;
+      var position = 0;
+      var positionToFind = -1;
+
+      // get all stages for the current Hunt
+      var stages = await Stage.find({
+        where: {hunt_id:player.hunt_id},
+        sort: 'position ASC'
+      });
+      for(const stage of stages)
+      {
+        sails.log("player %d: looking at stage %d",player.id, stage.id);
+
+        if(stage.position == positionToFind) // we found next stage, we're done
+        {
+          next_stage_id = stage.id;
+          break;
+        }
+
+        if(stage.id == player.current_stage_id )
+        {
+          currentStage = stage;
+          positionToFind = stage.position +1;
+        }
+        position++;
+      }
+      // now:
+      //  currentStage contains the current stage;
+      //  next_stage_id contains the id of the next stage (or 0 is we're at the end of the game)
+      //  even if we don't need it, positionToFind contains the pos. of next stage.
+
+      if(currentStage == null)
       {
         response = { 'success' : 0 , 'err' : 'impossibile trovare la tappa corrente' };
         return response;
@@ -63,27 +90,34 @@ module.exports = {
 
       var jsonAnswers = JSON.parse(player.answers);
       var thisAnswer = {
-        stage_id: stage.id,
-        stage_name: stage.name,
+        stage_id: currentStage.id,
+        stage_name: currentStage.name,
         answer: answer
       };
       jsonAnswers.push(thisAnswer);
 
-      var nextStagePosition = stage.position +1;
-
-      if(!stage.task) // se c'è un'attività, il controllo è offline (umano)
+      var correctAnswer = false;
+      if(!currentStage.task) // se c'è un'attività, il controllo è offline (umano)
       {
         // controlla validità risposta e aggiorna punteggio:
         // compare answers case-insensitive
         // for fuzzy-matching, we could use list.js library
-        if(stage.answer.toLowerCase() === answer.toLowerCase())
-            player.points += stage.points;
+        if(currentStage.answer.toLowerCase() === answer.toLowerCase())
+        {
+            player.points += currentStage.points;
+            correctAnswer = true;
+        }
+      }
+      else
+      {
+        // se c'è un task, per default la risposta è 'giusta'
+        correctAnswer = true;
       }
 
       // new values for query
       let valuesToSet = {
         hunt_id: hunt_id,
-        current_stage_id: nextStagePosition, // go to next stage
+        current_stage_id: next_stage_id, // go to next stage
         points: player.points,
         answers: JSON.stringify(jsonAnswers),
       };
@@ -107,7 +141,7 @@ module.exports = {
       }
       else
       {
-        response = { 'success' : 1 , 'err' : "" , 'current_stage_id' : nextStageId, 'correctAnswer' : correct};
+        response = { 'success' : 1 , 'err' : "" , 'current_stage_id' : next_stage_id, 'correctAnswer' : correctAnswer};
       }
 
       return response;
