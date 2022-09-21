@@ -22,10 +22,10 @@
               <th width="10%">id</th>
               <th width="20%">Email</th>
               <th width="20%">uuid</th>
-              <th width="10%">Caccia</th>
+              <th width="20%">Caccia</th>
               <th width="10%">Tappa</th>
               <th width="10%">Punteggio</th>
-              <th style="text-align: center" width="20%">Ultima visita</th>
+              <th style="text-align: center" width="10%">Ultima visita</th>
           </tr>
       </thead>
       <tbody>
@@ -33,9 +33,9 @@
               <td>{{ item.id }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.uuid }}</td>
-              <td class="feedback-title" @click="filter_hunt = item.hunt_id">{{item.hunt_id}}</td>
+              <td class="feedback-title" @click="filter_hunt = item.hunt_id">{{item.hunt}}</td>
 
-              <td>{{ item.current_stage_id }}</td>
+              <td>{{ item.stage }}</td>
               <td>{{ item.points }}</td>
 
               <td align="center">{{ new Date(item.updatedAt).toLocaleString() }}</td>
