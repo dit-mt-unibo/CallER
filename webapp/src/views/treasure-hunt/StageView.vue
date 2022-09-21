@@ -366,9 +366,7 @@ export default ({
                 this.modalStyleClass = "thunt-modal-box-green";
                 this.disableNextButton = false;
 
-            }            
-
-            this.disableNextButton = false;
+            }
             
             this.showModalGPS = true;
             this.showButtonLoader = false;
