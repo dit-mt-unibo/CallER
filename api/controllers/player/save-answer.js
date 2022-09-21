@@ -20,7 +20,8 @@ module.exports = {
       },
       answer: {
         type: 'string',
-        required: false
+        required: false,
+        description: "contiene l'ID dell'elemento selezionato nel quiz a risposta multipla. Può essere vuoto"
       },
     },
 
@@ -35,7 +36,7 @@ module.exports = {
     fn: async function({uuid, hunt_id, answer}) {
 
       uuid = sails.hooks.sanitize.cleanHtml(uuid);
-      answer = sails.hooks.sanitize.cleanHtml(answer);
+      answer = sails.hooks.sanitize.cleanHtml(answer);    
 
       // get the current Player object:
       var player = await Player.findOne({uuid:uuid});
@@ -56,8 +57,6 @@ module.exports = {
       });
       for(const stage of stages)
       {
-        sails.log("player %d: looking at stage %d",player.id, stage.id);
-
         if(stage.position == positionToFind) // we found next stage, we're done
         {
           next_stage_id = stage.id;
@@ -79,7 +78,7 @@ module.exports = {
       {
         response = { 'success' : 0 , 'err' : 'impossibile trovare la tappa corrente' };
         return response;
-      }
+      }      
 
       if(player.answers == null)
       {
@@ -87,20 +86,35 @@ module.exports = {
       }
 
       var jsonAnswers = JSON.parse(player.answers);
+      
+      /**
+       * tramite l'indice contenuto in answer, recupero la risposta in formato testo,
+       * per poi assegnarla all'oggetto thisAnswer.answer
+       */
+      let full_text_answer = "";
+
+      if ( _.isEmpty(answer) === false ) {
+ 
+        if ( _.isUndefined(currentStage.choices[answer]) === false ) {
+ 
+          full_text_answer = currentStage.choices[answer];
+ 
+        }
+ 
+      }
+
       var thisAnswer = {
         stage_id: currentStage.id,
         stage_name: currentStage.name,
-        answer: answer
-      };
+        answer: full_text_answer
+      }; 
       jsonAnswers.push(thisAnswer);
 
       var correctAnswer = false;
       if(!currentStage.task) // se c'è un'attività, il controllo è offline (umano)
       {
-        // controlla validità risposta e aggiorna punteggio:
-        // compare answers case-insensitive
-        // for fuzzy-matching, we could use list.js library
-        if(currentStage.answer.toLowerCase() === answer.toLowerCase())
+        // controlla validità risposta e aggiorna punteggio:        
+        if(currentStage.answer == answer)
         {
             player.points += currentStage.points;
             correctAnswer = true;
