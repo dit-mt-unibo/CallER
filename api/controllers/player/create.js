@@ -43,7 +43,9 @@ module.exports = {
         let response = {};
 
         // generate uuid
-        inputs.uuid = crypto.randomUUID();
+        const uuid = crypto.randomBytes(16);
+        inputs.uuid = uuid.toString('hex');
+        // not available until Node v15 inputs.uuid = crypto.randomUUID();
 
         // get the first stage...
         var stages = await Stage.find({

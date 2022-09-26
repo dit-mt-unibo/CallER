@@ -16,6 +16,11 @@ module.exports = {
       maxLength: 150
     },
 
+    position: {
+      type: 'number',
+      defaultsTo: 1
+    },
+
     full_text: {
       type: 'string' ,
       required: true,
@@ -26,7 +31,7 @@ module.exports = {
       type: 'string',
       description: 'filename. Allowed file extensions png, jpg, jpeg',
       required: true,
-      custom: function(filename) {          
+      custom: function(filename) {
           return sails.hooks.validation.validateExtension(filename, ['png' , 'jpg' , 'jpeg']);
       }
     },
@@ -54,21 +59,26 @@ module.exports = {
       description: 'longitudine'
     },
 
-    gmaps_place_id: {
-      type: 'string',
-      description: 'google maps place_id',
-      allowNull: true,
-      maxLength: 300
-    },
-
     question: {
       type: 'string',
-      required: true
+      required: false
+    },
+
+    choices: {
+      type: 'json',
+      description: 'json array contains the choices in a multiple choice quiz',
+      defaultsTo: '[]',
     },
 
     answer: {
       type: 'string',
-      required: true
+      required: false
+    },
+
+    task: {
+      type: 'string',
+      description: 'alternative to a question: a task to be performed and scored offline, e.g. send a picture of this monument to game@forliviamo.it',
+      required: false
     },
 
     hunt_id: {

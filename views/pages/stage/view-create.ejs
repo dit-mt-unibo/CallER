@@ -1,3 +1,17 @@
+<!--
+<script>
+  $(document).on('click', '#formSubmit', function () {
+  var totalChoices = "[ \""+
+  document.getElementById("choiceA").value + "\", \"" +
+  document.getElementById("choiceB").value + "\", \"" +
+  document.getElementById("choiceC").value + "\", \"" +
+  document.getElementById("choiceD").value + "\" ]";
+  $('input[name="choices"]').val(totalChoices);
+
+  return true;
+  });
+</script>
+-->
 <div id="view-create" class="container" v-cloak>
 
 
@@ -17,7 +31,6 @@
             <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
             <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
         </div>
-
 
         <div class="form-group">
             <label :class="[formErrors.full_text ? 'text-danger' : '']">
@@ -65,23 +78,8 @@
         </div>
 
         <div class="form-group">
-            <label :class="[formErrors.gmaps_stage_id ? 'text-danger' : '']">
-                Google maps stage ID <span class="small">(opzionale)</span>
-            </label>
-            <input type="text" name="gmaps_stage_id" class="form-control" :class="[formErrors.gmaps_stage_id ? 'is-invalid' : '']"
-                v-model="formData.gmaps_stage_id" maxlength="300" id="gmaps_stage_id" />
-            <p class="medium mt-2">
-                <b>N.B.</b>
-                <u>
-                    Inserire l'ID del luogo fornito da Google, vedi pagina https://developers.google.com/maps/documentation/places/web-service/place-id
-                </u>
-            </p>
-            <cloud-error v-if="formErrors.gmaps_stage_id === 'maxLength'">Il campo può contenere al max. 300 caratteri</cloud-error>
-        </div>
-
-        <div class="form-group">
             <label :class="[formErrors.lat || formErrors.long ? 'text-danger' : '']">
-                Coordinate <span class="small">(opzionale)</span>
+                Coordinate
             </label>
             <div class="input-group">
                 <span class="input-group-text">Latitudine e Longitudine</span>
@@ -90,9 +88,12 @@
                 <input type="text" name="long" class="form-control" :class="[formErrors.long ? 'is-invalid' : '']"
                     v-model="formData.long" id="long" autocomplete="off">
             </div>
+            <cloud-error v-if="formErrors.lat === 'required' || formErrors.long === 'required'">Campo obbligatorio</cloud-error>
             <cloud-error v-if="formErrors.lat === 'custom'">Valore latitudine non valido</cloud-error>
             <cloud-error v-if="formErrors.long === 'custom'">Valore longitudine non valido</cloud-error>
         </div>
+
+        <hr/>
 
         <div class="form-group">
           <label :class="[formErrors.question ? 'text-danger' : '']">
@@ -104,15 +105,74 @@
           <cloud-error v-if="formErrors.question === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
         </div>
 
-        <div class="form-group">
-          <label :class="[formErrors.answer ? 'text-danger' : '']">
-              Risposta giusta
-          </label>
-          <input type="text" name="answer" class="form-control" :class="[formErrors.answer ? 'is-invalid' : '']"
-              v-model="formData.answer" maxlength="150" id="answer" />
-          <cloud-error v-if="formErrors.answer === 'required'">Campo obbligatorio</cloud-error>
-          <cloud-error v-if="formErrors.answer === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
-        </div>
+
+        <!-- <span>DEBUG choices: {{ formData.choices }}</span> -->
+
+        <div><label>Inserisci di seguito 4 possibili risposte:</label></div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta A</label>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="choiceA" value="" v-model="formData.choices[0]">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta B</label>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="choiceB" value="" v-model="formData.choices[1]">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta C</label>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="choiceC" value="" v-model="formData.choices[2]">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta D</label>
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="choiceD" value="" v-model="formData.choices[3]">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label>Risposta Giusta</label>
+      </div>
+      <div class="form-group col-md-2">
+        <select name="answer" v-model="formData.answer" class="form-control">
+          <option value=""></option>
+          <option value="0">A</option>
+          <option value="1">B</option>
+          <option value="2">C</option>
+          <option value="3">D</option>
+        </select>
+      </div>
+    </div>
+    <!-- <span>DEBUG current answer: {{formData.answer}}</span> -->
+
+    <div><label font="bold">-- Oppure --</label></div>
+
+    <div class="form-group">
+      <label :class="[formErrors.task ? 'text-danger' : '']">
+          Attività: in alternativa alla domanda, possiamo definire un 'compito' da portare a termine
+          (es. scatta una foto alla statua in questa piazza e mandala a gioco@forliviamo.it)
+      </label>
+      <textarea name="task" class="form-control" v-model="formData.task" id="task" rows="4"></textarea>
+      <cloud-error v-if="formErrors.task === 'required'">Campo obbligatorio</cloud-error>
+      <cloud-error v-if="formErrors.task === 'maxLength'">Il campo può contenere al max. 2000 caratteri</cloud-error>
+    </div>
+
 
         <div class="form-group">
           <label :class="[formErrors.points ? 'text-danger' : '']">
@@ -141,6 +201,7 @@
         <div class="row justify-content-center">
             <div class="col-4">
                 <cloud-error  v-if="cloudError === 'saveFail'" >Errore durante il salvataggio dei dati</cloud-error>
+                <cloud-error v-if="Object.keys(formErrors).length > 0">Errore, campi form non compilati correttamente</cloud-error>
             </div>
         </div>
 

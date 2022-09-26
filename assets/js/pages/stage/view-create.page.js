@@ -162,6 +162,7 @@ parasails.registerPage('view-create', {
         syncing: false,
         formData: {
             /* ... */
+            choices : ['A','B','C','D']
         },
 
         // For tracking client-side validation errors in our form
@@ -172,7 +173,7 @@ parasails.registerPage('view-create', {
             name: { required: true , maxLength: 150},
             full_text: { required: true , maxLength: 65535},
             image: {
-                required: false ,
+                required: true ,
                 custom: function(fileObj) {
 
                     var result = false;
@@ -195,6 +196,7 @@ parasails.registerPage('view-create', {
                 }
             },
             lat: {
+                required: true ,
                 custom: function(value) {
 
                     const pattern = /^[1-9]{1}[0-9]{0,1}[.]{0,1}[0-9]{0,}$/;
@@ -207,6 +209,7 @@ parasails.registerPage('view-create', {
                 }
             } ,
             long: {
+                required: true ,
                 custom: function(value) {
 
                     const pattern = /^[1-9]{1}[0-9]{0,2}[.]{0,1}[0-9]{0,}$/;
@@ -219,8 +222,11 @@ parasails.registerPage('view-create', {
                 }
 
             },
+            points: {
+                required: true
+            },
             hunt_id: {
-                required: false,
+                required: true,
                 custom: function(value) {
 
                     let HuntID = parseInt(value);
@@ -228,7 +234,6 @@ parasails.registerPage('view-create', {
 
                 }
             },
-            gmaps_place_id: { maxLength: 300},
         },
 
         // Server error state for the form
@@ -250,17 +255,12 @@ parasails.registerPage('view-create', {
     beforeMount: function () {
 
         if ( _.isUndefined(window.SAILS_LOCALS['item']) == false ) {
-
-            this.formData = window.SAILS_LOCALS['item'];
-            this.huntId = (this.formData.hunt_id == null ) ? null : parseInt(this.formData.hunt_id);
-            this.formData.lat = ( _.isNull(this.formData.lat) === false ) ? String(this.formData.lat) : null;
-            this.formData.long = ( _.isNull(this.formData.long) === false ) ? String(this.formData.long) : null;
+            
             this.formRules["image"] = {}; // image validation is not required in update mode
 
         }
         else {
-
-
+          //this.formData.choices = ['A','B','C','D'];
         }
 
         this.terms = window.SAILS_LOCALS['terms'];
@@ -309,14 +309,14 @@ parasails.registerPage('view-create', {
         },
         submittedForm: async function () {
 
-            this.syncing = true;
-            window.location = '/stage/list';
+          this.syncing = true;
+          window.location = '/stage/list';
 
         },
         submittedUpdateForm: async function() {
 
-            this.syncing = true;
-            window.location = '/stage/details/' + this.item.id;
+          this.syncing = true;
+          window.location = '/stage/details/' + this.item.id;
 
         },
         rejectedForm (err) {
@@ -349,8 +349,7 @@ parasails.registerPage('view-create', {
 
             $.trumbowyg.plugins.glossary.createLink();
 
-        }
-
+        },
 
     },
 });

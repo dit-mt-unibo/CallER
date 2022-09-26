@@ -4,8 +4,6 @@
  * @description save or update stage
  */
 
-const { exit } = require('process');
-
  module.exports = {
 
     inputs: {
@@ -13,6 +11,10 @@ const { exit } = require('process');
         name: {
             type: 'string',
             required: true
+        },
+        position: {
+          type: 'number',
+          required: false
         },
         full_text: {
             type: 'string',
@@ -24,10 +26,12 @@ const { exit } = require('process');
         },
 
         lat: {
-            type: 'ref'
+            type: 'ref',
+            required: true
         },
         long: {
-          type: 'ref'
+          type: 'ref',
+          required: true
         },
 
         hunt_id: {
@@ -39,19 +43,21 @@ const { exit } = require('process');
             allowNull: true
         },
 
-        gmaps_place_id: {
-            type: 'string',
-            allowNull: true
-        },
-
         question: {
           type: 'string',
-          allowNull: false
+          allowNull: true
+        },
+
+        choices: {
+          type: 'json',
         },
 
         answer: {
           type: 'string',
-          allowNull: false
+        },
+
+        task: {
+          type: 'string',
         },
 
         points: {
@@ -76,19 +82,6 @@ const { exit } = require('process');
 
         var session = this.req.session;
 
-        if ( _.isEmpty(inputs.lat) ) {
-
-            inputs.lat = null;
-
-        }
-
-        if ( _.isEmpty(inputs.long) ) {
-
-            inputs.long = null;
-
-        }
-
-
         if ( _.isUndefined(inputs.id) ) {
 
             this.req.file('image').upload({
@@ -100,8 +93,6 @@ const { exit } = require('process');
 
                 if (err) return exits.uploadFail({ description : 'upload image failed. Server error:' + err.message });
 
-                console.log("uploaded files: ", uploadedFiles);
-
                 inputs.image = uploadedFiles[0].filename;
                 inputs.imageUID = uploadedFiles[0].fd.replace(/^.*[\\\/]/, '');
 
@@ -110,7 +101,20 @@ const { exit } = require('process');
 
                 try {
 
-                    var result = await Stage.create(inputs).fetch();
+                  // find last stage in the same hunt:
+                  var lastStage = await Stage.find({
+                    where: { hunt_id: inputs.hunt_id },
+                    limit: 1,
+                    sort: 'position DESC'
+                  });
+
+                  if(lastStage.length > 0)
+                  {
+                    inputs.position = lastStage[0].position + 1;
+                  }
+
+                  // creiamo la nuova tappa:
+                  var result = await Stage.create(inputs).fetch();
 
                 }
                 catch(err) {

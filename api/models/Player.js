@@ -15,9 +15,9 @@ module.exports = {
       required: true,
       maxLength: 320,
       custom: function(email) {
-                
+
         return sails.hooks.validation.validateEmail(email);
-        
+
       }
     },
 
@@ -46,6 +46,10 @@ module.exports = {
     // campo json con tutte le risposte fornite finora.
     answers: {
       type: 'string'
+        // array di:
+          //  id tappa : ...
+          // nome tappa: ...
+          // risposta:
     }
   },
 

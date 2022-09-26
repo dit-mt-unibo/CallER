@@ -47,8 +47,13 @@
                     <div class="box-block">
                         <h5><i class="fas fa-star mr-2"></i>Quiz</h5>        
                         <div class="box-block-body">
-                            <p class="quiz-question">{{quizQuestion}}</p>            
-                            <input class="thunt-input" type="text" v-model="quizAnswer">
+                            <p class="quiz-question">{{quizQuestion}}</p>
+                            <ul v-show="quizChoices" id="quizList" class="list-group">
+                                <li class="list-group-item quiz-answer" v-for="(choice , id) in quizChoices" v-bind:key="choice" :id="'list_' + id"
+                                @click="selectAnswer(id)">
+                                    <div>{{ choice }}</div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>                
@@ -65,6 +70,11 @@
                     :class="[disableNextButton ? 'thunt-button-disabled' : '']"
                     :disabled="disableNextButton"
                     @click="checkAnswer">Avanti</button>
+                </div>
+                <div class="col-12" align="center">
+                    <button type="button" 
+                    class="thunt-button thunt-button-red"                    
+                    @click="showModalSkipStage = true">Salta la tappa</button>
                 </div>
             </div>        
             <!-- Loader -->
@@ -111,7 +121,7 @@
         <div v-if="showModalGPS" class="thunt-modal-box">
             <div class="thunt-modal-box-container" :class="modalStyleClass">
                 <div class="header"></div>
-                <p class="mt-2">{{modalMessage}}</p>
+                <p class="my-4">{{modalMessage}}</p>
                 <div class="my-3" align="center">                    
                     <button type="button" class="thunt-button-blue" @click="closeModal">Chiudi</button>
                 </div>
@@ -119,41 +129,50 @@
         </div>
     </transition>
     <!-- Finestra modale avviso campo risposta vuoto -->
-    <transition name="fade">
-        <div v-if="showModalAnswer" class="thunt-modal-box">
-            <div class="thunt-modal-box-container thunt-modal-box-red">
-                <div class="header"></div>
-                <p class="mt-2">
-                    Non hai risposto al quiz. Sicuro di voler continuare senza rispondere?
-                </p>
-                <div class="my-3" align="center">
-                    <button type="button" class="thunt-modal-button-left thunt-button-green" @click="showModalAnswer = false; next();">Continua</button>
-                    <button type="button" class="thunt-modal-button-right thunt-button-blue" @click="showModalAnswer = false;">Chiudi</button>
-                </div>
-            </div>
-        </div>
-    </transition> 
+    <thunt-modal-message-two-buttons 
+        :showModal="showModalAnswer"
+        :btnDenyClass="'thunt-button-blue'"
+        @thuntConfirm="showModalAnswer = false; next();"
+        @thuntDeny="showModalAnswer = false;">
+        <slot>
+            <p class="my-4">
+                Non hai risposto al quiz. Sicuro di voler continuare senza rispondere?
+            </p>
+        </slot>
+        <template v-slot:btnyes>Continua</template>
+        <template v-slot:btnno>Chiudi</template>
+    </thunt-modal-message-two-buttons>
     <!-- Finestra modale chiusura gioco -->
-    <transition name="fade">
-        <div v-if="showModalQuitGame" class="thunt-modal-box">
-            <div class="thunt-modal-box-container thunt-modal-box-red">
-                <div class="header"></div>
-                <p class="mt-2">
-                    Sicuro di voler abbandonare il gioco?
-                </p>
-                <div class="my-3" align="center">
-                    <button type="button" class="thunt-modal-button-left thunt-button-red" @click="showModalQuitGame = false; quitGame();">Sì</button>
-                    <button type="button" class="thunt-modal-button-right thunt-button-green" @click="showModalQuitGame = false;">No</button>
-                </div>
-            </div>            
-        </div>
-    </transition>  
+    <thunt-modal-message-two-buttons 
+        :showModal="showModalQuitGame"
+        :btnConfirmClass="'thunt-button-red'"
+        :btnDenyClass="'thunt-button-green'"
+        @thuntConfirm="showModalQuitGame = false; quitGame();"
+        @thuntDeny="showModalQuitGame = false;">
+        <slot>
+            <p class="my-4">
+                Sicuro di voler abbandonare il gioco?
+            </p>
+        </slot>
+    </thunt-modal-message-two-buttons>
+    <!-- Finestra modale salta la tappa -->
+    <thunt-modal-message-two-buttons 
+        :showModal="showModalSkipStage"
+        @thuntConfirm="showModalSkipStage = false; skipStage();"
+        @thuntDeny="showModalSkipStage = false">
+        <slot>
+            <p class="my-4">
+                Sicuro di voler saltare la tappa?
+            </p>
+        </slot>
+    </thunt-modal-message-two-buttons>
 </template>
 
 <script>
 
 import cookieModule from '../../modules/cookie.module.js';
 import * as geolib from 'geolib';
+import thuntModalMessageTwoButtons from '../../components/thunt-modal-message-two-buttons.vue';
 const axios = require('axios');
 
 export default ({
@@ -175,12 +194,14 @@ export default ({
             showPageLoader: false,
             quizQuestion: '',
             quizAnswer: '',
+            quizChoices: [],
             disableNextButton: true,
             showModalGPS: false,
             modalMessage: '',
             modalStyleClass: '',
             showModalAnswer: false,
             showModalQuitGame: false,
+            showModalSkipStage: false,
             cookies: 0,
 
         }
@@ -207,6 +228,9 @@ export default ({
 
             }
 
+            this.quizAnswer = '';
+            this.quizChoices = [];            
+
             /**
              * Scroll in cima alla pagina
              */
@@ -223,8 +247,8 @@ export default ({
 
             }
 
-            // Gioco completato se current_stage_id = -1
-            if ( player.data[0].current_stage_id === -1 ) {
+            // Gioco completato se current_stage_id = 0
+            if ( player.data[0].current_stage_id == 0 ) {
                 
                 return this.$router.push('/caccia-al-tesoro/completata');
 
@@ -242,34 +266,42 @@ export default ({
             
             this.stageName = stage.data.item.name;
             this.stageDescription = stage.data.item.full_text;
-            this.stageImg = this.apiUrl + '/images/contenuti/' + stage.data.item.imageUID;
-            this.quizQuestion = stage.data.item.question;
+            this.stageImg = this.apiUrl + '/images/contenuti/' + stage.data.item.imageUID;            
             this.srcGMaps = 'https://www.google.com/maps/embed/v1/place?key=' + process.env.VUE_APP_GOOGLE_MAPS_API +
             '&q=' + stage.data.item.lat + ',' + stage.data.item.long + '&zoom=18';
 
             this.stageCoords = { lat: stage.data.item.lat , lon: stage.data.item.long };
 
-            this.quizAnswer = '';
+            if ( stage.data.item.question != '') {
+
+                this.quizChoices = stage.data.item.choices;
+                this.quizQuestion = stage.data.item.question;
+
+            }
+            else {
+
+                this.quizQuestion = stage.data.item.task;
+
+            }            
 
             this.disableNextButton = true;
 
             /**
              * Assegna alle tappe uno stato che può essere current, completed, none.
              * Lo status current è per la tappa corrente
-             * Lo status completed è le tappe completate. Non avendo questo dato dal server,
-             * si impostano come completed tutte le tappe con ID inferiore a quello della tappa corrente,
-             * perché si parte dall'assunto che le tappe siano ordinate per ID crescente.
+             * Lo status completed è per le tappe completate. Non avendo questo dato dal server,
+             * si impostano come completed tutte le tappe con position inferiore a quello della tappa corrente.
              * Queste impostazioni servono ad applicare lo stile corretto agli oggetti della barra laterale             
              */
             for (let i=0; i < this.cookies.stages.length; ++i) {
 
-                if ( this.cookies.stages[i].id == stage.data.item.id ) {
+                if ( this.cookies.stages[i].position == stage.data.item.position ) {
                     
                     this.stageNumber = i+1;
                     this.cookies.stages[i].status = "current";
 
                 }
-                else if( this.cookies.stages[i].id < stage.data.item.id ) {
+                else if( this.cookies.stages[i].position < stage.data.item.position ) {
 
                     this.cookies.stages[i].status = "completed";
 
@@ -301,7 +333,9 @@ export default ({
 
         /**
          * Callback per il metodo getCurrentPosition dell'oggetto Navigator.
-         * Chiamato quando la geolocalizzazione dell'utente avviene correttamente
+         * Chiamato quando la geolocalizzazione dell'utente avviene correttamente.
+         * 
+         * @param {object} pos: oggetto contenente le coordinate rilevate da navigator.geolocation.getCurrentPosition
          */
         verifyPosSuccess(pos) {
 
@@ -334,8 +368,6 @@ export default ({
 
             }
             
-            this.disableNextButton = false;
-            
             this.showModalGPS = true;
             this.showButtonLoader = false;
 
@@ -344,6 +376,8 @@ export default ({
         /**
          * Callback per il metodo getCurrentPosition dell'oggetto Navigator.
          * Chiamato in caso di errore durante la geolocalizzazione dell'utente
+         * 
+         * @param {Object} err: oggetto errore generato da navigator.geolocation.getCurrentPosition
          */
         verifyPosError(err){
 
@@ -367,11 +401,45 @@ export default ({
         },
 
         /**
+         * Listener evento selezione risposta dell'utente.
+         * Imposta quizAnswer con la scelta dell'utente, evidenzia l'elemento della lista selezionato.
+         *          
+         * @param {int} elmID: id elemento selezionato         
+         */
+        selectAnswer(elmID) {
+
+            this.quizAnswer = elmID;
+
+            this.cleanPlayerSelection();
+            
+            let selectedElement = document.getElementById("list_" + elmID);
+
+            selectedElement.classList.add("quiz-response-success-bg");
+
+        },
+
+        /**
+         * Rimuove l'evidenziazione dell'elemento selezionato nella lista a scelta multipla
+         */
+        cleanPlayerSelection() {
+
+            let listElements = document.getElementById("quizList").children;            
+
+            for (let index = 0; index < listElements.length; index++) {
+                
+                const element = listElements[index];
+                element.classList.remove("quiz-response-success-bg");
+                             
+            }
+
+        },
+
+        /**
          * Controlla che l'utente abbia inserito una risposta
          */
         checkAnswer() {
 
-            if (this.quizAnswer.length == 0){
+            if (this.quizAnswer.length == 0 && this.quizChoices.length > 0){
 
                 this.showModalAnswer = true;
 
@@ -389,19 +457,13 @@ export default ({
          * Chiamata API
          */
         async next() {
-
-            // pulizia stringa inviata dall'utente
-            const specialChars = /[`!$%^&*()+\-={};':"\\|<>/?~]/g;
-            var answer = this.quizAnswer.replace(specialChars, "");
-            answer = this.quizAnswer.replace(/\[/g, "");
-            answer = this.quizAnswer.replace(/\]/g, "").trim();
                         
             let response = null;
             let apiError = false;
 
             try{
 
-                response = await axios.post(this.apiUrl + "/api/player/save-answer" , { uuid: this.cookies.uuid , answer: answer , hunt_id: this.cookies.hunt_id });
+                response = await axios.post(this.apiUrl + "/api/player/save-answer" , { uuid: this.cookies.uuid , answer: this.quizAnswer , hunt_id: this.cookies.hunt_id });
 
             }
             catch(err) {
@@ -435,6 +497,54 @@ export default ({
 
             }                
                     
+        },
+
+        /**
+         * Salta la tappa. 
+         * Il giocatore conferma di voler saltare la tappa.
+         * Il sistema effettua la chiamata API per registrare la risposta non data.
+         */
+        async skipStage() {
+
+            let response = null;
+            let apiError = false;
+
+            try{
+
+                response = await axios.post(this.apiUrl + "/api/player/save-answer" , { uuid: this.cookies.uuid , answer: "" , hunt_id: this.cookies.hunt_id });
+
+            }
+            catch(err) {
+
+                apiError = true;
+                console.log(err.response.data.message);
+
+            }
+
+            if ( apiError ) {
+
+                this.modalMessage = "Impossibile proseguire alla tappa successiva, riprovare tra qualche istante";
+                this.modalStyleClass = "thunt-modal-box-red";
+                this.showModalGPS = true;
+
+            }
+            else {
+
+                if ( response.data.success == 1 ) {
+
+                    this.loadStage();
+
+                }
+                else {
+
+                    this.modalMessage = "Impossibile proseguire alla tappa successiva, riprovare tra qualche istante";
+                    this.modalStyleClass = "thunt-modal-box-red";
+                    this.showModalGPS = true;
+
+                }
+
+            }
+
         },
 
         /**
@@ -478,7 +588,8 @@ export default ({
 
             this.showModalGPS = false;
             this.showModalAnswer = false;
-            this.showModalQuitGame = false
+            this.showModalQuitGame = false;
+            this.showModalSkipStage = false;
             this.modalMessage = '';
             this.modalStyleClass = '';
 
@@ -493,6 +604,10 @@ export default ({
             this.$router.push('/caccia-al-tesoro');
 
         }
+    },
+
+    components: {
+        thuntModalMessageTwoButtons
     }
 })
 </script>

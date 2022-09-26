@@ -45,9 +45,9 @@ module.exports = {
 
     let children = {};
     children = await Stage.find({
-      select: ["id" , "name"],
+      select: ["id" , "name" , "position"],
       where: { hunt_id: inputs.id },
-      sort: 'id ASC'
+      sort: 'position ASC'
     });
 
     return { item, children };
