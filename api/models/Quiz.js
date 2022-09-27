@@ -37,12 +37,7 @@ module.exports = {
         place_id: {
             type: 'number',
             required: true
-        },
-
-        stage_id: {
-          type: 'number',
-          required: false
-      }
+        }
     }
 
 };
