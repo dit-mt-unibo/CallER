@@ -1,26 +1,11 @@
-<!--
-<script>
-  $(document).ready (function () {
-
-    $(document).on('click', '#formSubmit', function () {
-        var totalChoices = "[ \""+
-        document.getElementById("choiceA").value + "\", \"" +
-        document.getElementById("choiceB").value + "\", \"" +
-        document.getElementById("choiceC").value + "\", \"" +
-        document.getElementById("choiceD").value + "\" ]";
-        $('input[name="choices"]').val(totalChoices);
-
-        return true;
-      });
-    });
-</script>
--->
 <div id="view-create" class="container" v-cloak>
 
     <modal-glossary :terms="terms" @click="insertGlossaryLink()"></modal-glossary>
 
-    <ajax-form  onload="SplitChoices();" action="saveStage" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData"
-        :form-rules="formRules" :form-errors.sync="formErrors" :hunt-id="huntId"
+    <!--onload="SplitChoices();" -->
+    <ajax-form  action="saveStage" :syncing.sync="syncing"
+        :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules"
+        :form-errors.sync="formErrors" :hunt-id="huntId"
         :tbw-editor-id="'tbweditor'" :tbw-editor-field="'full_text'"
         @submitted="submittedUpdateForm($event)" @rejected="rejectedForm($event)">
 
@@ -121,23 +106,12 @@
             </select>
           </div>
         </div>
-<!--
-        <div class="form-group">
-          <label :class="[formErrors.answer ? 'text-danger' : '']">
-              Risposta giusta
-          </label>
-          <input type="text" name="answer" class="form-control" :class="[formErrors.answer ? 'is-invalid' : '']"
-              v-model="formData.answer" maxlength="150" id="answer" />
-          <cloud-error v-if="formErrors.answer === 'required'">Campo obbligatorio</cloud-error>
-          <cloud-error v-if="formErrors.answer === 'maxLength'">Il campo può contenere al max. 150 caratteri</cloud-error>
-        </div>
--->
 
         <div class="form-group">
           <label :class="[formErrors.task ? 'text-danger' : '']">
               Attività
           </label>
-          <textarea name="task" class="form-control" v-model="formData.task" id="task" rows="8">{{ item.task }}</textarea>
+          <textarea name="task" class="form-control" v-model="formData.task" id="task" rows="8"></textarea>
           <cloud-error v-if="formErrors.task === 'required'">Campo obbligatorio</cloud-error>
           <cloud-error v-if="formErrors.task === 'maxLength'">Il campo può contenere al max. 2000 caratteri</cloud-error>
         </div>

@@ -51,7 +51,10 @@
 
         }
         catch (err) {
-            //
+          throw { fail : {
+            pageTitle: pageTitle ,
+            error: { title: "Errore database" , message: "Impossibile leggere elenco Caccia al tesoro" }
+        } };
         }
 
         try {

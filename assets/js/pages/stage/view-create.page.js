@@ -162,7 +162,6 @@ parasails.registerPage('view-create', {
         syncing: false,
         formData: {
             /* ... */
-            choices : ['A','B','C','D']
         },
 
         // For tracking client-side validation errors in our form
@@ -255,15 +254,19 @@ parasails.registerPage('view-create', {
     beforeMount: function () {
 
         if ( _.isUndefined(window.SAILS_LOCALS['item']) == false ) {
-            
-            this.formRules["image"] = {}; // image validation is not required in update mode
 
-        }
-        else {
-          //this.formData.choices = ['A','B','C','D'];
-        }
+          this.formData = window.SAILS_LOCALS['item'];
+          this.huntId = (this.formData.hunt_id == null ) ? null : parseInt(this.formData.hunt_id);
+          this.formData.lat = ( _.isNull(this.formData.lat) === false ) ? String(this.formData.lat) : null;
+          this.formData.long = ( _.isNull(this.formData.long) === false ) ? String(this.formData.long) : null;
+          this.formRules["image"] = {}; // image validation is not required in update mode
 
-        this.terms = window.SAILS_LOCALS['terms'];
+      }
+      else {
+        this.formData.choices = ['X','Y','Z','W'];
+      }
+
+      this.terms = window.SAILS_LOCALS['terms'];
 
     },
     mounted: async function () {

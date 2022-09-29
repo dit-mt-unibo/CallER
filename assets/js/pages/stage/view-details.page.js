@@ -19,7 +19,6 @@ parasails.registerPage('view-details', {
         // Filters feedbacks
         filteredItems () {
             return item;
-
         },
 
     },
