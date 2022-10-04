@@ -19,12 +19,13 @@
     <table class="table table-striped">
       <thead>
           <tr>
-              <th width="10%">id</th>
-              <th width="20%">Email</th>
-              <th width="20%">uuid</th>
-              <th width="20%">Caccia</th>
+              <th width="5%">id</th>
+              <th width="15%">Email</th>
+              <th width="15%">uuid</th>
+              <th width="15%">Caccia</th>
               <th width="10%">Tappa</th>
-              <th width="10%">Punteggio</th>
+              <th width="8%">Punteggio</th>
+              <th width="22%">Risposte</th>
               <th style="text-align: center" width="10%">Ultima visita</th>
           </tr>
       </thead>
@@ -33,11 +34,10 @@
               <td>{{ item.id }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.uuid }}</td>
-              <td class="feedback-title" @click="filter_hunt = item.hunt_id">{{item.hunt}}</td>
-
+              <td class="text-highlight" @click="filter_hunt = item.hunt_id">{{item.hunt}}</td>
               <td>{{ item.stage }}</td>
               <td>{{ item.points }}</td>
-
+              <td v-html="item.answers"></td>
               <td align="center">{{ new Date(item.updatedAt).toLocaleString() }}</td>
           </tr>
       </tbody>
