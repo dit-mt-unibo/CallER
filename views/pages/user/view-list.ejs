@@ -1,6 +1,6 @@
 <div id="view-list" v-cloak>
     
-    <modal-delete :item-id="deleteItemId" :action="'/user/delete/'">
+    <modal-delete :item-id="deleteItemId" :action="'/admin/user/delete/'">
         <div slot="body">
             <p>Vuoi eliminare l'utente?</p>
         </div>
@@ -11,7 +11,7 @@
         <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
 
         <div class="container-fluid" style="margin:30px 0">
-            <a class="btn btn-success" href="/user/add">Nuovo utente</a>
+            <a class="btn btn-success" href="/admin/user/add">Nuovo utente</a>
         </div>    
 
         <table class="table table-striped">
@@ -31,7 +31,7 @@
                     <td>{{ item.surname }}</td>
                     <td>{{ item.username }}</td>
                     <td align="center">
-                        <a class="btn btn-primary" :href="'/user/edit/' + item.id">Modifica</a>                    
+                        <a class="btn btn-primary" :href="'/admin/user/edit/' + item.id">Modifica</a>                    
                         <button v-if="item.id != <%= req.session.userId %>" type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)" 
                             data-toggle="modal" data-target="#confirmDeleteModal">
                             Elimina

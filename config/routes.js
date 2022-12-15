@@ -19,121 +19,121 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
+  '/admin': {
     action: 'homepage'
   },
 
   // Routes for places
-  'GET /place/list': {
+  'GET /admin/place/list': {
     action: 'place/view-list'
   },
-  'GET /place/add': {
+  'GET /admin/place/add': {
     action: 'place/view-create'
   },
-  'GET /place/edit/:id': {
+  'GET /admin/place/edit/:id': {
     action: 'place/view-update'
   },
-  'GET /place/details/:id': {
+  'GET /admin/place/details/:id': {
     action: 'place/view-details'
   },
-  'POST /place/save': {
+  'POST /admin/place/save': {
     action: 'place/save'
   },
-  'GET /place/delete/:id': {
+  'GET /admin/place/delete/:id': {
     action: 'place/delete'
   },
-  'POST /place/publish/': {
+  'POST /admin/place/publish/': {
     action: 'place/publish'
   },
-  'POST /place/fulltext-update': {
+  'POST /admin/place/fulltext-update': {
     action: 'place/fulltext-update'
   },
-  'POST /place/image-update': {
+  'POST /admin/place/image-update': {
     action: 'place/image-update'
   },
-  'POST /place/video-update': {
+  'POST /admin/place/video-update': {
     action: 'place/video-update'
   },
-  'POST /place/audio-update': {
+  'POST /admin/place/audio-update': {
     action: 'place/audio-update'
   },
 
 
 
   // Routes for categories
-  'GET /category/list' : {
+  'GET /admin/category/list' : {
     action: 'category/view-list'
   },
-  'GET /category/add': {
+  'GET /admin/category/add': {
     action: 'category/view-create',
     view: 'pages/category/view-create'
   },
-  'GET /category/edit/:id': {
+  'GET /admin/category/edit/:id': {
     action: 'category/view-update'
   },
-  'POST /category/save': {
+  'POST /admin/category/save': {
     action: 'category/save'
   },
-  'GET /category/delete/:id': {
+  'GET /admin/category/delete/:id': {
     action: 'category/delete'
   },
-  'POST /category/description-update': {
+  'POST /admin/category/description-update': {
     action: 'category/description-update'
   },
-  'POST /category/publish': {
+  'POST /admin/category/publish': {
     action: 'category/publish'
   },
 
   // Routes for quiz
-  'POST /quiz/save' : {
+  'POST /admin/quiz/save' : {
     action: 'quiz/save'
   },
-  'POST /quiz/delete': {
+  'POST /admin/quiz/delete': {
     action: 'quiz/delete'
   },
 
 
   // Routes for hunt (caccia al tesoro)
-  'GET /hunt/list' : {
+  'GET /admin/hunt/list' : {
     action: 'hunt/view-list'
   },
-  'GET /hunt/add': {
+  'GET /admin/hunt/add': {
     action: 'hunt/view-create',
     view: 'pages/hunt/view-create'
   },
-  'GET /hunt/edit/:id': {
+  'GET /admin/hunt/edit/:id': {
     action: 'hunt/view-update'
   },
-  'POST /hunt/save': {
+  'POST /admin/hunt/save': {
     action: 'hunt/save'
   },
-  'GET /hunt/delete/:id': {
+  'GET /admin/hunt/delete/:id': {
     action: 'hunt/delete'
   },
 
   // Routes for stages
-  'GET /stage/list' : {
+  'GET /admin/stage/list' : {
     action: 'stage/view-list'
   },
-  'GET /stage/add': {
+  'GET /admin/stage/add': {
     action: 'stage/view-create'
   },
-  'GET /stage/edit/:id': {
+  'GET /admin/stage/edit/:id': {
     action: 'stage/view-update'
   },
-  'GET /stage/details/:id': {
+  'GET /admin/stage/details/:id': {
     action: 'stage/view-details'
   },
-  'POST /stage/save': {
+  'POST /admin/stage/save': {
     action: 'stage/save'
   },
-  'GET /stage/delete/:id': {
+  'GET /admin/stage/delete/:id': {
     action: 'stage/delete'
   },
-  'POST /stage/fulltext-update': {
+  'POST /admin/stage/fulltext-update': {
     action: 'stage/fulltext-update'
   },
-  'POST /stage/image-update': {
+  'POST /admin/stage/image-update': {
     action: 'stage/image-update'
   },
 
@@ -162,76 +162,76 @@ module.exports.routes = {
   },*/
 
   // Routes for user
-  '/login': {
+  '/admin/login': {
     action: 'user/view-login',
     view: 'pages/user/view-login',
     locals: {
       layout: 'layouts/guest'
     }
   },
-  '/logout': {
+  '/admin/logout': {
     action: 'user/logout'
   },
-  'POST /check-account': {
+  'POST /admin/check-account': {
     action: 'user/login'
   },
-  'GET /user/list' : {
+  'GET /admin/user/list' : {
     action: 'user/view-list'
   },
-  'GET /user/add': {
+  'GET /admin/user/add': {
     action: 'user/view-create',
     view: 'pages/user/view-create'
   },
-  'GET /user/edit/:id': {
+  'GET /admin/user/edit/:id': {
     action: 'user/view-update'
   },
-  'POST /user/save': {
+  'POST /admin/user/save': {
     action: 'user/save'
   },
-  'GET /user/delete/:id': {
+  'GET /admin/user/delete/:id': {
     action: 'user/delete'
   },
 
   // Routes for glossary
-  'GET /glossary/list' : {
+  'GET /admin/glossary/list' : {
     action: 'glossary/view-list'
   },
-  'GET /glossary/add': {
+  'GET /admin/glossary/add': {
     action: 'glossary/view-create',
     view: 'pages/glossary/view-create'
   },
-  'GET /glossary/edit/:id': {
+  'GET /admin/glossary/edit/:id': {
     action: 'glossary/view-update'
   },
-  'GET /glossary/details/:id' :{
+  'GET /admin/glossary/details/:id' :{
     action: 'glossary/view-details'
   },
-  'POST /glossary/save': {
+  'POST /admin/glossary/save': {
     action: 'glossary/save'
   },
-  'GET /glossary/delete/:id': {
+  'GET /admin/glossary/delete/:id': {
     action: 'glossary/delete'
   },
-  'POST /glossary/definition-update': {
+  'POST /admin/glossary/definition-update': {
     action: 'glossary/definition-update'
   },
-  'POST /glossary/definition-update': {
+  'POST /admin/glossary/definition-update': {
     action: 'glossary/definition-update'
   },
-  'POST /glossary/image-update': {
+  'POST /admin/glossary/image-update': {
     action: 'glossary/image-update'
   },
-  'POST /glossary/audio-update': {
+  'POST /admin/glossary/audio-update': {
     action: 'glossary/audio-update'
   },
 
   // Routes for feedback
-  'GET /feedback/list' : {
+  'GET /admin/feedback/list' : {
     action: 'feedback/view-list'
   },
 
   // Routes for player
-  'GET /player/list' : {
+  'GET /admin/player/list' : {
     action: 'player/view-list'
   },  
 

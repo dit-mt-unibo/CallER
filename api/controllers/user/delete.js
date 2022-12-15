@@ -63,7 +63,7 @@ module.exports = {
 
         }        
 
-        return this.res.redirect('/user/list');
+        return this.res.redirect('/admin/user/list');
 
     }
 

@@ -34,7 +34,7 @@ parasails.registerPage('view-login', {
         submittedForm: async function () { 
             
             this.syncing = true;            
-            window.location = '/';
+            window.location = '/admin';
 
         },
         rejectedForm (err) {

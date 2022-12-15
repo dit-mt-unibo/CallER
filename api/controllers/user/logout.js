@@ -12,13 +12,13 @@
         // If the user is not logged in, redirect to the login page
         if ( _.isUndefined( this.req.session.userId ) ) { 
 
-            return this.res.redirect('/login');
+            return this.res.redirect('/admin/login');
 
         }
 
         delete this.req.session.userId;
 
-        return this.res.redirect('/login');
+        return this.res.redirect('/admin/login');
 
     }
 

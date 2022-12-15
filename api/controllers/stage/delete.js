@@ -78,7 +78,7 @@
 
         }
 
-        return this.res.redirect('/stage/list');
+        return this.res.redirect('/admin/stage/list');
 
     }
 

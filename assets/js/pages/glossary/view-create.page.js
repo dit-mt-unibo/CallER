@@ -149,14 +149,14 @@ parasails.registerPage('view-create', {
         submittedForm: async function () { 
             
             this.syncing = true;            
-            window.location = '/glossary/list';
+            window.location = '/admin/glossary/list';
 
         },
 
         submittedUpdateForm: async function() {
             
             this.syncing = true;            
-            window.location = '/glossary/details/' + this.item.id;
+            window.location = '/admin/glossary/details/' + this.item.id;
 
         },
 

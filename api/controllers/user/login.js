@@ -32,7 +32,7 @@
         // If the user is already logged in, redirect to the homepage
         if ( _.isUndefined( this.req.session.userId ) === false ) { 
 
-            return this.res.redirect('/');
+            return this.res.redirect('/admin');
 
         }
 

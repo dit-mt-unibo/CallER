@@ -10,6 +10,6 @@ module.exports = async function(req, res, proceed) {
 
     }
 
-    return res.redirect('/login');
+    return res.redirect('/admin/login');
 
 }

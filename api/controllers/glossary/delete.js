@@ -32,7 +32,7 @@ module.exports = {
         catch(err) {
                         
             this.req.session.flash = {type: 'error' , message: 'Eliminazione vocabolo non riuscita. Errore: ' + err.message};
-            return this.res.redirect('/glossary/list');
+            return this.res.redirect('/admin/glossary/list');
 
         }   
         
@@ -61,7 +61,7 @@ module.exports = {
 
         }
 
-        return this.res.redirect('/glossary/list');
+        return this.res.redirect('/admin/glossary/list');
 
     }
 }

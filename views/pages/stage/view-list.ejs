@@ -7,7 +7,7 @@
         </div>
     </modal-editor>
 
-    <modal-delete :item-id="deleteItemId" :action="'/stage/delete/'">
+    <modal-delete :item-id="deleteItemId" :action="'/admin/stage/delete/'">
         <div slot="body">
             <p>Stai per eliminare una tappa, vuoi proseguire?</p>
         </div>
@@ -20,7 +20,7 @@
     <div class="container-fluid row" style="margin:30px 0">
 
         <div class="col-3">
-            <a class="btn btn-success" href="/stage/add">Nuova tappa</a>
+            <a class="btn btn-success" href="/admin/stage/add">Nuova tappa</a>
         </div>
         <div class="col-7">
             <input type="text" class="form-control" placeholder="filtra risultati" v-model="search">
@@ -57,7 +57,7 @@
                 <td align="center">{{ new Date(item.createdAt).toLocaleString() }}</td>
                 <td align="center">{{ new Date(item.updatedAt).toLocaleString() }}</td>
                 <td align="center">
-                    <a class="btn btn-primary" :href="'/stage/details/' + item.id">Visualizza</a>
+                    <a class="btn btn-primary" :href="'/admin/stage/details/' + item.id">Visualizza</a>
                     <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)"
                         data-toggle="modal" data-target="#confirmDeleteModal">
                         Elimina

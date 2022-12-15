@@ -360,13 +360,13 @@ parasails.registerPage('view-create', {
         submittedForm: async function () { 
             
             this.syncing = true;            
-            window.location = '/place/list';
+            window.location = '/admin/place/list';
 
         },
         submittedUpdateForm: async function() {
             
             this.syncing = true;            
-            window.location = '/place/details/' + this.item.id;
+            window.location = '/admin/place/details/' + this.item.id;
 
         },
         rejectedForm (err) {

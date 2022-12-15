@@ -7,7 +7,7 @@
         </div>
     </modal-editor>
 
-    <modal-delete :item-id="deleteItemId" :action="'/hunt/delete/'">
+    <modal-delete :item-id="deleteItemId" :action="'/admin/hunt/delete/'">
         <div slot="body">
             <p>Stai per eliminare una caccia al tesoro.</p>
             <p>Vuoi proseguire?</p>
@@ -21,7 +21,7 @@
     <div class="container-fluid row" style="margin:30px 0">
 
         <div class="col-3">
-            <a class="btn btn-success" href="/hunt/add">Nuova Caccia al Tesoro</a>
+            <a class="btn btn-success" href="/admin/hunt/add">Nuova Caccia al Tesoro</a>
         </div>
         <div class="col-7">
             <input type="text" class="form-control" placeholder="filtra risultati" v-model="search">
@@ -53,7 +53,7 @@
                 </td>
 
                 <td align="center">
-                    <a class="btn btn-primary" :href="'/hunt/edit/' + item.id">Modifica</a>
+                    <a class="btn btn-primary" :href="'/admin/hunt/edit/' + item.id">Modifica</a>
                     <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)"
                         data-toggle="modal" data-target="#confirmDeleteModal">
                         Elimina
@@ -64,7 +64,7 @@
     </table>
 
     <div class="col-3">
-      <a class="btn btn-success" href="/player/list">Progresso dei partecipanti</a>
+      <a class="btn btn-success" href="/admin/player/list">Progresso dei partecipanti</a>
   </div>
 
 <% } %>

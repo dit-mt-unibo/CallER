@@ -313,13 +313,13 @@ parasails.registerPage('view-create', {
         submittedForm: async function () {
 
           this.syncing = true;
-          window.location = '/stage/list';
+          window.location = '/admin/stage/list';
 
         },
         submittedUpdateForm: async function() {
 
           this.syncing = true;
-          window.location = '/stage/details/' + this.item.id;
+          window.location = '/admin/stage/details/' + this.item.id;
 
         },
         rejectedForm (err) {

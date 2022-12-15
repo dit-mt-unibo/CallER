@@ -7,7 +7,7 @@
         </div>
     </modal-editor>
     
-    <modal-delete :item-id="deleteItemId" :action="'/glossary/delete/'">
+    <modal-delete :item-id="deleteItemId" :action="'/admin/glossary/delete/'">
         <div slot="body">
             <p>Stai per eliminare un vocabolo dal glossario. Vuoi proseguire?</p>
         </div>
@@ -20,7 +20,7 @@
     <div class="container-fluid row" style="margin:30px 0">    
 
         <div class="col-3">
-            <a class="btn btn-success" href="/glossary/add">Nuovo vocabolo</a>
+            <a class="btn btn-success" href="/admin/glossary/add">Nuovo vocabolo</a>
         </div>
         <div class="col-7">
             <input type="text" class="form-control" placeholder="filtra risultati" v-model="search">
@@ -53,7 +53,7 @@
                     <text-truncate :text="item.definition"></text-truncate>
                 </td>
                 <td align="center">
-                    <a class="btn btn-primary" :href="'/glossary/details/' + item.id">Visualizza</a>                    
+                    <a class="btn btn-primary" :href="'/admin/glossary/details/' + item.id">Visualizza</a>                    
                     <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)" 
                         data-toggle="modal" data-target="#confirmDeleteModal">
                         Elimina

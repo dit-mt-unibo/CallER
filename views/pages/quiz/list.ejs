@@ -13,15 +13,15 @@
                 <td><%= quiz.id %></td>
                 <td><%= quiz.question %></td>
                 <td>
-                    <a href="/quiz/edit/<%= quiz.id %>" class="btn btn-primary">Modifica</a>
-                    <a href="/quiz/delete/<%= quiz.id %>" class="btn btn-danger confirm-delete" title="Elimina" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton<%= quiz.id %>">Elimina</a>
+                    <a href="/admin/quiz/edit/<%= quiz.id %>" class="btn btn-primary">Modifica</a>
+                    <a href="/admin/quiz/delete/<%= quiz.id %>" class="btn btn-danger confirm-delete" title="Elimina" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton<%= quiz.id %>">Elimina</a>
                 </td>
             </tr>
         <% }); %>
     </tbody> 
 </table>
 
-<a class="btn btn-success" href="/quiz/add">Aggiungi</a>
+<a class="btn btn-success" href="/admin/quiz/add">Aggiungi</a>
 
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">

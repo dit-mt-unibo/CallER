@@ -2,7 +2,7 @@
 
   $(document).ready (function () {
 
-    var choices = <%- quiz.choices %> ;
+    var choices = quiz.choices ;
     $('#choiceA').val(choices[0]);
     $('#choiceB').val(choices[1]);
     $('#choiceC').val(choices[2]);
@@ -32,7 +32,7 @@ id, question, choices, answer
   <div class="container">
 
   </div>
-  <form onload="SplitChoices();" id="createQuiz" action="<%= '/quiz/update/'+  quiz.id %>" method="POST">
+  <form onload="SplitChoices();" id="createQuiz" action="<%= '/admin/quiz/update/'+  quiz.id %>" method="POST">
     <div class="form-group">
       <label>Domanda</label>
       <input type="text" class="form-control" name="question" value="<%=quiz.question%>">

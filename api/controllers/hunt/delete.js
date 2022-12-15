@@ -32,7 +32,7 @@ module.exports = {
         catch(err) {
 
             this.req.session.flash = {type: 'error' , message: 'Eliminazione caccia al tesoro non riuscita. Errore: ' + err.message};
-            return this.res.redirect('/hunt/list');
+            return this.res.redirect('/admin/hunt/list');
 
         }
 
@@ -56,7 +56,7 @@ module.exports = {
 
         }
 
-        return this.res.redirect('/hunt/list');
+        return this.res.redirect('/admin/hunt/list');
 
     }
 }

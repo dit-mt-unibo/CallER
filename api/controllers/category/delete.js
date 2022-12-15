@@ -97,7 +97,7 @@ module.exports = {
 
         }        
 
-       return this.res.redirect('/category/list');
+       return this.res.redirect('/admin/category/list');
 
     }
 

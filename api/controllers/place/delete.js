@@ -60,7 +60,7 @@
 
         } 
         
-        return this.res.redirect('/place/list');
+        return this.res.redirect('/admin/place/list');
 
     }
 
