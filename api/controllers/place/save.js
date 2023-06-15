@@ -105,6 +105,8 @@ const { exit } = require('process');
         if ( _.isEmpty(inputs.video) === false ) {
 
             inputs.video = youtubeEmbedUrl(inputs.video);
+            const youTubeVideoId = inputs.video.split('/').slice(-1);
+            inputs.video_preview = 'https://img.youtube.com/vi/' + youTubeVideoId[0] + '/hqdefault.jpg';
 
         }
 

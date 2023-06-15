@@ -114,7 +114,7 @@
 
           this.syncing = true;
 
-          var data = { id: this.item.id , video: ''}
+          var data = { id: this.item.id , video: '' , video_preview: ''}
 
           // Submit the form
           var failedWithCloudExit;

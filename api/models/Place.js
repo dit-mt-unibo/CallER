@@ -67,6 +67,13 @@ module.exports = {
             isURL: true
         },
 
+        video_preview: {
+            type: 'string',
+            description: 'youtube thumbnail',
+            allowNull: true,
+            isURL: true
+        },
+
         video_block: {
             type: 'number',
             description: '0=unblocked, user can play the video. 1=blocked, user can not play the video',

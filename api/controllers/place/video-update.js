@@ -13,6 +13,10 @@
         },
         video: {
             type: 'string',
+        },
+        video_preview: {
+            type: 'string',
+            allowNull: true
         }
     },
 
@@ -33,10 +37,12 @@
         if ( _.isEmpty(inputs.video) === false ) {
 
             inputs.video = youtubeEmbedUrl(inputs.video);
+            const youTubeVideoId = inputs.video.split('/').slice(-1);
+            inputs.video_preview = 'https://img.youtube.com/vi/' + youTubeVideoId[0] + '/hqdefault.jpg';
 
         }
         
-        var result = await Place.updateOne( { id: inputs.id } ).set( { video: inputs.video } )
+        var result = await Place.updateOne( { id: inputs.id } ).set( { video: inputs.video , video_preview: inputs.video_preview } )
                         .intercept( (err) => {
 
                             return exits.saveFail();

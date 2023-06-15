@@ -19,7 +19,7 @@
           {{ item.address }}
         </a>
       </div>
-      <div class="col-12 d-none d-sm-block">
+      <div v-if="item.address" class="col-12 d-none d-sm-block">
         <i class="fas fa-map-marker-alt" style="color:#007bff;"></i>
         <a style="text-decoration:underline"
           :href="addressLinkMap"
@@ -58,15 +58,15 @@
         </div>
         <span v-html="item.full_text"></span>
       </div>
-      <div align="center" class="col-12 mt-3 mb-3" v-if="item.video">
-        <iframe
-          v-if="!isBlocked"
-          class="youvideo"
-          :src="item.video"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        ></iframe>
+      <div align="center" class="col-12 mt-3 mb-3" v-if="item.video_preview">
+        <div v-if="!isBlocked">
+          <a :href="item.video" target="_blank">
+            <img :src="item.video_preview" style="width: 100%; max-width: 400px;"/>
+            <div class="mt-3">
+              <p style="font-size: 1.2rem;">Guarda su YouTube</p>
+            </div>
+          </a>          
+        </div>
       </div>
       <div align="center" class="col-12 mt-3 mb-3" v-if="item.audio">
         <iframe
