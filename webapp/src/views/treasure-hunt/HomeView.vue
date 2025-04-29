@@ -50,7 +50,7 @@
     <div class="container-fluid">
         <div class="row">
             <div align="center" class="col-12 thunt-footer">
-                <p>@2022 DIT - Forlì</p>
+                <p>@2025 DIT - Forlì</p>
                 <p>
                     <span @click="this.$router.push('/contenuto/81');">Credits</span>
                     <a href="https://www.unibo.it/it/ateneo/privacy-e-note-legali/privacy/privacy-sistema-portale-ateneo" target="_blank" class="ml-3">Cookie</a>
