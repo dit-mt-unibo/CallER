@@ -137,6 +137,47 @@ module.exports.routes = {
     action: 'stage/image-update'
   },
 
+  // Routes for abgame (Gioco A/B)
+  'GET /admin/abgame/list': {
+    action: 'abgame/view-list'
+  },
+  'GET /admin/abgame/add': {
+    action: 'abgame/view-create',
+    view: 'pages/habgameunt/view-create'
+  },
+  'GET /admin/abgame/edit/:id': {
+    action: 'abgame/view-update'
+  },
+  'POST /admin/abgame/save': {
+    action: 'abgame/save'
+  },
+  'GET /admin/abgame/delete/:id': {
+    action: 'abgame/delete'
+  },
+
+  // Routes for questions (A/B game)
+  'GET /admin/abquestion/list': {
+    action: 'abquestion/view-list'
+  },
+  'GET /admin/abquestion/add': {
+    action: 'abquestion/view-create'
+  },
+  'GET /admin/abquestion/edit/:id': {
+    action: 'abquestion/view-update'
+  },
+  'GET /admin/abquestion/details/:id': {
+    action: 'abquestion/view-details'
+  },
+  'POST /admin/abquestion/save': {
+    action: 'abquestion/save'
+  },
+  'GET /admin/abquestion/delete/:id': {
+    action: 'abquestion/delete'
+  },
+  'POST /admin/abquestion/fulltext-update': {
+    action: 'abquestion/fulltext-update'
+  },
+  
 
 
 

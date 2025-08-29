@@ -1,0 +1,128 @@
+<div id="view-create" class="container" v-cloak>
+
+    <modal-glossary :terms="terms" @click="insertGlossaryLink()"></modal-glossary>
+
+    <!--onload="SplitChoices();" -->
+    <ajax-form  action="saveAbquestion" :syncing.sync="syncing"
+        :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules"
+        :form-errors.sync="formErrors" :abgame-id="abgameId"
+        :tbw-editor-id="'tbweditor'" :tbw-editor-field="'full_text'"
+        @submitted="submittedUpdateForm($event)" @rejected="rejectedForm($event)">
+
+        <div class="form-group">
+            <label :class="[formErrors.name1 ? 'text-danger' : '']">
+                Nome primo oggetto
+            </label>
+            <input type="text" name="name1" class="form-control" :class="[formErrors.name1 ? 'is-invalid' : '']"
+                v-model="formData.name1" maxlength="100" id="name1" />
+            <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+            <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 100 caratteri</cloud-error>
+        </div>
+
+      <div class="form-group">
+        <label :class="[formErrors.description1 ? 'text-danger' : '']">
+          Descrizione 
+        </label>
+        <input type="text" name="description1" class="form-control" :class="[formErrors.description1 ? 'is-invalid' : '']"
+            v-model="formData.description1" maxlength="250" id="description1" />
+        <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+        <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 250 caratteri</cloud-error>
+      </div>
+
+      <div class="form-group">
+        <label :class="[formErrors.imageUrl1 ? 'text-danger' : '']">
+          Url immagine
+        </label>
+        <input type="text" name="imageUrl1" class="form-control" :class="[formErrors.imageUrl1 ? 'is-invalid' : '']"
+            v-model="formData.imageUrl1" maxlength="250" id="imageUrl1" />
+        <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+        <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 250 caratteri</cloud-error>
+      </div>
+
+      <div class="form-group">
+        <label :class="[formErrors.name2 ? 'text-danger' : '']">
+          Nome secondo oggetto
+        </label>
+        <input type="text" name="name2" class="form-control" :class="[formErrors.name2 ? 'is-invalid' : '']"
+            v-model="formData.name2" maxlength="100" id="name2" />
+        <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+        <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 100 caratteri</cloud-error>
+      </div>
+
+      <div class="form-group">
+        <label :class="[formErrors.description2 ? 'text-danger' : '']">
+          Descrizione
+        </label>
+        <input type="text" name="description2" class="form-control" :class="[formErrors.description2 ? 'is-invalid' : '']"
+            v-model="formData.description2" maxlength="250" id="description2" />
+        <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+        <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 250 caratteri</cloud-error>
+      </div>
+
+      <div class="form-group">
+        <label :class="[formErrors.imageUrl2 ? 'text-danger' : '']">
+          Url immagine
+        </label>
+        <input type="text" name="imageUrl2" class="form-control" :class="[formErrors.imageUrl2 ? 'is-invalid' : '']"
+            v-model="formData.imageUrl2" maxlength="250" id="imageUrl2" />
+        <cloud-error v-if="formErrors.name === 'required'">Campo obbligatorio</cloud-error>
+        <cloud-error v-if="formErrors.name === 'maxLength'">Il campo può contenere al max. 250 caratteri</cloud-error>
+      </div>
+      
+       
+        <div class="form-group">
+          <label :class="[formErrors.points ? 'text-danger' : '']">
+              Punti assegnati
+          </label>
+          <input type="text" name="points" class="form-control" :class="[formErrors.points ? 'is-invalid' : '']"
+              v-model="formData.points" maxlength="5" id="points" />
+          <cloud-error v-if="formErrors.points === 'required'">Campo obbligatorio</cloud-error>
+          <cloud-error v-if="formErrors.points === 'maxLength'">Il campo può contenere al max. 5 caratteri (cifre)</cloud-error>
+        </div>
+
+        <div class="form-group">
+            <label :class="[formErrors.abgame_id ? 'text-danger' : '']">
+                Gioco
+            </label>
+            <select name="abgame_id" ref="abgameId" class="form-control" :class="[formErrors.abgame_id ? 'is-invalid' : '']"
+                id="abgame_id" v-on:change="selectOption()">
+                <option value=""></option>
+                <% abgames.forEach(element => { %>
+                    <option value="<%= element.id %>"
+                        <% if ( element.id == item.abgame_id ) { %> selected <% } %> >
+                        <%= element.name %>
+                    </option>
+                <% }) %>
+            </select>
+            <cloud-error v-if="formErrors.abgame_id === 'required'">Campo obbligatorio</cloud-error>
+        </div>
+
+        <input type="hidden" name="id" v-model="formData.id">
+
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <cloud-error  v-if="cloudError === 'saveFail'" >Errore durante il salvataggio dei dati</cloud-error>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-1">
+                <button type="button" class="btn btn-primary" onclick="window.location = '/admin/abquestion/details/<%= item.id %>';">Indietro</button>
+            </div>
+            <div class="col-1">
+                <ajax-button type="submit" :syncing="syncing">Salva</ajax-button>
+            </div>
+
+        </div>
+
+    </ajax-form>
+
+</div>
+
+<script src="/jscripts/cloud.setup.js"></script>
+<script src="/jscripts/components/ajax-button.component.js"></script>
+<script src="/jscripts/components/ajax-form.component.js"></script>
+<script src="/jscripts/components/cloud-error.component.js"></script>
+<script src="/jscripts/components/modal-glossary.component.js"></script>
+<script src="/jscripts/pages/stage/view-create.page.js"></script>

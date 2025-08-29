@@ -1,0 +1,82 @@
+<div id="view-list" v-cloak>
+
+  <!--
+    <modal-editor action="updateFullText" :syncing.sync="syncing" :form-message.sync="formMessage"
+        :required="required" :item="item" :field="'full_text'">
+        <div slot="header">
+            Modifica testo
+        </div>
+    </modal-editor>
+    -->
+
+    <modal-delete :item-id="deleteItemId" :action="'/admin/abquestion/delete/'">
+        <div slot="body">
+            <p>Stai per eliminare una coppia, vuoi proseguire?</p>
+        </div>
+    </modal-delete>
+
+    <div class="container-fluid">
+
+    <flash-message v-if="flashMessage" :message="flashMessage.message" :type="flashMessage.type"></flash-message>
+
+    <div class="container-fluid row" style="margin:30px 0">
+
+        <div class="col-3">
+            <a class="btn btn-success" href="/admin/abquestion/add">Nuova coppia</a>
+        </div>
+<!--
+        <div class="col-7">
+            <input type="text" class="form-control" placeholder="filtra risultati" v-model="search" />
+        </div>
+-->
+    </div>
+
+<%  if ( items.length == 0 ) { %>
+
+    <%- partial('../../partials/no-result.ejs' , {message: "Non sono state ancora inserite delle domande. Utilizza il bottone Nuovo contenuto per iniziare."}) %>
+
+<% } else { %>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="10%">Gioco</th>
+                <th width="20%">Nome 1</th>
+                <th width="20%">Nome 2</th>
+                <th style="text-align: center" width="10%">Creato</th>
+                <th style="text-align: center" width="10%">Modificato</th>
+                <th width="15%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in items">
+                <td>{{ item.id }}</td>
+                <td>{{ item.abgame_name }}</td>
+                <td>{{ item.name1 }}</td>
+                <td>{{ item.name2 }}</td>
+                <td align="center">{{ new Date(item.createdAt).toLocaleString() }}</td>
+                <td align="center">{{ new Date(item.updatedAt).toLocaleString() }}</td>
+                <td align="center">
+                    <a class="btn btn-primary" :href="'/admin/abquestion/details/' + item.id">Visualizza</a>
+                    <button type="button" class="btn btn-danger confirm-delete" @click="setDeleteItemId(item.id)"
+                        data-toggle="modal" data-target="#confirmDeleteModal">
+                        Elimina
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<% } %>
+
+    </div>
+
+</div>
+
+<script src="/jscripts/cloud.setup.js"></script>
+<!-- <script src="/jscripts/components/modal-editor.component.js"></script> -->
+<script src="/jscripts/components/modal-delete.component.js"></script>
+<script src="/jscripts/components/flash-message.component.js"></script>
+<script src="/jscripts/components/text-truncate.component.js"></script>
+<script src="/jscripts/pages/view-list.page.js"></script>

@@ -38,7 +38,8 @@ parasails.registerComponent('ajaxForm', {
         'placeImage', // place field image
         'level', // place. Content difficulty level
         'stageImage',  // stage field image
-        'huntId', // hunt id for stages
+    'huntId', // hunt id for stages
+        'abgameId',
 
     ],
 
@@ -176,6 +177,12 @@ parasails.registerComponent('ajaxForm', {
 
             }
 
+          // Abquestion form. Adds abgame_id key to the formData object
+          if (_.isUndefined(this.abgameId) === false) {
+
+            this.$set(this.formData, 'abgame_id', this.abgameId);
+
+          }
 
             // Adds trumbowyg content to the formData object
             if ( _.isUndefined(this.tbwEditorId) === false ) {

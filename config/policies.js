@@ -42,5 +42,9 @@ module.exports.policies = {
   'player/save': true,
   'player/save-answer': true,
   'player/find': true,
+  'abgame/find': true,
+  'abgame/render': true,
+  'abquestion/find': true,
+  'abquestion/render':true,
 
 };

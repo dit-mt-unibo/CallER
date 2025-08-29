@@ -207,3 +207,12 @@
 .feedback-title:hover{
     cursor: pointer;
 }
+
+.cardimage {
+  display: flex;
+  width: 100%;
+  height: 400px;
+  max-width: 400px;
+  max-height: 300px;
+  object-fit: contain;
+}
