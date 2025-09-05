@@ -350,5 +350,22 @@ module.exports.routes = {
   'GET /api/stage': {
     action: 'stage/render'
   },
-  
+
+  // Gioco A/B
+  'GET /api/abgame': {
+    action: 'abgame/find'
+  },
+'GET /api/get-abgame-id': {
+  action: 'abgame/find'
+  },
+  'GET /api/abgame/:id': {
+    action: 'abgame/render'
+  },
+
+  'GET /api/generate-new-game': {
+    action: 'abgame/generate-game'
+  },
+  'GET /api/abquestion/:id': {
+    action: 'abquestion/render'
+  },
 };

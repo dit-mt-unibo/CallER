@@ -82,6 +82,7 @@ export default {
             this.name = response.data.item.name;
             this.description = response.data.item.description;
 
+            console.log(response.data);
             if ( response.data.childrenCategories.length > 0 ) {
 
                 this.href = "/contenuti/";

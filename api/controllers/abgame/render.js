@@ -2,12 +2,9 @@ const abgame = require("../../models/Abgame");
 
 module.exports = {
 
-
   friendlyName: 'Render',
 
-
   description: 'Render game and questions (link to questions)',
-
 
   inputs: {
     id: {
@@ -15,7 +12,6 @@ module.exports = {
       type: 'number',
     }
   },
-
 
   exits: {
     success: {
@@ -28,7 +24,6 @@ module.exports = {
       // viewTemplatePath: 'pages/error'
     }
   },
-
 
   fn: async function (inputs) {
 
@@ -44,14 +39,14 @@ module.exports = {
       };
     }
 
-
     let children = {};
     children = await Abquestion.find({
-      select: ["id" , "name1", "name2" ],
+      select: ["id" , "name1", "name2"],
       where: { abgame_id: inputs.id },
       sort: 'id ASC'
     });
 
+    console.log("Rendering Abgame: " + item);
     return { item, children };
 
   }

@@ -31,15 +31,14 @@ module.exports = {
 
     let item = {};
     try {
-      item = await abquestion.findOne({
-        select: ['name1', 'name2', 'description1', 'description2', 'imageUrl1', 'imageUrl2', 'full_text', 'points'],
-        where: { id: inputs.id }
-      } );
+      item = await Abquestion.findOne(inputs.id);
     }
     catch (err) {
       throw {
         fail: {
-          error: { title: "Errore database", message: "Impossibile trovare la Coppia richiesta" }
+          error: {
+            title: "Errore database", message: "Impossibile trovare la Coppia richiesta (" + inputs.id + ")"
+          }
         }
       };
     }

@@ -60,7 +60,7 @@ module.exports = {
 
     abgame_id: {
       type: 'number',
-      required: false
+      required: true
     },
 
     points: {

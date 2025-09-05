@@ -311,7 +311,7 @@ export default {
     async getPlace() {
       let id = this.$route.params.id;
       const response = await axios.get(this.apiUrl + "/api/place/" + id);
-
+      console.log(response.data);
       return response.data.item;
     },
 
