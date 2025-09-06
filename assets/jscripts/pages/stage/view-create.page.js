@@ -248,6 +248,9 @@ parasails.registerPage('view-create', {
         // Glossary terms
         terms: [],
 
+        // Position. Select box
+        position: '',
+
     },
 
     // Populates formData only in update mode.
@@ -257,9 +260,11 @@ parasails.registerPage('view-create', {
 
           this.formData = window.SAILS_LOCALS['item'];
           this.huntId = (this.formData.hunt_id == null ) ? null : parseInt(this.formData.hunt_id);
+          this.position = parseInt(this.formData.position);
           this.formData.lat = ( _.isNull(this.formData.lat) === false ) ? String(this.formData.lat) : null;
           this.formData.long = ( _.isNull(this.formData.long) === false ) ? String(this.formData.long) : null;
           this.formRules["image"] = {}; // image validation is not required in update mode
+          this.formRules["position"] = { required: true } // position is required in update mode
 
       }
       else {
@@ -325,10 +330,19 @@ parasails.registerPage('view-create', {
         rejectedForm (err) {
         },
 
-        // Sets hunt ID
-        selectOption () {
+        // Set hunt_id or position
+        selectOption (field) {
 
-            this.huntId = this.$refs.huntId.value;
+            if (field == "hunt_id") {
+
+                this.huntId = this.$refs.huntId.value;
+
+            }
+            else {
+
+                this.position = this.$refs.position.value;
+
+            }            
 
         },
 

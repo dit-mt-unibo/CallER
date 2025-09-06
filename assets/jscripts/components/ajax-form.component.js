@@ -39,6 +39,7 @@ parasails.registerComponent('ajaxForm', {
         'level', // place. Content difficulty level
         'stageImage',  // stage field image
         'huntId', // hunt id for stages
+        'position', // position for stage
 
     ],
 
@@ -173,6 +174,13 @@ parasails.registerComponent('ajaxForm', {
             if ( _.isUndefined(this.stageImage) === false ) {
 
               this.$set(this.formData, 'image' , this.stageImage);
+
+            }
+
+            // Stage form. Adds position key to the formData object
+            if ( _.isUndefined(this.position) === false ) {
+
+              this.$set(this.formData, 'position' , this.position);
 
             }
 
