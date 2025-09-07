@@ -143,7 +143,7 @@ module.exports.routes = {
   },
   'GET /admin/abgame/add': {
     action: 'abgame/view-create',
-    view: 'pages/habgameunt/view-create'
+    view: 'pages/abgame/view-create'
   },
   'GET /admin/abgame/edit/:id': {
     action: 'abgame/view-update'
@@ -173,9 +173,6 @@ module.exports.routes = {
   },
   'GET /admin/abquestion/delete/:id': {
     action: 'abquestion/delete'
-  },
-  'POST /admin/abquestion/fulltext-update': {
-    action: 'abquestion/fulltext-update'
   },
   
 
@@ -360,11 +357,7 @@ module.exports.routes = {
   },
   'GET /api/abgame/:id': {
     action: 'abgame/render'
-  },
-
-  'GET /api/generate-new-game': {
-    action: 'abgame/generate-game'
-  },
+  },  
   'GET /api/abquestion/:id': {
     action: 'abquestion/render'
   },

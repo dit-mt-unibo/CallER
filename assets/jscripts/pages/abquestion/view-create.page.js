@@ -87,14 +87,9 @@ parasails.registerPage('view-create', {
         cloudError: '' ,
         saveFailMessage: '',
 
-        // Hunt ID. Select box
+        // Abgame ID. Select box
         abgameId: '',
 
-        // Stage image
-        stageImg: '',
-
-        // Glossary terms
-        terms: [],
 
     },
 
@@ -104,8 +99,7 @@ parasails.registerPage('view-create', {
         if ( _.isUndefined(window.SAILS_LOCALS['item']) == false ) {
 
           this.formData = window.SAILS_LOCALS['item'];
-          this.abgameId = (this.formData.ag_game_id == null) ? null : parseInt(this.formData.ag_game_id);
-
+          this.abgameId = (this.formData.abgame_id == null) ? null : parseInt(this.formData.abgame_id);
       }
       else {
       }

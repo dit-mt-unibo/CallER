@@ -38,9 +38,9 @@ parasails.registerComponent('ajaxForm', {
         'placeImage', // place field image
         'level', // place. Content difficulty level
         'stageImage',  // stage field image
-    'huntId', // hunt id for stages
-        'abgameId',
-
+        'huntId', // hunt id for stages
+        'abgameId', // abgame id for abquestion
+    
     ],
 
 

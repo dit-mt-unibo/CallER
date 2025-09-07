@@ -40,7 +40,7 @@
 
      full_text: {
        type: 'string',
-       required: true
+       required: false
      },
 
         
@@ -51,11 +51,6 @@
         id: {
             type: 'number',
             allowNull: true
-        },
-
-        question: {
-          type: 'string',
-          allowNull: true
         },
         
         points: {
