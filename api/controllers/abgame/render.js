@@ -46,7 +46,6 @@ module.exports = {
       sort: 'id ASC'
     });
 
-    console.log("Rendering Abgame: " + item);
     return { item, children };
 
   }

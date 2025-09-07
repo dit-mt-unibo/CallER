@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+
 import home from './components/home.page.vue'
 import categories from './components/categories.page.vue'
 import places from './components/places.page.vue'
@@ -7,6 +8,7 @@ import search from './components/search.page.vue'
 import glossary from './components/glossary.page.vue'
 import game from './components/game.page.vue'
 import abquestion from './components/abquestion.page.vue'
+import games from './components/games.page.vue'
 
 import TreasureHome from './views/treasure-hunt/HomeView.vue';
 import TreasureIntro from './views/treasure-hunt/IntroView.vue';
@@ -14,13 +16,7 @@ import TreasureStage from './views/treasure-hunt/StageView.vue';
 import TreasureCompleted from './views/treasure-hunt/CompletedView.vue';
 import TreasureError from './views/treasure-hunt/ErrorView.vue';
 
-import games from './components/games.page.vue'
-
-import AbgameHome from './views/abgame/HomeView.vue';
-import AbgameIntro from './views/abgame/IntroView.vue';
-import AbgamePair from './views/abgame/PairView.vue';
-import AbgameCompleted from './views/abgame/CompletedView.vue';
-import AbgameError from './views/abgame/ErrorView.vue';
+import AbgameCompleted from './components/abgame-completed.page.vue';
 
 const routes = [
   {
@@ -32,6 +28,7 @@ const routes = [
     path: "/giochi",
     name: "giochi",
     component: games,
+    meta: { layout: "abgame" },
   },
   {
     path: "/categorie/:id",
@@ -91,41 +88,23 @@ const routes = [
     component: TreasureError,
     meta: { layout: "hunt" },
   },
-  // Sezione gioco A/B
-  {
-    path: "/gioco-ab/:id",
-    component: AbgameHome,
-    meta: { layout: "abgame" },
-  },
+  // Sezione gioco A/B  
   {
     path: "/abgame/:id",
     name: "abgame",
     component: game,
-  },
-  {
-    path: "/gioco-ab/intro",
-    component: AbgameIntro,
     meta: { layout: "abgame" },
   },
   {
-    path: "/gioco-ab/domande",
-    component: AbgamePair,
-    meta: { layout: "abgame" },
-  },
-  {
-    path: "/gioco-ab/completata",
+    path: "/abgame/finished/:id",
     component: AbgameCompleted,
     meta: { layout: "abgame" },
-  },
-  {
-    path: "/gioco-ab/errore",
-    component: AbgameError,
-    meta: { layout: "abgame" },
-  },
+  },  
   {
     path: "/abquestion/:id",
     name: "abquestion",
     component: abquestion,
+    meta: { layout: "abgame" },
   },
 ];
 

@@ -1,24 +1,19 @@
-<!-- Home page della WebApp -->
+<!-- Lista dei giochi -->
 
 <template>
-    <toolbar :title="''" :category_id="''" />
-    <modalTodaysWord/>
-    <div class="container pt-4">
-        <div align="center" class="row">            
-            <div class="col-6 col-md-4" v-for="abgame in abgames" v-bind:key="abgame.id" v-bind:abgame="abgame">
-                <div class="home-icon-box" align="center">
-                    <span class="btn" @click="goTo(abgame.id)">                        
-                      <p class="mt-3">{{abgame.name}}</p>
-                    </span>
-                </div>             
-            </div>            
-        </div> <!-- chiusura row -->
+    <div class="flex content-align-center">
+      <div class="titolo">Gioca con noi!</div>
+          <div class="row" v-for="abgame in abgames" v-bind:key="abgame.id" v-bind:abgame="abgame">
+              <div class="titolo" align="center">
+                  <span class="btn" @click="goTo(abgame.id)">                        
+                    <p class="titolo titolo-gioco">&gt;&nbsp;{{abgame.name}}</p>
+                  </span>
+              </div>
+          </div>                    
     </div> <!-- chiusura container -->    
 </template>
 
 <script>
-
-import toolbar from './toolbar.component.vue';
 
 const axios = require('axios')
 
@@ -75,8 +70,7 @@ export default {
         
     },
 
-    components: {
-        toolbar 
+    components: {        
     }
     
 }

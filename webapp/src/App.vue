@@ -16,7 +16,7 @@ Template principale della WebApp all'interno del quale vengono visualizzate le p
 import CookieGdpr from './components/cookie-gdpr.component.vue';
 import DefaultLayout from './layouts/default.layout.vue';
 import TreasureHuntLayout from './layouts/treasure-hunt.layout.vue';
-import AbgameHuntLayout from './layouts/abgame.layout.vue';
+import AbgameLayout from './layouts/abgame.layout.vue';
 
 export default {
 
@@ -28,8 +28,8 @@ export default {
     },
 
     components: {
-        
-        CookieGdpr, DefaultLayout, TreasureHuntLayout
+
+      CookieGdpr, DefaultLayout, TreasureHuntLayout, AbgameLayout
         
     },
 

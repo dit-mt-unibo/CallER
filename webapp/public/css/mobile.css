@@ -113,6 +113,10 @@ body {
   font-weight: 700;
 }
 
+.titolo-gioco {
+    color: darkblue;
+}
+
 .category-name{
     font-size: 1.1em;
     padding: 0 15px;
