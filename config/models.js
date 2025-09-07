@@ -53,7 +53,7 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
   /* TODO Comment when we are in production environment */ 
-  migrate: 'alter',
+  migrate: 'safe',
 
 
   /***************************************************************************

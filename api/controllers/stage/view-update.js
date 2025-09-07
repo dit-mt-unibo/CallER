@@ -39,6 +39,8 @@
         let hunts = [];
         // Terms from glossary table
         let terms = [];
+        // Number of stages in a hunt
+        let stages = 1;
 
         try {
 
@@ -61,6 +63,10 @@
 
             item = await Stage.findOne({ id: id });
 
+            records = await Stage.find({ select: ["id"], where: { hunt_id: item.hunt_id } });
+
+            stages = records.length;
+
         }
         catch (err) {
 
@@ -80,7 +86,7 @@
 
         }
 
-        return { item: item , pageTitle: pageTitle , hunts: hunts, terms: terms };
+        return { item: item , stages: stages, pageTitle: pageTitle , hunts: hunts, terms: terms };
 
     }
 

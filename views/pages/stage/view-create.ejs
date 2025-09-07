@@ -189,7 +189,7 @@
                 Caccia al tesoro
             </label>
             <select name="hunt_id" ref="huntId" class="form-control" :class="[formErrors.hunt_id ? 'is-invalid' : '']"
-                id="hunt_id" v-on:change="selectOption()">
+                id="hunt_id" v-on:change="selectOption('hunt_id')">
                 <option value=""></option>
                 <% hunts.forEach(element => { %>
                     <option value="<%= element.id %>"><%= element.name %></option>

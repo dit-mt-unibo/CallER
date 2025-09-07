@@ -135,6 +135,8 @@
         }
         else {
 
+            inputs.position = await reorderStages(inputs.id, inputs.hunt_id, inputs.position);
+
             try {
 
                 var result = await Stage.updateOne( {id: inputs.id} ).set(inputs);
@@ -155,7 +157,50 @@
 
         }
 
+    },
+}
+
+/**
+ * Riordina le tappe in base alla scelta dell'utente.
+ * 
+ * Ritorna la posizione corretta da assegnare alla tappa in modifica
+ * 
+ * @param {Number} stage_id ID tappa in modifica
+ * @param {Number} hunt_id ID caccia al tesoro selezionata nel form
+ * @param {Number} new_position nuova posizione della tappa
+ * @returns Number
+ */
+async function reorderStages(stage_id, hunt_id, new_position) {
+
+    // Recupera la "vecchia" posizione della tappa
+    const stage = await Stage.findOne({ select: ["position", "hunt_id"], where: { id: stage_id } });
+
+    // Se l'utente sposta la tappa in un'altra caccia al tesoro, la tappa verrà posizionata all'ultimo posto
+    if (stage.hunt_id != hunt_id) {
+
+        const stages = await Stage.find({ hunt_id: hunt_id });
+        
+        return stages.length + 1;
+
+    }
+    
+    if(stage.position != new_position) {
+        
+        // Sposta la tappa che occupa la posizione "new_position" nella posizione della tappa in modifica
+        try {
+
+            await Stage.updateOne({ hunt_id: hunt_id, position: new_position }).set({ position: stage.position });
+
+        }
+        catch (err) {
+
+            sails.log("Can't reorder the stages due to: " + err.message);
+
+            return stage.position;
+        }
+
     }
 
+    return new_position;
 }
 

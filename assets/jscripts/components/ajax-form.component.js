@@ -41,6 +41,8 @@ parasails.registerComponent('ajaxForm', {
         'huntId', // hunt id for stages
         'abgameId', // abgame id for abquestion
     
+        'position', // position for stage
+
     ],
 
 
@@ -183,6 +185,13 @@ parasails.registerComponent('ajaxForm', {
             this.$set(this.formData, 'abgame_id', this.abgameId);
 
           }
+            // Stage form. Adds position key to the formData object
+            if ( _.isUndefined(this.position) === false ) {
+
+              this.$set(this.formData, 'position' , this.position);
+
+            }
+
 
             // Adds trumbowyg content to the formData object
             if ( _.isUndefined(this.tbwEditorId) === false ) {

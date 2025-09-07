@@ -5,7 +5,7 @@
     <!--onload="SplitChoices();" -->
     <ajax-form  action="saveStage" :syncing.sync="syncing"
         :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules"
-        :form-errors.sync="formErrors" :hunt-id="huntId"
+        :form-errors.sync="formErrors" :hunt-id="huntId" :position="position"
         :tbw-editor-id="'tbweditor'" :tbw-editor-field="'full_text'"
         @submitted="submittedUpdateForm($event)" @rejected="rejectedForm($event)">
 
@@ -124,6 +124,22 @@
               v-model="formData.points" maxlength="5" id="points" />
           <cloud-error v-if="formErrors.points === 'required'">Campo obbligatorio</cloud-error>
           <cloud-error v-if="formErrors.points === 'maxLength'">Il campo può contenere al max. 5 caratteri (cifre)</cloud-error>
+        </div>        
+
+        <div class="form-group">
+            <label :class="[formErrors.position ? 'text-danger' : '']">
+                Posizione
+            </label>
+            <select name="position" ref="position" class="form-control" :class="[formErrors.position ? 'is-invalid' : '']"
+                id="position" v-on:change="selectOption('position')">                
+                <% for (let index = 1; index <= stages; index++) { %>
+                  <option value="<%= index %>"
+                        <% if ( index == item.position ) { %> selected <% } %> >
+                        <%= index %>
+                    </option>
+                <% } %>
+            </select>
+            <cloud-error v-if="formErrors.position === 'required'">Campo obbligatorio</cloud-error>
         </div>
 
         <div class="form-group">
@@ -131,7 +147,7 @@
                 Caccia al tesoro
             </label>
             <select name="hunt_id" ref="huntId" class="form-control" :class="[formErrors.hunt_id ? 'is-invalid' : '']"
-                id="hunt_id" v-on:change="selectOption()">
+                id="hunt_id" v-on:change="selectOption('hunt_id')">
                 <option value=""></option>
                 <% hunts.forEach(element => { %>
                     <option value="<%= element.id %>"
