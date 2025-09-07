@@ -68,9 +68,12 @@ parasails.registerPage('view-create', {
             name2: { required: true, maxLength: 100 },
             imageUrl1: {
                 required: true ,                
-            },
+          },
+          imageUrl2: {
+            required: true,
+          },
             points: {
-                required: true
+                required: false
             },
             abgame_id: {
                 required: true,
