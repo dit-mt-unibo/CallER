@@ -47,6 +47,7 @@ body {
   position: relative;
   min-height: calc(100% - 230px);
   height: auto !important;
+  padding: 5px;
 }
 
 .footer {    

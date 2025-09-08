@@ -108,6 +108,7 @@ export default {
           abgame_id: id,
           list_as_string,
           guessed_so_far: 0,
+          step: 1,
         };
         Cookie.setCookieJson("abgame", cookie, 1);
 

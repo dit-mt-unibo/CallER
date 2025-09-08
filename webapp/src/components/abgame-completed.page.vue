@@ -17,7 +17,7 @@
 
     <p>
       <span v-if="guessed_so_far == total_questions" class="titolo">Congratulazioni!</span>
-      Sei riuscito a indovinare correttamente <br />{{guessed_so_far}}/{{total_questions}} piatti, o il {{ percentGuessed }}%
+      Sei riuscito a rispondere correttamente <br />{{guessed_so_far}}/{{total_questions}} a domande, o il {{ percentGuessed }}%
     </p>
     <p>Arrivederci!</p>
 

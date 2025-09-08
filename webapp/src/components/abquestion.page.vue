@@ -1,41 +1,41 @@
 <!-- Visualizza i contenuti di un luogo -->
 
 <template>
-  <div class="container">    
-    <div class="titolo justify-content-center">Coppia #{{item.id}}</div>    
+  <div class="text-center">    
+    <div class="titolo">Domanda n.&nbsp;{{step}}</div>    
   </div>
    
   <div id="setup" class="container">
     <p>Le foto rappresentano <b><i>{{toGuess}}</i></b> e <b><i>{{other}}</i></b></p>
     <p>Quale di queste due immagini rappresenta <b>{{toGuess}}</b>? Cliccaci sopra..</p>
     <div class="row">
-      <div class="col">
-        <p><a href="#" data="0" @click="setupVar(0)"><img class="place-img" :src="item.imageUrl1" /></a></p>
-      </div>
-      <div class="col">
-        <p><a href="#" data="1" @click="setupVar(1)"><img class="place-img" :src="item.imageUrl2" /></a></p>
-      </div>
+      <p><a href="#" data="0" @click="setupVar(0)"><img class="place-img" :src="item.imageUrl1" /></a></p>
     </div>
-  </div>
-  <div id="informazioni" hidden>
-    <p>
+    <div class="row">
+      <p><a href="#" data="1" @click="setupVar(1)"><img class="place-img" :src="item.imageUrl2" /></a></p>
+    </div>
+  </div>  
+  <div id="informazioni" class="container" hidden>
+    <div class="row">
       Dovevamo trovare la foto per&nbsp;<b>{{toGuess}}</b>
+      tra queste due possibilit&agrave;:
       <br />
-      Ecco spiegato cosa sono:
-    </p>
-    <div class="flex">
-      <div class="row">
-        <div class="col">
-          <p><b>Nome:&nbsp;</b>{{item.name1}}</p>
-          <p><img class="img-responsive piatto" style="background-color:{{bg1}}" :src="item.imageUrl1" /></p>
-          <p><b>Definizione:</b> {{ item.description1 }}</p>
-        </div>
-        <div class="col">
-          <p><b>Nome:&nbsp;</b>{{item.name2}}</p>
-          <p><img class="img-responsive piatto" style="background-color:{{bg2}}" :src="item.imageUrl2" /></p>
-          <p><b>Definizione:</b> {{ item.description2 }}</p>
-        </div>
-      </div>
+    </div>
+    <div>&nbsp;</div>
+    <div class="row" id="row1" style="background-color:{{bg1}}">
+      <img id="img1" class="place-img" :src="item.imageUrl1" />
+    </div>
+    <div class="row">
+      <p><b>{{item.name1}}</b>&nbsp;</p>
+      <p>{{ item.description1 }}</p>
+    </div>
+    <div>&nbsp;</div>
+    <div class="row" id="row2" style="background-color:{{bg2}}">
+      <img id="img2" class="place-img" :src="item.imageUrl2" />
+    </div>
+    <div class="row">
+      <p><b>{{item.name2}}</b>&nbsp;</p>
+      <p>{{ item.description2 }}</p>
     </div>
 
   </div>
@@ -73,6 +73,7 @@ export default {
       next_question_id: -1,
       bg1: "PaleGreen",
       bg2: "LightCoral",
+      name: "",
     };
   },
 
@@ -124,7 +125,10 @@ export default {
 
       }
 
-      this.guessed_so_far = JSON.parse(this.cookie.guessed_so_far);
+      // read the name of the game to display on the page
+      this.step = JSON.parse(this.cookie.step);     
+
+        this.guessed_so_far = JSON.parse(this.cookie.guessed_so_far);
       // list of indexes:
       let current_game_list = JSON.parse("[" + this.cookie.list_as_string + "]");
       let next_question_id = -1;
@@ -141,7 +145,6 @@ export default {
           position++;
         }
       }      
-
       
       this.next_question_id = next_question_id;
       if (next_question_id == -1) { //ultima domanda, fine gioco
@@ -166,7 +169,11 @@ export default {
         this.bg1 = "LightCoral";
         this.bg2 = "PaleGreen";
       }
-      
+
+      document.getElementById("row1").style.backgroundColor = this.bg1;
+      document.getElementById("row2").style.backgroundColor = this.bg2;
+
+
     },
 
     
@@ -196,6 +203,7 @@ export default {
       document.getElementById("setup").hidden = true;
       // update cookie
       this.cookie.guessed_so_far = this.guessed_so_far;
+      this.cookie.step = this.step+1;
       Cookie.setCookieJson("abgame", this.cookie, 1);
       let pair_name = "IT-"+this.item.name1+"-"+this.item.name2+"-" + guessed_correctly;
       //umami.track('game-answer', { name: pair_name });
