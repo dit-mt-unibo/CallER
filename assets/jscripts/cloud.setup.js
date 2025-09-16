@@ -31,6 +31,7 @@ Cloud.setup({
     "updateGlossaryDefinition": { "verb": "POST", "url": "/admin/glossary/definition-update" },
     "updateGlossaryAudio": { "verb": "POST", "url": "/admin/glossary/audio-update" },
     "updateGlossaryImage": { "verb": "POST", "url": "/admin/glossary/image-update" },
+    "updateStageImage": { "verb": "POST", "url": "/admin/stage/image-update" },
     "saveHunt": { "verb":"POST" , "url":"/admin/hunt/save" },
     "saveStage": { "verb": "POST", "url": "/admin/stage/save" },
     "saveAbgame": { "verb": "POST", "url": "/admin/abgame/save" },
