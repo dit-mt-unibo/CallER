@@ -7,7 +7,7 @@ const app = createApp(App);
 
 app.use(VueUmamiPlugin, {
   websiteID: 'a5c95fed-e131-4a43-9c47-04437a921ef7',
-  scriptSrc: 'https://us.umami.is/script.js', // Optional
+  scriptSrc: 'https://cloud.umami.is/script.js', // Optional
   router,
   allowLocalhost: true,
   // Optional arguments to be added to the Umami script tag, 
