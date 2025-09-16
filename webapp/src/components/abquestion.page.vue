@@ -50,8 +50,7 @@
 <script>
 
 import Cookie from "../modules/cookie.module.js";
-  //  import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
-  import Umami from "../modules/umami.module.js";
+import Umami from "../modules/umami.module.js";
 const axios = require("axios");
 
 export default {
