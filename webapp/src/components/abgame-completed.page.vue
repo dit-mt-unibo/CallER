@@ -29,8 +29,8 @@
 <script>
 
   import Cookie from "../modules/cookie.module.js";
-  import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
-  //const axios = require("axios");
+  //import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
+  const axios = require("axios");
 
   export default {
     name: "coppia",
@@ -101,18 +101,17 @@
         let current_game_list = JSON.parse("[" + this.cookie.list_as_string + "]");
         this.total_questions = current_game_list.length;
         this.percentGuessed = Math.round(this.guessed_so_far * 100 / this.total_questions);
-        let game_id = JSON.parse(this.cookie.abgame_id);
         // cancella il cookie per questo gioco
         Cookie.deleteCookie("abgame");
 
-        this.sendData(game_id, this.guessed_so_far.toString()); 
+        this.sendData(this.guessed_so_far.toString()); 
       },
 
       async bodyClick() {
         return;
-      }
+      },
 
-      async sendData(game_id, dataString) {
+      async sendData(dataString) {
         var data = {
           payload: {
             hostname: "forliviamo.it",
@@ -123,16 +122,16 @@
             url: window.location.pathname,
             website: 'a5c95fed-e131-4a43-9c47-04437a921ef7',
             name: 'game-completed',
-            data: { "prop": dataString, "game-id": gameId },
+            data: { "risposte-giuste": dataString },
           },
           type: 'event',
         };
         let url = "https://cloud.umami.is/api/send?x-umami-api-key=api_L31Rwo9NgEEm2X3ljDxcgvjWz14LyITT";
-
-        await axios.post(url, data).catch(function (error) {
-          console.log(error);
-        });
+        await axios.post(url, data)
+        
       },
+      
+      
     },
 
     components: {

@@ -50,7 +50,7 @@
 <script>
 
 import Cookie from "../modules/cookie.module.js";
-  import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
+//  import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
 
 const axios = require("axios");
 
@@ -233,13 +233,7 @@ export default {
       this.sendData(pair_name);
       console.log(pair_name);
     },
-    /*
-
-template:
-- onclick sull'immagine, controlla se è quella giusta
-     - mostra spiegazioni e link alla prossima (Avanti)
-
-    */
+    
     async bodyClick() {
       return;
     }
