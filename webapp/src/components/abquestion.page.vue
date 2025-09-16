@@ -188,6 +188,28 @@ export default {
       return response.data.item;
     },
 
+    async sendData(dataString) {
+      var data = {
+        payload: {
+          hostname: "forliviamo.it",
+          language: navigator.language,
+          referrer: document.referrer,
+          screen: `${window.screen.width}x${window.screen.height}`,
+          title: document.title,
+          url: window.location.pathname,
+          website: 'a5c95fed-e131-4a43-9c47-04437a921ef7',
+          name: 'game-question',
+          data: { "prop": dataString },
+        },
+        type: 'event',
+      };
+      let url = "https://cloud.umami.is/api/send?x-umami-api-key=api_L31Rwo9NgEEm2X3ljDxcgvjWz14LyITT";      
+      
+      await axios.post(url, data).catch(function (error) {
+        console.log(error);
+      });
+    },
+
     async setupVar(risposta) {
       //alert("hai scelto la risposta " + risposta + " la risposta corretta era " + this.answer);
 
@@ -208,7 +230,7 @@ export default {
       Cookie.setCookieJson("abgame", this.cookie, 1);
       let pair_name = "IT-"+this.item.name1+"-"+this.item.name2+"-" + guessed_correctly;
       //umami.track('game-answer', { name: pair_name });
-      trackUmamiEvent('game-answer', { name: pair_name });
+      this.sendData(pair_name);
       console.log(pair_name);
     },
     /*

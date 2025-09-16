@@ -101,17 +101,38 @@
         let current_game_list = JSON.parse("[" + this.cookie.list_as_string + "]");
         this.total_questions = current_game_list.length;
         this.percentGuessed = Math.round(this.guessed_so_far * 100 / this.total_questions);
-        let gameId = JSON.parse(this.cookie.abgame_id);
+        let game_id = JSON.parse(this.cookie.abgame_id);
         // cancella il cookie per questo gioco
         Cookie.deleteCookie("abgame");
-        trackUmamiEvent('game-completed', { id: gameId, guessed: this.guessed_so_far });
+
+        this.sendData(game_id, this.guessed_so_far.toString()); 
       },
 
       async bodyClick() {
         return;
       }
 
+      async sendData(game_id, dataString) {
+        var data = {
+          payload: {
+            hostname: "forliviamo.it",
+            language: navigator.language,
+            referrer: document.referrer,
+            screen: `${window.screen.width}x${window.screen.height}`,
+            title: document.title,
+            url: window.location.pathname,
+            website: 'a5c95fed-e131-4a43-9c47-04437a921ef7',
+            name: 'game-completed',
+            data: { "prop": dataString, "game-id": gameId },
+          },
+          type: 'event',
+        };
+        let url = "https://cloud.umami.is/api/send?x-umami-api-key=api_L31Rwo9NgEEm2X3ljDxcgvjWz14LyITT";
 
+        await axios.post(url, data).catch(function (error) {
+          console.log(error);
+        });
+      },
     },
 
     components: {
