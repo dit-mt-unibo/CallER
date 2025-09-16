@@ -30,6 +30,7 @@
 
   import Cookie from '../modules/cookie.module.js';
   import Slicer from '../modules/slicer.module.js';
+  import Umami from '../modules/umami.module.js';
 const axios = require('axios');
 
 export default {
@@ -74,7 +75,7 @@ export default {
     created : async function () {
 
       await this.getGamedata();
-      await this.sendPageView();
+      await Umami.sendPageView();
     },
 
 
@@ -123,35 +124,7 @@ export default {
       },
 
 
-      async sendPageView() {
-        var data = {
-          payload: {
-            hostname: "forliviamo.it",
-            language: navigator.language,
-            referrer: document.referrer,
-            screen: `${window.screen.width}x${window.screen.height}`,
-            title: document.title,
-            url: window.location.pathname,
-            website: 'a5c95fed-e131-4a43-9c47-04437a921ef7'          
-          },
-          type: 'event',
-        };
-        let url = "https://cloud.umami.is/api/send?x-umami-api-key=api_L31Rwo9NgEEm2X3ljDxcgvjWz14LyITT";
-
-        await axios.post(url, data).catch(function (error) {
-          console.log(error);
-        });
-      },
-      //TODO:
-      /*
       
-
-
-      mostra link alla prima domanda 'iniziamo'
-
-
-
-      */
     },
 
 

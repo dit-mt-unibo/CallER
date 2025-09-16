@@ -156,7 +156,7 @@ import quiz from "./quiz.component.vue";
 import feedback from "./feedback.component.vue";
 import toolbar from "./toolbar.component.vue";
 import Cookie from "../modules/cookie.module.js";
-
+import Umami from '../modules/umami.module.js';
 const axios = require("axios");
 
 export default {
@@ -225,6 +225,7 @@ export default {
 
   created: async function () {    
     await this.initUI();
+    await Umami.sendPageview();
   },
 
   mounted: function () {

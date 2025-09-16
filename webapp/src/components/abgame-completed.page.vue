@@ -29,8 +29,8 @@
 <script>
 
   import Cookie from "../modules/cookie.module.js";
-  //import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
-  const axios = require("axios");
+  import Umami from '../modules/umami.module.js';
+  
 
   export default {
     name: "coppia",
@@ -85,8 +85,7 @@
        */
       async initUI() {
 
-        //this.item = await this.getAbquestion();
-
+        
         this.cookie = JSON.parse(Cookie.getCookie("abgame"));
         console.log(this.cookie);
         // Se il cookie abgame non esiste, torna alla home
@@ -104,32 +103,13 @@
         // cancella il cookie per questo gioco
         Cookie.deleteCookie("abgame");
 
-        this.sendData(this.guessed_so_far.toString()); 
+        Umami.sendEventData("game-completed", "risposte-giuste", this.guessed_so_far.toString()); 
       },
 
       async bodyClick() {
         return;
       },
-
-      async sendData(dataString) {
-        var data = {
-          payload: {
-            hostname: "forliviamo.it",
-            language: navigator.language,
-            referrer: document.referrer,
-            screen: `${window.screen.width}x${window.screen.height}`,
-            title: document.title,
-            url: window.location.pathname,
-            website: 'a5c95fed-e131-4a43-9c47-04437a921ef7',
-            name: 'game-completed',
-            data: { "risposte-giuste": dataString },
-          },
-          type: 'event',
-        };
-        let url = "https://cloud.umami.is/api/send?x-umami-api-key=api_L31Rwo9NgEEm2X3ljDxcgvjWz14LyITT";
-        await axios.post(url, data)
-        
-      },
+      
       
       
     },

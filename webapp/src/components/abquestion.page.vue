@@ -50,8 +50,8 @@
 <script>
 
 import Cookie from "../modules/cookie.module.js";
-//  import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
-
+  //  import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
+  import Umami from "../modules/umami.module.js";
 const axios = require("axios");
 
 export default {
@@ -230,7 +230,7 @@ export default {
       Cookie.setCookieJson("abgame", this.cookie, 1);
       let pair_name = "IT-"+this.item.name1+"-"+this.item.name2+"-" + guessed_correctly;
       //umami.track('game-answer', { name: pair_name });
-      this.sendData(pair_name);
+      Umami.sendEventData("game-question", "risposta", pair_name);
       console.log(pair_name);
     },
     
