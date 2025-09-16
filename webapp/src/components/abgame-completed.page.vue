@@ -29,8 +29,8 @@
 <script>
 
   import Cookie from "../modules/cookie.module.js";
-  import { trackUmamiEvent } from '@jaseeey/vue-umami-plugin';
-  //const axios = require("axios");
+  import Umami from '../modules/umami.module.js';
+  
 
   export default {
     name: "coppia",
@@ -85,8 +85,7 @@
        */
       async initUI() {
 
-        //this.item = await this.getAbquestion();
-
+        
         this.cookie = JSON.parse(Cookie.getCookie("abgame"));
         console.log(this.cookie);
         // Se il cookie abgame non esiste, torna alla home
@@ -101,17 +100,18 @@
         let current_game_list = JSON.parse("[" + this.cookie.list_as_string + "]");
         this.total_questions = current_game_list.length;
         this.percentGuessed = Math.round(this.guessed_so_far * 100 / this.total_questions);
-        let gameId = JSON.parse(this.cookie.abgame_id);
         // cancella il cookie per questo gioco
         Cookie.deleteCookie("abgame");
-        trackUmamiEvent('game-completed', { id: gameId, guessed: this.guessed_so_far });
+
+        Umami.sendEventData("game-completed", "risposte-giuste", this.guessed_so_far.toString()); 
       },
 
       async bodyClick() {
         return;
-      }
-
-
+      },
+      
+      
+      
     },
 
     components: {

@@ -21,6 +21,7 @@
 
 import toolbar from './toolbar.component.vue';
 import modalTodaysWord from './modal-todays-word.component.vue';
+import Umami from '../modules/umami.module.js';
 
 const axios = require('axios')
 
@@ -42,7 +43,8 @@ export default {
     
     created : async function() {
     
-        await this.getCategories();
+      await this.getCategories();
+      await Umami.sendPageview();
     
     },
     

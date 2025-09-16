@@ -17,8 +17,8 @@
 <script>
 
 import listitems from './listitems.component.vue';
-import toolbar from './toolbar.component.vue';
-
+  import toolbar from './toolbar.component.vue';
+  import Umami from '../modules/umami.module';
 const axios = require('axios');
 
 export default {
@@ -64,7 +64,8 @@ export default {
     
     created : async function () {
         
-        this.children = await this.getCategory();
+      this.children = await this.getCategory();
+      await Umami.sendPageview();
         
     } ,
     

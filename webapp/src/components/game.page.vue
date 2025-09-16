@@ -30,6 +30,7 @@
 
   import Cookie from '../modules/cookie.module.js';
   import Slicer from '../modules/slicer.module.js';
+  import Umami from '../modules/umami.module.js';
 const axios = require('axios');
 
 export default {
@@ -74,7 +75,7 @@ export default {
     created : async function () {
 
       await this.getGamedata();
-
+      await Umami.sendPageView();
     },
 
 
@@ -124,16 +125,6 @@ export default {
 
 
       
-      //TODO:
-      /*
-      
-
-
-      mostra link alla prima domanda 'iniziamo'
-
-
-
-      */
     },
 
 
